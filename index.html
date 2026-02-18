@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullah | Systems & Product Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cairo:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #1A120B;
+    --bg-mid: #3C2A21;
+    --bg-card: #2A1F17;
+    --bg-card2: #301E14;
+    --accent-cream: #FFFDD0;
+    --accent-gold: #EAD39B;
+    --accent-beige: #F5F5DC;
+    --accent-warm: #D4A96A;
+    --accent-glow: #C8943A;
+    --text-primary: #FFFDD0;
+    --text-secondary: #B8A898;
+    --text-muted: #7A6A5A;
+    --border: rgba(234,211,155,0.12);
+    --border-hover: rgba(234,211,155,0.35);
+    --shadow-glow: 0 0 40px rgba(200,148,58,0.15);
+    --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
+    --shadow-deep: 0 20px 60px rgba(0,0,0,0.6);
+    --gradient-gold: linear-gradient(135deg, #EAD39B 0%, #C8943A 50%, #A0722A 100%);
+    --gradient-warm: linear-gradient(135deg, #C8943A 0%, #8B5E2E 100%);
+    --gradient-card: linear-gradient(145deg, #2A1F17 0%, #1E1510 100%);
+    --gradient-shine: linear-gradient(105deg, transparent 40%, rgba(234,211,155,0.06) 50%, transparent 60%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Ambient glow blobs */
+  .ambient {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+  }
+  .ambient-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #C8943A 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: floatAmb 8s ease-in-out infinite;
+  }
+  .ambient-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #8B5E2E 0%, transparent 70%);
+    bottom: 20%; left: -100px;
+    animation: floatAmb 12s ease-in-out infinite reverse;
+  }
+  .ambient-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #EAD39B 0%, transparent 70%);
+    top: 50%; right: 15%;
+    animation: floatAmb 10s ease-in-out infinite 3s;
+    opacity: 0.06;
+  }
+
+  @keyframes floatAmb {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(20px, -30px) scale(1.05); }
+  }
+
+  /* ===== DESKTOP LAYOUT ===== */
+  .layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 100vh;
+  }
+
+  /* ===== COLUMN 1 — IDENTITY ===== */
+  .col-left {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    padding: 48px 36px;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background: linear-gradient(180deg, rgba(26,18,11,0.98) 0%, rgba(26,18,11,0.95) 100%);
+  }
+
+  .profile-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 88px;
+    height: 88px;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: var(--gradient-gold);
+    padding: 2px;
+    animation: spinRing 8s linear infinite;
+  }
+
+  @keyframes spinRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .avatar-inner {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--gradient-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    overflow: hidden;
+    border: 2px solid var(--bg-deep);
+    z-index: 1;
+  }
+
+  .avatar-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-cream);
+    text-align: center;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+  }
+
+  .profile-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--accent-gold);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .profile-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* Skill Capsules */
+  .skills-section { flex: 1; overflow: hidden; }
+
+  .skills-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .skill-group { margin-bottom: 14px; }
+
+  .skill-group-name {
+    font-size: 10px;
+    color: var(--accent-warm);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .capsules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .capsule {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.25s ease;
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  .capsule:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(234,211,155,0.07);
+    box-shadow: 0 0 12px rgba(200,148,58,0.2);
+    transform: translateY(-1px);
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-shine);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .btn:hover::after { transform: translateX(100%); }
+
+  .btn-primary {
+    background: var(--gradient-gold);
+    color: #1A120B;
+    border: none;
+    box-shadow: 0 4px 20px rgba(200,148,58,0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 6px 30px rgba(200,148,58,0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent-gold);
+    border: 1px solid var(--border-hover);
+  }
+
+  .btn-outline:hover {
+    background: rgba(234,211,155,0.07);
+    border-color: var(--accent-gold);
+    box-shadow: 0 4px 20px rgba(200,148,58,0.15);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.03);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ===== COLUMN 2 — DEPTH ===== */
+  .col-mid {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    padding: 48px 36px;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: linear-gradient(180deg, rgba(26,18,11,0.96) 0%, rgba(24,16,9,0.98) 100%);
+  }
+
+  /* Vertical divider that fades */
+  .col-mid::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 1px;
+    height: 80%;
+    background: linear-gradient(180deg, transparent 0%, var(--border-hover) 30%, var(--accent-warm) 50%, var(--border-hover) 70%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .mid-section {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mid-section:last-child { border-bottom: none; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 12px;
+    padding: 3px 10px;
+    border: 1px solid rgba(200,148,58,0.3);
+    border-radius: 3px;
+    background: rgba(200,148,58,0.05);
+  }
+
+  .mid-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-cream);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .mid-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .mid-text strong {
+    color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  /* Workflow Steps */
+  .workflow-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+
+  .step-item:hover {
+    background: rgba(234,211,155,0.05);
+    border-color: var(--border-hover);
+    transform: translateX(-3px);
+  }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--accent-warm);
+    font-style: italic;
+    min-width: 20px;
+    line-height: 1;
+  }
+
+  .step-text {
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .stat-box {
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .stat-box:hover::before { transform: scaleX(1); }
+
+  .stat-box:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 20px rgba(200,148,58,0.1);
+    transform: translateY(-2px);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ===== COLUMN 3 — DYNAMIC ===== */
+  .col-right {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 48px 36px;
+    border-left: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-mid) transparent;
+  }
+
+  .col-right::-webkit-scrollbar { width: 3px; }
+  .col-right::-webkit-scrollbar-track { background: transparent; }
+  .col-right::-webkit-scrollbar-thumb { background: var(--bg-mid); border-radius: 3px; }
+  .col-right::-webkit-scrollbar-thumb:hover { background: var(--accent-warm); }
+
+  /* Social Icons */
+  .social-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-warm);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .social-btn:hover::before { opacity: 0.12; }
+
+  .social-btn:hover {
+    border-color: var(--accent-warm);
+    color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200,148,58,0.15);
+  }
+
+  .social-icon {
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .social-text {
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+  }
+
+  /* Section Heading */
+  .right-section { margin-bottom: 48px; }
+
+  .right-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .right-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-cream);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-hover), transparent);
+  }
+
+  .section-icon {
+    font-size: 18px;
+  }
+
+  /* Horizontal Scroll for Featured */
+  .featured-scroll-wrap {
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-mid) transparent;
+    cursor: grab;
+  }
+
+  .featured-scroll-wrap:active { cursor: grabbing; }
+
+  .featured-scroll-wrap::-webkit-scrollbar { height: 3px; }
+  .featured-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+  .featured-scroll-wrap::-webkit-scrollbar-thumb { background: var(--bg-mid); border-radius: 3px; }
+
+  .featured-row {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding-bottom: 4px;
+  }
+
+  .feat-card {
+    width: 180px;
+    height: 240px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+    background: var(--gradient-card);
+    transition: all 0.35s ease;
+  }
+
+  .feat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(200,148,58,0.1);
+  }
+
+  .feat-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) saturate(0.8);
+    transition: all 0.4s ease;
+  }
+
+  .feat-card:hover .feat-card-img {
+    filter: brightness(0.5) saturate(0.6);
+  }
+
+  .feat-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    opacity: 0.3;
+  }
+
+  .feat-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.8) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .feat-card:hover .feat-card-overlay { opacity: 1; }
+
+  .feat-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-cream);
+    text-align: center;
+  }
+
+  .feat-card-tag {
+    font-size: 9px;
+    color: var(--accent-gold);
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Top gradient on featured card */
+  .feat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 2;
+  }
+
+  .feat-card:hover::before { transform: scaleX(1); }
+
+  /* Admin System Cards */
+  .systems-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sys-card {
+    padding: 18px 20px;
+    border-radius: 10px;
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sys-card::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gradient-gold);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+  }
+
+  .sys-card:hover::before { transform: scaleY(1); }
+
+  .sys-card:hover {
+    background: linear-gradient(145deg, #2F2218 0%, #231810 100%);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-card), 0 0 20px rgba(200,148,58,0.08);
+    transform: translateX(-4px);
+  }
+
+  .sys-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(200,148,58,0.1);
+    border: 1px solid rgba(200,148,58,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .sys-card:hover .sys-icon {
+    background: rgba(200,148,58,0.15);
+    border-color: var(--accent-warm);
+    box-shadow: 0 0 15px rgba(200,148,58,0.2);
+  }
+
+  .sys-info { flex: 1; }
+
+  .sys-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-cream);
+    margin-bottom: 3px;
+  }
+
+  .sys-type {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 6px;
+  }
+
+  .sys-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .sys-detail-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    font-family: 'Cairo', sans-serif;
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  .sys-detail-btn:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(234,211,155,0.05);
+  }
+
+  /* Website Cards Grid */
+  .web-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .web-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--gradient-card);
+    transition: all 0.35s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .web-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-shine);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .web-card:hover::after { transform: translateX(100%); }
+
+  .web-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-card), 0 0 25px rgba(200,148,58,0.1);
+    transform: translateY(-4px);
+  }
+
+  .web-thumb {
+    height: 110px;
+    background: linear-gradient(135deg, #2A1F17 0%, #3C2A21 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.35s ease;
+  }
+
+  .web-card:hover .web-thumb {
+    background: linear-gradient(135deg, #3C2A21 0%, #4B382A 100%);
+  }
+
+  .web-info { padding: 12px 14px; }
+
+  .web-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-cream);
+    margin-bottom: 3px;
+  }
+
+  .web-tag {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Contact Form */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-group { position: relative; }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    resize: none;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--accent-warm);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 0 0 3px rgba(200,148,58,0.1);
+  }
+
+  .form-textarea { height: 100px; }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .contact-info-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .contact-info-item span:first-child { font-size: 14px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: linear-gradient(145deg, #261E1A 0%, #1E1510 100%);
+    border: 1px solid var(--border-hover);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-deep), 0 0 60px rgba(200,148,58,0.1);
+    animation: modalIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-mid) transparent;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: sticky;
+    top: 0;
+    background: #261E1A;
+    border-radius: 16px 16px 0 0;
+    z-index: 2;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-cream);
+  }
+
+  .modal-subtitle {
+    font-size: 11px;
+    color: var(--accent-warm);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.25s ease;
+  }
+
+  .modal-close:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    transform: rotate(90deg);
+  }
+
+  .modal-body { padding: 24px 28px; }
+
+  .modal-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .modal-thumb {
+    height: 100px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3C2A21, #2A1F17);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    overflow: hidden;
+  }
+
+  .modal-thumb:hover {
+    border-color: var(--border-hover);
+    transform: scale(1.03);
+  }
+
+  .modal-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 2;
+    margin-bottom: 16px;
+  }
+
+  .modal-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .modal-tech {
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(200,148,58,0.08);
+    border: 1px solid rgba(200,148,58,0.2);
+    color: var(--accent-gold);
+    letter-spacing: 0.5px;
+  }
+
+  .modal-btns {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* ===== BOTTOM NAV (Mobile) ===== */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(26,18,11,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+  }
+
+  .bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .nav-item.active, .nav-item:hover {
+    color: var(--accent-gold);
+  }
+
+  .nav-item-icon { font-size: 18px; }
+
+  /* ===== MOBILE LAYOUT ===== */
+  @media (max-width: 900px) {
+    .layout {
+      display: block;
+      padding-bottom: 80px;
+    }
+
+    .col-left, .col-mid {
+      position: static;
+      height: auto;
+      padding: 32px 20px;
+      border-left: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .col-right {
+      height: auto;
+      overflow-y: visible;
+      padding: 32px 20px;
+      border-left: none;
+    }
+
+    .bottom-nav { display: block; }
+
+    /* Mobile sections visibility */
+    .mobile-section {
+      display: none;
+    }
+
+    .mobile-section.active {
+      display: block;
+    }
+
+    /* Desktop-only columns on mobile */
+    .col-left { display: block; }
+    .col-mid { display: none; }
+
+    .web-grid { grid-template-columns: 1fr; }
+
+    .modal-gallery { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .featured-row .feat-card { width: 150px; height: 200px; }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .col-left > * { animation: fadeUp 0.6s ease forwards; }
+  .col-left > *:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+  .col-left > *:nth-child(2) { animation-delay: 0.2s; opacity: 0; }
+  .col-left > *:nth-child(3) { animation-delay: 0.3s; opacity: 0; }
+  .col-left > *:nth-child(4) { animation-delay: 0.4s; opacity: 0; }
+
+  .col-mid > * { animation: fadeUp 0.6s ease forwards; }
+  .col-mid > *:nth-child(1) { animation-delay: 0.2s; opacity: 0; }
+  .col-mid > *:nth-child(2) { animation-delay: 0.3s; opacity: 0; }
+  .col-mid > *:nth-child(3) { animation-delay: 0.4s; opacity: 0; }
+  .col-mid > *:nth-child(4) { animation-delay: 0.5s; opacity: 0; }
+  .col-mid > *:nth-child(5) { animation-delay: 0.6s; opacity: 0; }
+
+  /* Gold shimmer on title */
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .shimmer-text {
+    background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-cream) 40%, var(--accent-glow) 60%, var(--accent-gold) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  /* Divider line */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+    margin: 8px 0;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(200,148,58,0.1);
+    border: 1px solid rgba(200,148,58,0.25);
+    color: var(--accent-warm);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-warm);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient lighting -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+<div class="ambient ambient-3"></div>
+
+<!-- ===================== LAYOUT ===================== -->
+<div class="layout">
+
+  <!-- ===== COLUMN 1 — LEFT ===== -->
+  <div class="col-left">
+
+    <!-- Profile -->
+    <div class="profile-block">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar-inner">A</div>
+      </div>
+      <div>
+        <div class="profile-name shimmer-text">Abdullah</div>
+        <div class="profile-title">Systems & Product Builder</div>
+      </div>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        متاح للعمل
+      </div>
+      <p class="profile-desc">
+        أبني أنظمة إدارية ومواقع احترافية<br>
+        أركز على المنطق، الهيكلة، وتجربة المستخدم<br>
+        وأحول الأفكار إلى منتجات قابلة للاستخدام
+      </p>
+    </div>
+
+    <!-- Skills -->
+    <div class="skills-section">
+      <div class="skills-label">المهارات التقنية</div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Frontend</div>
+        <div class="capsules">
+          <span class="capsule">HTML</span>
+          <span class="capsule">CSS</span>
+          <span class="capsule">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Backend Concepts</div>
+        <div class="capsules">
+          <span class="capsule">Node.js</span>
+          <span class="capsule">MongoDB</span>
+          <span class="capsule">API Design</span>
+          <span class="capsule">Auth</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Systems Knowledge</div>
+        <div class="capsules">
+          <span class="capsule">Architecture</span>
+          <span class="capsule">Business Logic</span>
+          <span class="capsule">DB Design</span>
+          <span class="capsule">Security</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">AI Tools</div>
+        <div class="capsules">
+          <span class="capsule">Prompt Engineering</span>
+          <span class="capsule">AI-Assisted Dev</span>
+          <span class="capsule">Prototyping</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-group">
+      <a href="#works" class="btn btn-primary">⚡ مشاريعي</a>
+      <a href="#" class="btn btn-outline">📄 تحميل CV</a>
+      <a href="#contact" class="btn btn-ghost">💬 تواصل معي</a>
+      <a href="#spms" class="btn btn-ghost">🏛️ نظام SPMS</a>
+    </div>
+
+  </div><!-- /col-left -->
+
+
+  <!-- ===== COLUMN 2 — MID ===== -->
+  <div class="col-mid">
+
+    <div class="mid-section">
+      <div class="section-tag">من أنا</div>
+      <div class="mid-heading">مطوّر أنظمة بتفكير منتجات</div>
+      <p class="mid-text">
+        أنا مطور أنظمة أركز على بناء <strong>حلول عملية قابلة للاستخدام</strong>
+        لا أركز على كتابة الكود فقط، بل على تصميم تدفق العمل
+        من الواجهة إلى منطق المعالجة إلى تخزين البيانات
+        أتعامل مع كل مشروع كـ <strong>منتج</strong> وليس مجرد صفحة ويب
+      </p>
+    </div>
+
+    <div class="mid-section">
+      <div class="section-tag">طريقة العمل</div>
+      <div class="workflow-steps">
+        <div class="step-item"><span class="step-num">١</span><span class="step-text">تحليل الفكرة</span></div>
+        <div class="step-item"><span class="step-num">٢</span><span class="step-text">رسم الهيكل</span></div>
+        <div class="step-item"><span class="step-num">٣</span><span class="step-text">تحديد الجداول</span></div>
+        <div class="step-item"><span class="step-num">٤</span><span class="step-text">بناء الواجهة</span></div>
+        <div class="step-item"><span class="step-num">٥</span><span class="step-text">ربط المنطق</span></div>
+        <div class="step-item"><span class="step-num">٦</span><span class="step-text">اختبار السيناريوهات</span></div>
+        <div class="step-item"><span class="step-num">٧</span><span class="step-text">تحسين الأداء</span></div>
+        <div class="step-item"><span class="step-num">٨</span><span class="step-text">التسليم النهائي</span></div>
+      </div>
+    </div>
+
+    <div class="mid-section">
+      <div class="section-tag">الإحصائيات</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">مشروع ويب</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">4+</div>
+          <div class="stat-label">أنظمة إدارية</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">سنوات خبرة</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">إمكانات</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mid-section">
+      <div class="section-tag">ما أتميز به</div>
+      <p class="mid-text">
+        <strong>سرعة بناء عالية</strong> باستخدام أدوات AI —
+        فهم هيكلي كامل للأنظمة — قدرة على بناء Admin Systems متكاملة —
+        تجربة مستخدم منظمة بدون تعقيد —
+        <strong>التفكير بالمنتج طويل المدى</strong>
+      </p>
+    </div>
+
+  </div><!-- /col-mid -->
+
+
+  <!-- ===== COLUMN 3 — RIGHT ===== -->
+  <div class="col-right">
+
+    <!-- Social Row -->
+    <div class="social-row">
+      <a href="#" class="social-btn">
+        <span class="social-icon">🐙</span>
+        <span class="social-text">GitHub</span>
+      </a>
+      <a href="#" class="social-btn">
+        <span class="social-icon">💼</span>
+        <span class="social-text">LinkedIn</span>
+      </a>
+      <a href="mailto:hello@example.com" class="social-btn">
+        <span class="social-icon">✉️</span>
+        <span class="social-text">Email</span>
+      </a>
+      <a href="#" class="social-btn">
+        <span class="social-icon">💬</span>
+        <span class="social-text">WhatsApp</span>
+      </a>
+    </div>
+
+    <!-- ===== FEATURED WORKS ===== -->
+    <div class="right-section" id="works">
+      <div class="right-section-header">
+        <span class="section-icon">⭐</span>
+        <div class="right-section-title">أعمال مميزة</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="featured-scroll-wrap">
+        <div class="featured-row">
+
+          <div class="feat-card" onclick="openModal('spms')">
+            <div class="feat-card-placeholder">🏛️</div>
+            <div class="feat-card-overlay">
+              <div class="feat-card-name">نظام SPMS</div>
+              <div class="feat-card-tag">نظام إدارة طلاب</div>
+            </div>
+          </div>
+
+          <div class="feat-card" onclick="openModal('clinic')">
+            <div class="feat-card-placeholder">🏥</div>
+            <div class="feat-card-overlay">
+              <div class="feat-card-name">إدارة عيادة</div>
+              <div class="feat-card-tag">نظام طبي</div>
+            </div>
+          </div>
+
+          <div class="feat-card" onclick="openModal('booking')">
+            <div class="feat-card-placeholder">📅</div>
+            <div class="feat-card-overlay">
+              <div class="feat-card-name">نظام حجوزات</div>
+              <div class="feat-card-tag">Booking System</div>
+            </div>
+          </div>
+
+          <div class="feat-card" onclick="openModal('dashboard')">
+            <div class="feat-card-placeholder">📊</div>
+            <div class="feat-card-overlay">
+              <div class="feat-card-name">Dashboard Analytics</div>
+              <div class="feat-card-tag">Data Analysis</div>
+            </div>
+          </div>
+
+          <div class="feat-card" onclick="openModal('ecomm')">
+            <div class="feat-card-placeholder">🛒</div>
+            <div class="feat-card-overlay">
+              <div class="feat-card-name">متجر إلكتروني</div>
+              <div class="feat-card-tag">E-Commerce</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ADMIN SYSTEMS ===== -->
+    <div class="right-section" id="spms">
+      <div class="right-section-header">
+        <span class="section-icon">🏢</span>
+        <div class="right-section-title">أنظمة إدارية</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="systems-grid">
+
+        <div class="sys-card" onclick="openModal('spms')">
+          <div class="sys-icon">🏛️</div>
+          <div class="sys-info">
+            <div class="sys-name">SPMS — نظام إدارة الطلاب</div>
+            <div class="sys-type">Student Performance Management</div>
+            <div class="sys-desc">نظام متكامل لإدارة الطلاب والدرجات والحضور والتقارير الأكاديمية</div>
+          </div>
+          <button class="sys-detail-btn">تفاصيل ←</button>
+        </div>
+
+        <div class="sys-card" onclick="openModal('clinic')">
+          <div class="sys-icon">🏥</div>
+          <div class="sys-info">
+            <div class="sys-name">نظام إدارة عيادة</div>
+            <div class="sys-type">Clinic Management System</div>
+            <div class="sys-desc">إدارة المرضى، المواعيد، الوصفات، والفواتير الطبية بشكل متكامل</div>
+          </div>
+          <button class="sys-detail-btn">تفاصيل ←</button>
+        </div>
+
+        <div class="sys-card" onclick="openModal('booking')">
+          <div class="sys-icon">📅</div>
+          <div class="sys-info">
+            <div class="sys-name">نظام إدارة الحجوزات</div>
+            <div class="sys-type">Booking & Reservation System</div>
+            <div class="sys-desc">منصة حجز متطورة مع تقويم ذكي وإشعارات فورية وإدارة الغرف</div>
+          </div>
+          <button class="sys-detail-btn">تفاصيل ←</button>
+        </div>
+
+        <div class="sys-card" onclick="openModal('business')">
+          <div class="sys-icon">💼</div>
+          <div class="sys-info">
+            <div class="sys-name">نظام إدارة الأعمال</div>
+            <div class="sys-type">Business Management ERP</div>
+            <div class="sys-desc">نظام ERP متكامل للفواتير، المخزون، الموارد البشرية والتقارير المالية</div>
+          </div>
+          <button class="sys-detail-btn">تفاصيل ←</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== WEBSITES ===== -->
+    <div class="right-section">
+      <div class="right-section-header">
+        <span class="section-icon">🌐</span>
+        <div class="right-section-title">مواقع الويب</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="web-grid">
+
+        <div class="web-card" onclick="openModal('corp')">
+          <div class="web-thumb">🏢</div>
+          <div class="web-info">
+            <div class="web-name">موقع شركة</div>
+            <div class="web-tag">Corporate Website</div>
+          </div>
+        </div>
+
+        <div class="web-card" onclick="openModal('landing')">
+          <div class="web-thumb">🚀</div>
+          <div class="web-info">
+            <div class="web-name">صفحة هبوط</div>
+            <div class="web-tag">Landing Page</div>
+          </div>
+        </div>
+
+        <div class="web-card" onclick="openModal('personal')">
+          <div class="web-thumb">👤</div>
+          <div class="web-info">
+            <div class="web-name">موقع شخصي</div>
+            <div class="web-tag">Personal Portfolio</div>
+          </div>
+        </div>
+
+        <div class="web-card" onclick="openModal('ecomm')">
+          <div class="web-thumb">🛒</div>
+          <div class="web-info">
+            <div class="web-name">متجر إلكتروني</div>
+            <div class="web-tag">E-Commerce Store</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== CONTACT ===== -->
+    <div class="right-section" id="contact">
+      <div class="right-section-header">
+        <span class="section-icon">📞</span>
+        <div class="right-section-title">تواصل معي</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">الاسم</label>
+          <input type="text" class="form-input" placeholder="اسمك الكامل">
+        </div>
+        <div class="form-group">
+          <label class="form-label">البريد الإلكتروني</label>
+          <input type="email" class="form-input" placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">الرسالة</label>
+          <textarea class="form-textarea" placeholder="صف مشروعك أو فكرتك..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="handleSend(this)">إرسال الرسالة ✨</button>
+      </div>
+
+      <div class="contact-info-row">
+        <div class="contact-info-item"><span>✉️</span><span>hello@abdullah.dev</span></div>
+        <div class="contact-info-item"><span>💬</span><span>WhatsApp متاح</span></div>
+        <div class="contact-info-item"><span>🕐</span><span>رد خلال 24 ساعة</span></div>
+      </div>
+    </div>
+
+  </div><!-- /col-right -->
+
+</div><!-- /layout -->
+
+
+<!-- ===== BOTTOM NAV (Mobile) ===== -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="nav-item active" onclick="mobileNav(this, 'home')">
+      <span class="nav-item-icon">🏠</span>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="mobileNav(this, 'about')">
+      <span class="nav-item-icon">👤</span>
+      <span>عني</span>
+    </button>
+    <button class="nav-item" onclick="mobileNav(this, 'works')">
+      <span class="nav-item-icon">💼</span>
+      <span>الأعمال</span>
+    </button>
+    <button class="nav-item" onclick="mobileNav(this, 'contact')">
+      <span class="nav-item-icon">📞</span>
+      <span>تواصل</span>
+    </button>
+  </div>
+</nav>
+
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">اسم المشروع</div>
+        <div class="modal-subtitle" id="modalSubtitle">نوع المشروع</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-gallery" id="modalGallery"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-techs" id="modalTechs"></div>
+      <div class="modal-btns">
+        <a href="#" class="btn btn-primary" style="flex:1; font-size:12px;">🌐 عرض مباشر</a>
+        <a href="#" class="btn btn-outline" style="flex:1; font-size:12px;">🐙 GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // ===== PROJECT DATA =====
+  const projects = {
+    spms: {
+      title: 'SPMS — نظام إدارة الطلاب',
+      subtitle: 'Student Performance Management System',
+      gallery: ['🏛️','📊','👨‍🎓'],
+      desc: 'نظام متكامل لإدارة بيانات الطلاب، الدرجات، سجلات الحضور، والتقارير الأكاديمية. يوفر لوحة تحكم شاملة للإدارة والمعلمين والطلاب مع تحليلات تفصيلية وتصدير التقارير.',
+      techs: ['HTML/CSS/JS', 'Node.js', 'MongoDB', 'Authentication', 'REST API', 'Dashboard', 'Analytics']
+    },
+    clinic: {
+      title: 'نظام إدارة العيادة',
+      subtitle: 'Clinic Management System',
+      gallery: ['🏥','📋','💊'],
+      desc: 'منصة طبية متكاملة لإدارة المرضى، جدولة المواعيد، إدارة الوصفات الطبية، الفواتير، وتقارير صحية تفصيلية. مناسب للعيادات والمستوصفات الصغيرة والمتوسطة.',
+      techs: ['HTML/CSS/JS', 'Node.js', 'MongoDB', 'Calendar UI', 'PDF Reports', 'Auth System']
+    },
+    booking: {
+      title: 'نظام إدارة الحجوزات',
+      subtitle: 'Advanced Booking & Reservation System',
+      gallery: ['📅','🏨','✅'],
+      desc: 'نظام حجز متطور يدعم إدارة الغرف والوحدات، التقويم الذكي، الإشعارات الفورية، وتقارير الإشغال. يمكن تخصيصه لأي نوع من الحجوزات: فنادق، قاعات، خدمات.',
+      techs: ['HTML/CSS/JS', 'JavaScript', 'MongoDB', 'Real-time', 'Notifications', 'Calendar']
+    },
+    business: {
+      title: 'نظام إدارة الأعمال',
+      subtitle: 'Business Management ERP',
+      gallery: ['💼','📈','🗂️'],
+      desc: 'نظام ERP متكامل يشمل إدارة الفواتير، المخزون، الموردين، الموارد البشرية، والتقارير المالية. مصمم لمتطلبات الشركات الصغيرة والمتوسطة مع واجهة بسيطة وقوية.',
+      techs: ['HTML/CSS/JS', 'Node.js', 'MongoDB', 'REST API', 'Excel Export', 'Multi-user']
+    },
+    dashboard: {
+      title: 'Dashboard Analytics',
+      subtitle: 'Data Analysis & Visualization',
+      gallery: ['📊','📉','🎯'],
+      desc: 'لوحة تحكم تحليلية متقدمة مع رسوم بيانية تفاعلية، مؤشرات KPI، وتقارير قابلة للتخصيص. تصور البيانات بطريقة بصرية واضحة وعملية.',
+      techs: ['HTML/CSS/JS', 'Chart.js', 'Data Viz', 'Custom Reports', 'Export PDF']
+    },
+    corp: {
+      title: 'موقع شركة',
+      subtitle: 'Corporate Website',
+      gallery: ['🏢','💻','🌐'],
+      desc: 'موقع مؤسسي احترافي يعكس هوية الشركة ويعرض خدماتها ومنتجاتها بتصميم عصري وسرعة تحميل عالية.',
+      techs: ['HTML', 'CSS', 'JavaScript', 'Responsive', 'SEO Ready', 'Fast Loading']
+    },
+    landing: {
+      title: 'صفحة هبوط',
+      subtitle: 'High-Converting Landing Page',
+      gallery: ['🚀','🎯','⚡'],
+      desc: 'صفحة هبوط مُحسَّنة للتحويلات مع تصميم جذاب، CTA واضح، وأداء سريع. مناسبة للمنتجات والخدمات الرقمية.',
+      techs: ['HTML', 'CSS', 'JavaScript', 'Animations', 'CRO', 'Mobile-First']
+    },
+    personal: {
+      title: 'موقع شخصي',
+      subtitle: 'Personal Portfolio',
+      gallery: ['👤','✨','🎨'],
+      desc: 'بورتفوليو شخصي أنيق يعرض الهوية المهنية، الأعمال، والمهارات بتصميم فريد يترك انطباعًا لا يُنسى.',
+      techs: ['HTML', 'CSS', 'JavaScript', 'Custom Design', 'Animations']
+    },
+    ecomm: {
+      title: 'متجر إلكتروني',
+      subtitle: 'E-Commerce Platform',
+      gallery: ['🛒','💳','📦'],
+      desc: 'متجر إلكتروني متكامل مع إدارة المنتجات، سلة التسوق، بوابة الدفع، وإدارة الطلبات. تجربة تسوق سلسة وسريعة.',
+      techs: ['HTML/CSS/JS', 'Node.js', 'MongoDB', 'Payment Gateway', 'Cart System', 'Admin Panel']
+    }
+  };
+
+  // ===== MODAL =====
+  function openModal(id) {
+    const p = projects[id];
+    if (!p) return;
+
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalSubtitle').textContent = p.subtitle;
+    document.getElementById('modalDesc').textContent = p.desc;
+
+    const galleryEl = document.getElementById('modalGallery');
+    galleryEl.innerHTML = p.gallery.map(g => `<div class="modal-thumb">${g}</div>`).join('');
+
+    const techsEl = document.getElementById('modalTechs');
+    techsEl.innerHTML = p.techs.map(t => `<span class="modal-tech">${t}</span>`).join('');
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ===== CONTACT FORM =====
+  function handleSend(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ تم الإرسال بنجاح!';
+    btn.style.background = 'linear-gradient(135deg, #5D8A50, #3A6B30)';
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // ===== DRAG SCROLL for featured =====
+  const scrollWrap = document.querySelector('.featured-scroll-wrap');
+  if (scrollWrap) {
+    let isDown = false, startX, scrollLeft;
+    scrollWrap.addEventListener('mousedown', e => {
+      isDown = true;
+      startX = e.pageX - scrollWrap.offsetLeft;
+      scrollLeft = scrollWrap.scrollLeft;
+    });
+    scrollWrap.addEventListener('mouseleave', () => isDown = false);
+    scrollWrap.addEventListener('mouseup', () => isDown = false);
+    scrollWrap.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollWrap.offsetLeft;
+      scrollWrap.scrollLeft = scrollLeft - (x - startX);
+    });
+  }
+
+  // ===== MOBILE NAV =====
+  function mobileNav(btn, section) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Simple mobile section scroll
+    if (section === 'works') document.getElementById('works')?.scrollIntoView({behavior:'smooth'});
+    if (section === 'contact') document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});
+    if (section === 'home') window.scrollTo({top:0, behavior:'smooth'});
+    if (section === 'about') document.querySelector('.col-mid')?.scrollIntoView({behavior:'smooth'});
+  }
+</script>
+
+</body>
+</html>
