@@ -9,1104 +9,948 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cairo:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-/* ============================
-   ROOT VARIABLES
-============================ */
+/* ─── VARIABLES ─────────────────────────────────── */
 :root {
-  --bg:       #1A120B;
-  --bg-mid:   #3C2A21;
-  --bg-card:  #2A1F17;
-  --cream:    #FFFDD0;
-  --gold:     #EAD39B;
-  --warm:     #D4A96A;
-  --glow:     #C8943A;
-  --txt1:     #FFFDD0;
-  --txt2:     #B8A898;
-  --txt3:     #7A6A5A;
-  --bdr:      rgba(234,211,155,0.12);
-  --bdrh:     rgba(234,211,155,0.35);
-  --sdw:      0 8px 32px rgba(0,0,0,0.45);
-  --sdw2:     0 20px 60px rgba(0,0,0,0.65);
-  --gg:       linear-gradient(135deg,#EAD39B 0%,#C8943A 50%,#A0722A 100%);
-  --gc:       linear-gradient(145deg,#2A1F17 0%,#1E1510 100%);
-  --gs:       linear-gradient(105deg,transparent 40%,rgba(234,211,155,0.07) 50%,transparent 60%);
+  --bg:    #1A120B;
+  --bgm:   #3C2A21;
+  --bgc:   #2A1F17;
+  --cream: #FFFDD0;
+  --gold:  #EAD39B;
+  --warm:  #D4A96A;
+  --glow:  #C8943A;
+  --t1:    #FFFDD0;
+  --t2:    #B8A898;
+  --t3:    #7A6A5A;
+  --bd:    rgba(234,211,155,0.12);
+  --bdh:   rgba(234,211,155,0.35);
+  --gg:    linear-gradient(135deg,#EAD39B 0%,#C8943A 50%,#A0722A 100%);
+  --gc:    linear-gradient(145deg,#2A1F17 0%,#1E1510 100%);
+  --gs:    linear-gradient(105deg,transparent 40%,rgba(234,211,155,0.07) 50%,transparent 60%);
 }
 
-/* ============================
-   BASE RESET
-============================ */
+/* ─── RESET ─────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Cairo',sans-serif;
-  background:var(--bg);
-  color:var(--txt1);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
 
-/* ============================
-   AMBIENT GLOW BLOBS
-============================ */
-.amb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
-.a1{width:520px;height:520px;background:radial-gradient(circle,#C8943A,transparent 70%);top:-120px;right:-80px;opacity:.09;animation:fl 8s ease-in-out infinite}
-.a2{width:420px;height:420px;background:radial-gradient(circle,#8B5E2E,transparent 70%);bottom:15%;left:-100px;opacity:.09;animation:fl 12s ease-in-out infinite reverse}
-.a3{width:320px;height:320px;background:radial-gradient(circle,#EAD39B,transparent 70%);top:45%;right:10%;opacity:.05;animation:fl 10s ease-in-out infinite 3s}
-@keyframes fl{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(18px,-26px) scale(1.04)}}
+/* noise */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
 
-/* ============================
-   SCROLLBAR GLOBAL
-============================ */
+/* ambient blobs */
+.amb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.a1{width:500px;height:500px;background:radial-gradient(circle,#C8943A,transparent 70%);top:-100px;right:-80px;opacity:.09;animation:fl 8s ease-in-out infinite}
+.a2{width:400px;height:400px;background:radial-gradient(circle,#8B5E2E,transparent 70%);bottom:15%;left:-100px;opacity:.09;animation:fl 12s ease-in-out infinite reverse}
+.a3{width:300px;height:300px;background:radial-gradient(circle,#EAD39B,transparent 70%);top:45%;right:12%;opacity:.05;animation:fl 10s ease-in-out infinite 3s}
+@keyframes fl{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(16px,-24px)scale(1.04)}}
+
+/* scrollbars */
 ::-webkit-scrollbar{width:3px;height:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bg-mid);border-radius:3px}
+::-webkit-scrollbar-thumb{background:var(--bgm);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--warm)}
 
-/* ============================
-   DESKTOP LAYOUT — 3 COLUMNS
-============================ */
-.desktop-layout{
-  display:none; /* shown only on ≥900px */
-  position:relative;
-  z-index:1;
-  height:100vh;
-  overflow:hidden;
-}
-.desktop-layout .d-cols{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  height:100vh;
-}
-.d-col{
-  height:100vh;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding:48px 34px 60px;
-  border-right:1px solid var(--bdr);
-  scrollbar-width:thin;
-  scrollbar-color:var(--bg-mid) transparent;
-  position:relative;
-}
-.d-col:last-child{border-right:none}
+/* ─── DESKTOP: 3-COL LAYOUT ──────────────────────── */
+.desk{display:none;position:relative;z-index:1;height:100vh;overflow:hidden}
+.desk-cols{display:grid;grid-template-columns:1fr 1fr 1fr;height:100vh}
+.dc{height:100vh;overflow-y:auto;overflow-x:hidden;padding:46px 32px 60px;border-right:1px solid var(--bd);scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
+.dc:last-child{border-right:none}
 
-/* ============================
-   MOBILE LAYOUT — PAGES
-============================ */
-.mobile-layout{
-  display:block; /* shown only on <900px */
-  position:relative;
-  z-index:1;
-  min-height:100vh;
-}
-.m-page{display:none;min-height:100vh;flex-direction:column}
-.m-page.active{display:flex}
+/* ─── MOBILE: PAGE LAYOUT ────────────────────────── */
+.mob{display:none;position:relative;z-index:1;min-height:100vh}
+.mp{display:none;flex-direction:column;padding:28px 18px 20px;min-height:100vh}
+.mp.act{display:flex}
 
-/* ============================
-   BOTTOM NAV (mobile only)
-============================ */
-.bnav{
-  display:none;
-  position:fixed;bottom:0;left:0;right:0;z-index:200;
-  background:rgba(26,18,11,.97);backdrop-filter:blur(20px);
-  border-top:1px solid var(--bdr);padding:8px 0;
-}
-.bnav-inner{display:flex;justify-content:space-around}
-.bnt{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:5px 14px;color:var(--txt3);font-size:9px;letter-spacing:1px;
-  text-transform:uppercase;transition:all .25s ease;cursor:pointer;
-  border:none;background:none;font-family:'Cairo',sans-serif;
-}
-.bnt i{font-size:18px}
-.bnt.active,.bnt:hover{color:var(--gold)}
+/* ─── BOTTOM NAV ─────────────────────────────────── */
+.bnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(26,18,11,.97);backdrop-filter:blur(20px);border-top:1px solid var(--bd);padding:8px 0}
+.bnav-i{display:flex;justify-content:space-around}
+.bnt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 12px;color:var(--t3);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:none;font-family:'Cairo',sans-serif;transition:color .25s}
+.bnt i{font-size:17px}
+.bnt.on,.bnt:hover{color:var(--gold)}
 
-/* ============================
-   SHARED COMPONENTS
-============================ */
-
-/* --- PROFILE BLOCK --- */
-.profile-block{
-  display:flex;flex-direction:column;align-items:center;gap:12px;
-  padding-bottom:22px;border-bottom:1px solid var(--bdr);
-}
-.av-wrap{position:relative;width:92px;height:92px}
-.av-ring{
-  position:absolute;inset:-3px;border-radius:50%;
-  background:var(--gg);animation:spin 8s linear infinite;
-}
+/* ─── AVATAR ─────────────────────────────────────── */
+.profile-block{display:flex;flex-direction:column;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--bd);margin-bottom:20px}
+.av-wrap{position:relative;width:90px;height:90px}
+.av-ring{position:absolute;inset:-3px;border-radius:50%;background:var(--gg);animation:spin 8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.av-inner{
-  position:absolute;inset:2px;border-radius:50%;background:var(--gc);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:32px;font-weight:700;
-  color:var(--gold);border:2px solid var(--bg);overflow:hidden;
-}
-.av-inner img{width:100%;height:100%;object-fit:cover}
-.p-name{
-  font-family:'Playfair Display',serif;font-size:23px;font-weight:700;
-  text-align:center;
-  background:linear-gradient(90deg,var(--gold) 0%,var(--cream) 40%,var(--glow) 60%,var(--gold) 100%);
-  background-size:200% auto;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:shi 4s linear infinite;
-}
+.av-in{position:absolute;inset:2px;border-radius:50%;background:var(--gc);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold);border:2px solid var(--bg);overflow:hidden}
+.av-in img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:none}
+
+/* ─── PROFILE TEXT ───────────────────────────────── */
+.pname{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;background:linear-gradient(90deg,var(--gold) 0%,var(--cream) 40%,var(--glow) 60%,var(--gold) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shi 4s linear infinite}
 @keyframes shi{0%{background-position:-200% center}100%{background-position:200% center}}
-.p-title{
-  font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--gold);
-  text-align:center;letter-spacing:2px;text-transform:uppercase;
-}
-.p-tagline{
-  font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--txt2);
-  text-align:center;line-height:1.8;font-style:italic;
-}
-.badge{
-  display:inline-flex;align-items:center;gap:5px;font-size:9px;
-  padding:3px 10px;border-radius:20px;
-  background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.25);
-  color:var(--warm);letter-spacing:1px;text-transform:uppercase;
-}
-.bdot{
-  width:5px;height:5px;border-radius:50%;background:var(--warm);
-  animation:pu 2s ease infinite;
-}
+.ptitle{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--gold);text-align:center;letter-spacing:2px;text-transform:uppercase}
+.ptagline{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--t2);text-align:center;line-height:1.8;font-style:italic}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;padding:3px 10px;border-radius:20px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.25);color:var(--warm);letter-spacing:1px;text-transform:uppercase}
+.bdot{width:5px;height:5px;border-radius:50%;background:var(--warm);animation:pu 2s ease infinite}
 @keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-/* --- SECTION TAG --- */
-.stag{
-  display:inline-block;font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--warm);padding:3px 10px;border:1px solid rgba(200,148,58,.3);
-  border-radius:3px;background:rgba(200,148,58,.05);
-}
-
-/* --- SECTION HEADER --- */
-.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+/* ─── TAGS & HEADINGS ────────────────────────────── */
+.stag{display:inline-block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--warm);padding:3px 10px;border:1px solid rgba(200,148,58,.3);border-radius:3px;background:rgba(200,148,58,.05)}
+.mhead{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--cream);margin-bottom:8px;line-height:1.4}
+.abigh{font-family:'Playfair Display',serif;font-size:27px;font-weight:900;color:var(--cream);line-height:1.25;margin-bottom:14px}
+.abigh span{background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .sec-hdr i{color:var(--warm);font-size:14px}
-.sec-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream)}
-.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bdrh),transparent)}
+.sec-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream)}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bdh),transparent)}
+.divl{height:1px;background:linear-gradient(90deg,transparent,var(--bdh),transparent);margin:20px 0}
 
-/* --- PARAGRAPH TEXT --- */
-.txt{font-size:12px;color:var(--txt2);line-height:2;font-weight:300}
+/* ─── TEXT ───────────────────────────────────────── */
+.txt{font-size:12px;color:var(--t2);line-height:2;font-weight:300}
 .txt strong{color:var(--gold);font-weight:700}
 .txt em{color:var(--cream);font-style:normal;font-weight:500}
 
-/* --- MID HEADING --- */
-.mhead{
-  font-family:'Playfair Display',serif;font-size:16px;font-weight:600;
-  color:var(--cream);margin-bottom:8px;line-height:1.4;
-}
-
-/* --- SKILL CAPSULES --- */
-.sk-section{padding:18px 0}
-.sk-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-bottom:10px;font-weight:600}
-.sk-grp{margin-bottom:11px}
-.sk-gname{font-size:9px;color:var(--warm);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+/* ─── SKILL CAPSULES ─────────────────────────────── */
+.sk-sec{padding:16px 0}
+.sk-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:10px;font-weight:600}
+.sk-g{margin-bottom:10px}
+.sk-gn{font-size:9px;color:var(--warm);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
 .caps{display:flex;flex-wrap:wrap;gap:4px}
-.cap{
-  font-size:10px;padding:3px 10px;border-radius:20px;
-  border:1px solid var(--bdr);color:var(--txt2);background:rgba(255,255,255,.02);
-  transition:all .25s ease;cursor:default;white-space:nowrap;
-}
-.cap:hover{border-color:var(--gold);color:var(--gold);background:rgba(234,211,155,.07);box-shadow:0 0 12px rgba(200,148,58,.2);transform:translateY(-1px)}
+.cap{font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid var(--bd);color:var(--t2);background:rgba(255,255,255,.02);transition:all .25s;cursor:default;white-space:nowrap}
+.cap:hover{border-color:var(--gold);color:var(--gold);background:rgba(234,211,155,.07);box-shadow:0 0 10px rgba(200,148,58,.2);transform:translateY(-1px)}
 
-/* --- BUTTONS --- */
-.btng{display:flex;flex-direction:column;gap:7px;padding-top:14px;border-top:1px solid var(--bdr)}
-.btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:10px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;
-  font-weight:600;cursor:pointer;transition:all .3s ease;text-decoration:none;
-  letter-spacing:.5px;border:none;position:relative;overflow:hidden;
-}
-.btn::after{content:'';position:absolute;inset:0;background:var(--gs);transform:translateX(-100%);transition:transform .5s ease}
+/* ─── BUTTONS ────────────────────────────────────── */
+.btng{display:flex;flex-direction:column;gap:7px;padding-top:14px;border-top:1px solid var(--bd)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;letter-spacing:.5px;border:none;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:var(--gs);transform:translateX(-100%);transition:transform .5s}
 .btn:hover::after{transform:translateX(100%)}
-.btn-p{background:var(--gg);color:#1A120B;box-shadow:0 4px 20px rgba(200,148,58,.3)}
-.btn-p:hover{box-shadow:0 6px 30px rgba(200,148,58,.55);transform:translateY(-2px)}
-.btn-o{background:transparent;color:var(--gold);border:1px solid var(--bdrh)}
-.btn-o:hover{background:rgba(234,211,155,.07);border-color:var(--gold);box-shadow:0 4px 20px rgba(200,148,58,.15);transform:translateY(-2px)}
-.btn-g{background:rgba(255,255,255,.03);color:var(--txt2);border:1px solid var(--bdr)}
-.btn-g:hover{background:rgba(255,255,255,.06);color:var(--txt1);border-color:var(--bdrh);transform:translateY(-2px)}
-.btn i{font-size:12px}
+.btn-p{background:var(--gg);color:#1A120B;box-shadow:0 4px 18px rgba(200,148,58,.3)}
+.btn-p:hover{box-shadow:0 6px 28px rgba(200,148,58,.55);transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--gold);border:1px solid var(--bdh)}
+.btn-o:hover{background:rgba(234,211,155,.07);border-color:var(--gold);box-shadow:0 4px 18px rgba(200,148,58,.15);transform:translateY(-2px)}
+.btn-g{background:rgba(255,255,255,.03);color:var(--t2);border:1px solid var(--bd)}
+.btn-g:hover{background:rgba(255,255,255,.06);color:var(--t1);border-color:var(--bdh);transform:translateY(-2px)}
+.btn i{font-size:12px;position:relative;z-index:1}
+.btn span{position:relative;z-index:1}
 
-/* --- WORKFLOW GRID --- */
+/* ─── WORKFLOW ───────────────────────────────────── */
 .wfg{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
-.wfi{
-  display:flex;align-items:center;gap:8px;padding:7px 10px;
-  border-radius:6px;background:rgba(255,255,255,.02);border:1px solid var(--bdr);
-  transition:all .25s ease;cursor:default;
-}
-.wfi:hover{background:rgba(234,211,155,.05);border-color:var(--bdrh);transform:translateX(-2px)}
-.wfn{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--warm);font-style:italic;min-width:18px;line-height:1}
-.wft{font-size:10px;color:var(--txt2)}
+.wfi{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:6px;background:rgba(255,255,255,.02);border:1px solid var(--bd);transition:all .25s;cursor:default}
+.wfi:hover{background:rgba(234,211,155,.05);border-color:var(--bdh);transform:translateX(-2px)}
+.wfn{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--warm);font-style:italic;min-width:18px;line-height:1}
+.wft{font-size:10px;color:var(--t2)}
 
-/* --- STATS --- */
+/* ─── STATS ──────────────────────────────────────── */
 .srow{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
-.sbox{
-  padding:12px;border-radius:8px;background:var(--gc);border:1px solid var(--bdr);
-  text-align:center;transition:all .3s ease;position:relative;overflow:hidden;
-}
-.sbox::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--gg);transform:scaleX(0);transition:transform .3s ease}
+.sbox{padding:12px;border-radius:8px;background:var(--gc);border:1px solid var(--bd);text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.sbox::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--gg);transform:scaleX(0);transition:transform .3s}
 .sbox:hover::before{transform:scaleX(1)}
-.sbox:hover{border-color:var(--bdrh);box-shadow:0 4px 20px rgba(200,148,58,.1);transform:translateY(-2px)}
-.snum{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.slbl{font-size:9px;color:var(--txt3);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.sbox:hover{border-color:var(--bdh);box-shadow:0 4px 18px rgba(200,148,58,.1);transform:translateY(-2px)}
+.snum{font-family:'Playfair Display',serif;font-size:25px;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.slbl{font-size:9px;color:var(--t3);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
 
-/* --- DIVIDER --- */
-.div-sec{height:1px;background:linear-gradient(90deg,transparent,var(--bdrh),transparent);margin:22px 0}
-
-/* --- ABOUT BIG HEADING --- */
-.abigh{
-  font-family:'Playfair Display',serif;font-size:28px;font-weight:900;
-  color:var(--cream);line-height:1.25;margin-bottom:14px;
-}
-.abigh span{background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-/* --- WHY ME CARD --- */
-.why-card{
-  background:var(--gc);border:1px solid var(--bdr);border-radius:12px;
-  padding:20px;margin-top:8px;position:relative;overflow:hidden;
-}
+/* ─── WHY CARD ───────────────────────────────────── */
+.why-card{background:var(--gc);border:1px solid var(--bd);border-radius:12px;padding:18px;position:relative;overflow:hidden}
 .why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg)}
-.why-title{
-  font-family:'Playfair Display',serif;font-size:16px;color:var(--cream);
-  margin-bottom:10px;display:flex;align-items:center;gap:8px;
-}
-.why-txt{font-size:12px;color:var(--txt2);line-height:2}
+.why-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--cream);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.why-txt{font-size:12px;color:var(--t2);line-height:2}
 .why-txt strong{color:var(--warm);font-weight:600}
 
-/* --- SKILL ROWS (about) --- */
+/* ─── SKILL ROWS ─────────────────────────────────── */
 .skt{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-.skr{
-  border:1px solid var(--bdr);border-radius:10px;padding:13px 15px;
-  background:var(--gc);transition:all .3s ease;position:relative;overflow:hidden;
-}
-.skr::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--gg);transform:scaleY(0);transition:transform .3s ease;transform-origin:bottom}
+.skr{border:1px solid var(--bd);border-radius:10px;padding:12px 14px;background:var(--gc);transition:all .3s;position:relative;overflow:hidden}
+.skr::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--gg);transform:scaleY(0);transition:transform .3s;transform-origin:bottom}
 .skr:hover::after{transform:scaleY(1)}
-.skr:hover{border-color:var(--bdrh);box-shadow:0 4px 20px rgba(200,148,58,.08);transform:translateX(-2px)}
-.skrh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.skri{
-  width:30px;height:30px;border-radius:6px;
-  background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.2);
-  display:flex;align-items:center;justify-content:center;color:var(--warm);font-size:12px;flex-shrink:0;
-}
+.skr:hover{border-color:var(--bdh);box-shadow:0 4px 18px rgba(200,148,58,.08);transform:translateX(-2px)}
+.skrh{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.skri{width:29px;height:29px;border-radius:6px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.2);display:flex;align-items:center;justify-content:center;color:var(--warm);font-size:11px;flex-shrink:0}
 .skrn{font-size:11px;font-weight:700;color:var(--cream)}
 .skrst{margin-left:auto;font-size:8px;padding:2px 7px;border-radius:10px}
 .st-r{background:rgba(93,138,80,.15);border:1px solid rgba(93,138,80,.3);color:#8BC88A}
 .st-p{background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.25);color:var(--warm)}
 .skrc{display:flex;flex-wrap:wrap;gap:4px}
-.skrcap{font-size:9px;padding:2px 8px;border-radius:10px;border:1px solid var(--bdr);color:var(--txt3);background:rgba(255,255,255,.02)}
+.skrcap{font-size:9px;padding:2px 8px;border-radius:10px;border:1px solid var(--bd);color:var(--t3);background:rgba(255,255,255,.02)}
 
-/* --- SOCIAL CIRCLES --- */
-.sc-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
-.sc-item{display:flex;flex-direction:column;align-items:center;gap:6px}
-.sc-btn{
-  width:54px;height:54px;border-radius:50%;border:1px solid var(--bdr);
-  background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;
-  color:var(--txt3);font-size:18px;text-decoration:none;
-  transition:all .35s ease;position:relative;overflow:hidden;
-}
-.sc-btn::before{content:'';position:absolute;inset:0;border-radius:50%;background:var(--gg);opacity:0;transition:opacity .35s ease}
-.sc-btn i{position:relative;z-index:1;transition:color .35s ease}
+/* ─── SOCIAL CIRCLES ─────────────────────────────── */
+.sc-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.sc-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.sc-btn{width:45px;height:45px;border-radius:50%;border:1px solid var(--bd);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:17px;text-decoration:none;transition:all .35s;position:relative;overflow:hidden}
+.sc-btn::before{content:'';position:absolute;inset:0;border-radius:50%;background:var(--gg);opacity:0;transition:opacity .35s}
+.sc-btn i{position:relative;z-index:1}
 .sc-btn:hover::before{opacity:.15}
-.sc-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 30px rgba(200,148,58,.2)}
-.sc-lbl{font-size:8px;letter-spacing:1px;color:var(--txt3);text-transform:uppercase}
+.sc-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 28px rgba(200,148,58,.2)}
+.sc-lbl{font-size:8px;letter-spacing:1px;color:var(--t3);text-transform:uppercase}
 
-/* --- FEATURED CARDS (horizontal scroll) --- */
-.hswrap{
-  overflow-x:auto;padding-bottom:10px;cursor:grab;
-  scrollbar-width:thin;scrollbar-color:var(--bg-mid) transparent;
-}
+/* ─── HORIZONTAL SCROLL ──────────────────────────── */
+.hswrap{overflow-x:auto;padding-bottom:10px;cursor:grab;scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
 .hswrap:active{cursor:grabbing}
-.hrow{display:flex;gap:12px;width:max-content}
+.hrow{display:flex;gap:11px;width:max-content}
 
-.fcard{
-  width:160px;height:220px;border-radius:12px;overflow:hidden;
-  position:relative;border:1px solid var(--bdr);cursor:pointer;flex-shrink:0;
-  background:var(--gc);transition:all .35s ease;
-}
-.fcard:hover{transform:translateY(-6px) scale(1.02);border-color:var(--bdrh);box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 30px rgba(200,148,58,.12)}
-.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gg);transform:scaleX(0);transition:transform .3s ease;z-index:2}
+/* featured cards */
+.fcard{width:158px;height:218px;border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;background:var(--gc);transition:all .35s}
+.fcard:hover{transform:translateY(-6px) scale(1.02);border-color:var(--bdh);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 28px rgba(200,148,58,.12)}
+.fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:2}
 .fcard:hover::before{transform:scaleX(1)}
-.fph{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-size:50px;color:var(--warm);opacity:.2;transition:all .4s ease;
-}
+.fph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--warm);opacity:.2;transition:all .4s}
 .fcard:hover .fph{opacity:.1;transform:scale(1.1)}
-.fov{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.88) 100%);
-  display:flex;flex-direction:column;justify-content:flex-end;padding:14px;
-  opacity:0;transition:opacity .35s ease;
-}
+.fov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.88) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:13px;opacity:0;transition:opacity .35s}
 .fcard:hover .fov{opacity:1}
 .fname{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--cream);text-align:center}
 .ftag{font-size:9px;color:var(--gold);text-align:center;letter-spacing:1px;text-transform:uppercase;margin-top:3px}
 
-/* --- SYS GRID CARDS --- */
-.sygrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sycard{
-  border-radius:12px;overflow:hidden;border:1px solid var(--bdr);
-  cursor:pointer;position:relative;height:165px;background:var(--gc);
-  transition:all .35s ease;
-}
-.sycard:hover{border-color:var(--bdrh);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 25px rgba(200,148,58,.1);transform:translateY(-4px)}
-.sycard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s ease;z-index:3}
+/* system cards */
+.sygrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.sycard{border-radius:12px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;position:relative;height:162px;background:var(--gc);transition:all .35s}
+.sycard:hover{border-color:var(--bdh);box-shadow:0 12px 38px rgba(0,0,0,.5),0 0 22px rgba(200,148,58,.1);transform:translateY(-4px)}
+.sycard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:3}
 .sycard:hover::before{transform:scaleX(1)}
-.sybg{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:56px;color:var(--warm);opacity:.12;transition:all .35s ease;
-}
+.sybg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;color:var(--warm);opacity:.12;transition:all .35s}
 .sycard:hover .sybg{opacity:.07;transform:scale(1.1)}
-.syfoot{
-  position:absolute;bottom:0;left:0;right:0;padding:12px 14px;
-  background:linear-gradient(180deg,transparent 0%,rgba(26,18,11,.96) 100%);z-index:2;
-}
+.syfoot{position:absolute;bottom:0;left:0;right:0;padding:11px 13px;background:linear-gradient(180deg,transparent 0%,rgba(26,18,11,.96) 100%);z-index:2}
 .syname{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;color:var(--cream);margin-bottom:3px}
-.sydesc{font-size:9px;color:var(--txt2);line-height:1.5}
-.sybadge{
-  position:absolute;top:10px;right:10px;z-index:2;font-size:8px;padding:2px 7px;
-  border-radius:10px;background:rgba(200,148,58,.12);border:1px solid rgba(200,148,58,.3);
-  color:var(--warm);letter-spacing:1px;text-transform:uppercase;
-}
+.sydesc{font-size:9px;color:var(--t2);line-height:1.5}
+.sybadge{position:absolute;top:9px;right:9px;z-index:2;font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(200,148,58,.12);border:1px solid rgba(200,148,58,.3);color:var(--warm);letter-spacing:1px;text-transform:uppercase}
 
-/* --- WEB CARDS (horizontal scroll) --- */
-.wcard{
-  width:200px;height:145px;border-radius:12px;overflow:hidden;border:1px solid var(--bdr);
-  cursor:pointer;flex-shrink:0;position:relative;background:var(--gc);transition:all .35s ease;
-}
-.wcard:hover{transform:translateY(-5px) scale(1.02);border-color:var(--bdrh);box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 25px rgba(200,148,58,.1)}
-.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s ease;z-index:2}
+/* web cards */
+.wcard{width:195px;height:148px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;position:relative;background:var(--gc);transition:all .35s}
+.wcard:hover{transform:translateY(-5px) scale(1.02);border-color:var(--bdh);box-shadow:0 16px 38px rgba(0,0,0,.5),0 0 22px rgba(200,148,58,.1)}
+.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:2}
 .wcard:hover::before{transform:scaleX(1)}
-.wcbg{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:42px;color:var(--warm);opacity:.18;transition:all .4s ease;
-}
+.wcbg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--warm);opacity:.18;transition:all .4s}
 .wcard:hover .wcbg{opacity:.08;transform:scale(1.1)}
-.wcov{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 28%,rgba(26,18,11,.92) 100%);
-  display:flex;flex-direction:column;justify-content:flex-end;padding:12px;z-index:1;
-}
+.wcov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 28%,rgba(26,18,11,.92) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px;z-index:1}
 .wcname{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--cream)}
 .wctag{font-size:9px;color:var(--warm);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
 
-/* --- CONTACT FORM --- */
+/* ─── CONTACT FORM ───────────────────────────────── */
 .cform{display:flex;flex-direction:column;gap:10px}
-.flbl{display:block;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:5px}
-.finp,.ftea{
-  width:100%;padding:10px 13px;border-radius:7px;
-  background:rgba(255,255,255,.03);border:1px solid var(--bdr);
-  color:var(--txt1);font-family:'Cairo',sans-serif;font-size:12px;
-  outline:none;transition:all .3s ease;resize:none;
-}
+.flbl{display:block;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.finp,.ftea{width:100%;padding:10px 13px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--bd);color:var(--t1);font-family:'Cairo',sans-serif;font-size:12px;outline:none;transition:all .3s;resize:none}
 .finp:focus,.ftea:focus{border-color:var(--warm);background:rgba(255,255,255,.04);box-shadow:0 0 0 3px rgba(200,148,58,.1)}
 .ftea{height:100px}
-.finp::placeholder,.ftea::placeholder{color:var(--txt3)}
+.finp::placeholder,.ftea::placeholder{color:var(--t3)}
+.cirow{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.cicard{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;background:var(--gc);border:1px solid var(--bd);transition:all .3s}
+.cicard:hover{border-color:var(--bdh);transform:translateX(-3px);box-shadow:0 5px 18px rgba(200,148,58,.08)}
+.ciico{width:33px;height:33px;border-radius:7px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.2);display:flex;align-items:center;justify-content:center;color:var(--warm);font-size:13px;flex-shrink:0}
+.cival{font-size:11px;color:var(--t1)}
+.cilbl{font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
 
-.cirow{display:flex;flex-direction:column;gap:10px;margin-top:16px}
-.cicard{
-  display:flex;align-items:center;gap:12px;padding:12px 14px;
-  border-radius:9px;background:var(--gc);border:1px solid var(--bdr);transition:all .3s ease;
-}
-.cicard:hover{border-color:var(--bdrh);transform:translateX(-3px);box-shadow:0 6px 20px rgba(200,148,58,.08)}
-.ciico{
-  width:34px;height:34px;border-radius:7px;background:rgba(200,148,58,.1);
-  border:1px solid rgba(200,148,58,.2);display:flex;align-items:center;justify-content:center;
-  color:var(--warm);font-size:13px;flex-shrink:0;
-}
-.cival{font-size:11px;color:var(--txt1)}
-.cilbl{font-size:9px;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-
-/* --- FOOTER --- */
-.footer{background:#0D0905;border-top:1px solid var(--bdr);padding:28px 34px 16px}
-.ftop{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px}
-.flogo{
-  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
-  background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;
-}
-.ftagline{font-size:10px;color:var(--txt3);line-height:1.7}
-.fc-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);margin-bottom:9px;font-weight:600}
+/* ─── FOOTER ─────────────────────────────────────── */
+.footer{background:#0D0905;border-top:1px solid var(--bd);padding:26px 32px 16px;margin:0 -32px}
+.ftop{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:18px}
+.flogo{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.ftagl{font-size:10px;color:var(--t3);line-height:1.7}
+.fc-ttl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);margin-bottom:9px;font-weight:600}
 .flinks{list-style:none;display:flex;flex-direction:column;gap:5px}
-.flinks a{
-  font-size:10px;color:var(--txt3);text-decoration:none;
-  transition:all .25s ease;display:flex;align-items:center;gap:6px;cursor:pointer;
-}
+.flinks a{font-size:10px;color:var(--t3);text-decoration:none;display:flex;align-items:center;gap:6px;cursor:pointer;transition:all .25s}
 .flinks a:hover{color:var(--gold);transform:translateX(-3px)}
 .flinks i{font-size:9px}
-.fsocials{display:flex;gap:7px;margin-top:10px}
-.fsbtn{
-  width:31px;height:31px;border-radius:50%;border:1px solid var(--bdr);
-  background:transparent;display:flex;align-items:center;justify-content:center;
-  color:var(--txt3);font-size:12px;text-decoration:none;transition:all .3s ease;
-}
-.fsbtn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 14px rgba(200,148,58,.15)}
-.fbot{border-top:1px solid var(--bdr);padding-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-.fcopy{font-size:9px;color:var(--txt3)}
-.fmade{font-size:9px;color:var(--txt3)}
+.fsoc{display:flex;gap:7px;margin-top:10px}
+.fsbtn{width:30px;height:30px;border-radius:50%;border:1px solid var(--bd);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:11px;text-decoration:none;transition:all .3s}
+.fsbtn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);box-shadow:0 5px 13px rgba(200,148,58,.15)}
+.fbot{border-top:1px solid var(--bd);padding-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px}
+.fcopy,.fmade{font-size:9px;color:var(--t3)}
 .fmade span{color:var(--warm)}
 
-/* --- MODAL --- */
-.movl{
-  position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);
-  z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;
+/* mobile footer fix */
+@media(max-width:899px){
+  .footer{margin:0 -18px;padding:26px 18px 16px}
 }
+
+/* ─── MODAL ──────────────────────────────────────── */
+.movl{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);z-index:1000;display:none;align-items:center;justify-content:center;padding:18px}
 .movl.open{display:flex}
-.mbox{
-  background:linear-gradient(145deg,#261E1A 0%,#1E1510 100%);
-  border:1px solid var(--bdrh);border-radius:16px;width:100%;max-width:600px;
-  max-height:88vh;overflow-y:auto;
-  box-shadow:var(--sdw2),0 0 60px rgba(200,148,58,.1);
-  animation:min .35s cubic-bezier(.34,1.56,.64,1);
-  scrollbar-width:thin;scrollbar-color:var(--bg-mid) transparent;
-}
-@keyframes min{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.mhdr{
-  padding:20px 24px 16px;border-bottom:1px solid var(--bdr);
-  display:flex;justify-content:space-between;align-items:flex-start;
-  position:sticky;top:0;background:#261E1A;border-radius:16px 16px 0 0;z-index:2;
-}
-.mtitle{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream)}
+.mbox{background:linear-gradient(145deg,#261E1A 0%,#1E1510 100%);border:1px solid var(--bdh);border-radius:16px;width:100%;max-width:580px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.65),0 0 55px rgba(200,148,58,.1);animation:min .35s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
+@keyframes min{from{opacity:0;transform:scale(.88) translateY(22px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mhdr{padding:20px 24px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;background:#261E1A;border-radius:16px 16px 0 0;z-index:2}
+.mtitle{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream)}
 .msub{font-size:9px;color:var(--warm);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
-.mcls{
-  width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.05);
-  border:1px solid var(--bdr);color:var(--txt3);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s ease;
-}
-.mcls:hover{background:rgba(255,255,255,.1);color:var(--txt1);border-color:var(--bdrh);transform:rotate(90deg)}
+.mcls{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s;flex-shrink:0}
+.mcls:hover{background:rgba(255,255,255,.1);color:var(--t1);border-color:var(--bdh);transform:rotate(90deg)}
 .mbdy{padding:20px 24px}
 .mgal{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
-.mth{
-  height:90px;border-radius:8px;background:linear-gradient(135deg,#3C2A21,#2A1F17);
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;color:var(--warm);opacity:.5;border:1px solid var(--bdr);
-  cursor:pointer;transition:all .25s ease;
-}
-.mth:hover{border-color:var(--bdrh);opacity:.8;transform:scale(1.03)}
-.mdesc{font-size:12px;color:var(--txt2);line-height:2;margin-bottom:12px}
+.mth{height:88px;border-radius:8px;background:linear-gradient(135deg,#3C2A21,#2A1F17);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--warm);opacity:.5;border:1px solid var(--bd);transition:all .25s}
+.mth:hover{border-color:var(--bdh);opacity:.8;transform:scale(1.03)}
+.mdesc{font-size:12px;color:var(--t2);line-height:2;margin-bottom:12px}
 .mtechs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
 .mtech{font-size:10px;padding:3px 10px;border-radius:20px;background:rgba(200,148,58,.08);border:1px solid rgba(200,148,58,.2);color:var(--gold)}
 .mbtns{display:flex;gap:8px}
 .mbtns .btn{flex:1;font-size:11px}
 
-/* ============================
-   RESPONSIVE SWITCH
-============================ */
+/* ─── RESPONSIVE ─────────────────────────────────── */
 @media(min-width:900px){
-  .desktop-layout{display:block}
-  .mobile-layout{display:none}
+  .desk{display:block}
+  .mob{display:none}
   .bnav{display:none !important}
 }
 @media(max-width:899px){
-  .desktop-layout{display:none}
-  .mobile-layout{display:block}
+  .desk{display:none}
+  .mob{display:block}
   .bnav{display:block}
   body{padding-bottom:68px}
-  .sygrid{grid-template-columns:1fr}
-  .ftop{grid-template-columns:1fr}
+  .sygrid{grid-template-columns:1fr 1fr}
   .mgal{grid-template-columns:1fr 1fr}
-  .d-col{padding:28px 18px 40px}
 }
 @media(max-width:480px){
-  .fcard{width:148px;height:200px}
-  .wcard{width:175px;height:132px}
+  .fcard{width:145px;height:198px}
+  .wcard{width:170px;height:132px}
+  .sygrid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- AMBIENT -->
 <div class="amb a1"></div>
 <div class="amb a2"></div>
 <div class="amb a3"></div>
 
+<!-- ═══════════════════════════════════════════════════════
+     DESKTOP — 3 Independent Scrollable Columns
+═══════════════════════════════════════════════════════ -->
+<div class="desk">
+ <div class="desk-cols">
 
-<!-- ============================================================
-     DESKTOP LAYOUT  —  3 independent scrollable columns
-============================================================ -->
-<div class="desktop-layout">
-  <div class="d-cols">
+  <!-- ▌LEFT: Home content -->
+  <div class="dc" id="dcL">
 
-    <!-- ░░░ LEFT COLUMN — HOME CONTENT ░░░ -->
-    <div class="d-col" id="dcol-left">
-
-      <!-- Profile -->
-      <div class="profile-block" style="margin-bottom:22px">
-        <div class="av-wrap">
-          <div class="av-ring"></div>
-          <div class="av-inner">A</div>
-        </div>
-        <div class="p-name">Abdullah</div>
-        <div class="p-title">Product Systems Builder</div>
-        <div class="badge"><span class="bdot"></span> Available for Work</div>
-        <p class="p-tagline">"Specializing in building high-quality,<br>functional web systems at record speed."</p>
-      </div>
-
-      <!-- Stats -->
-      <div style="margin-bottom:22px">
-        <div class="stag" style="margin-bottom:12px">Impact</div>
-        <div class="srow">
-          <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
-          <div class="sbox"><div class="snum">4+</div><div class="slbl">Admin Systems</div></div>
-          <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
-          <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
-        </div>
-      </div>
-
-      <div class="div-sec"></div>
-
-      <!-- Skills -->
-      <div class="sk-section" style="padding-top:0">
-        <div class="sk-lbl">Core Technologies</div>
-        <div class="sk-grp">
-          <div class="sk-gname">Frontend</div>
-          <div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div>
-        </div>
-        <div class="sk-grp">
-          <div class="sk-gname">Backend &amp; Cloud</div>
-          <div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div>
-        </div>
-        <div class="sk-grp">
-          <div class="sk-gname">Systems &amp; Dashboards</div>
-          <div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">DB Design</span><span class="cap">Auth</span></div>
-        </div>
-        <div class="sk-grp">
-          <div class="sk-gname">AI Productivity</div>
-          <div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div>
-        </div>
-      </div>
-
-      <div class="div-sec"></div>
-
-      <!-- Workflow -->
-      <div style="margin-bottom:22px">
-        <div class="stag" style="margin-bottom:12px">My Workflow</div>
-        <div class="wfg">
-          <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
-          <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
-          <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
-          <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
-          <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
-          <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
-          <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
-          <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
-        </div>
-      </div>
-
-      <div class="div-sec"></div>
-
-      <!-- Why me -->
-      <div style="margin-bottom:22px">
-        <div class="stag" style="margin-bottom:12px">Why Work With Me</div>
-        <p class="txt" style="margin-bottom:14px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design.</strong></p>
-        <div class="why-card">
-          <div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
-          <p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong> with hands-on projects coming soon. AI-augmented workflow for rapid, high-quality delivery.</p>
-        </div>
-      </div>
-
-      <!-- Buttons -->
-      <div class="btng">
-        <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> View SPMS System</button>
-        <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> Download CV</a>
-        <button class="btn btn-g" onclick="document.getElementById('dcol-right').scrollTo({top:99999,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> Contact Me</button>
-      </div>
-
+   <div class="profile-block">
+    <div class="av-wrap">
+     <div class="av-ring"></div>
+     <div class="av-in" id="avD">
+      <!-- 📸 صورة البروفايل: غيّر src في JS أسفل الصفحة (PHOTO_URL) -->
+      <img id="avD-img" src="" alt="Abdullah">
+      <span id="avD-txt">A</span>
+     </div>
     </div>
-    <!-- /LEFT COL -->
+    <div class="pname">Abdullah</div>
+    <div class="ptitle">Product Systems Builder</div>
+    <div class="badge"><span class="bdot"></span> Available for Work</div>
+    <p class="ptagline">"Specializing in building high-quality,<br>functional web systems at record speed."</p>
+   </div>
+
+   <div class="stag" style="margin-bottom:10px">Impact</div>
+   <div class="srow">
+    <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
+    <div class="sbox"><div class="snum">4+</div><div class="slbl">Admin Systems</div></div>
+    <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
+    <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
+   </div>
+
+   <div class="divl"></div>
+
+   <div class="sk-sec" style="padding-top:0">
+    <div class="sk-lbl">Core Technologies</div>
+    <div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
+    <div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
+    <div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">DB Design</span><span class="cap">Auth</span></div></div>
+    <div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
+   </div>
+
+   <div class="divl"></div>
+
+   <div class="stag" style="margin-bottom:10px">My Workflow</div>
+   <div class="wfg">
+    <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
+    <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
+    <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
+    <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
+    <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
+    <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
+    <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
+    <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
+   </div>
+
+   <div class="divl"></div>
+
+   <div class="stag" style="margin-bottom:10px">Why Work With Me</div>
+   <p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design.</strong></p>
+   <div class="why-card" style="margin-bottom:18px">
+    <div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
+    <p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong> with hands-on projects coming soon. AI-augmented workflow for rapid, high-quality delivery.</p>
+   </div>
+
+   <div class="btng">
+    <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> <span>View SPMS System</span></button>
+    <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> <span>Download CV</span></a>
+    <button class="btn btn-g" onclick="dcR.scrollTo({top:dcR.scrollHeight,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> <span>Contact Me</span></button>
+   </div>
+
+  </div><!-- /left -->
 
 
-    <!-- ░░░ MIDDLE COLUMN — ABOUT CONTENT ░░░ -->
-    <div class="d-col" id="dcol-mid">
+  <!-- ▌MID: About content -->
+  <div class="dc" id="dcM">
 
-      <!-- About heading -->
-      <div style="margin-bottom:22px">
-        <div class="stag" style="margin-bottom:14px">About Me</div>
-        <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
-        <p class="txt" style="margin-bottom:12px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering high-performance web applications in <strong>50% less time</strong> without compromising quality.</p>
-        <p class="txt" style="margin-bottom:12px">I don't just write code — I design the entire thinking behind a system: how data flows, how users interact, how businesses scale. Every project is treated as a <strong>real product.</strong></p>
-        <p class="txt">Currently leveling up with <strong>React.js</strong> and deeper backend architecture, while actively delivering with pure JavaScript, Firebase, and Node.js.</p>
-      </div>
+   <div class="stag" style="margin-bottom:14px">About Me</div>
+   <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
+   <p class="txt" style="margin-bottom:11px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
+   <p class="txt" style="margin-bottom:11px">I don't just write code — I design the entire thinking behind a system: how data flows, how users interact, how businesses scale. Every project is treated as a <strong>real product.</strong></p>
+   <p class="txt">Currently leveling up with <strong>React.js</strong> and deeper backend architecture, while actively delivering with pure JavaScript, Firebase, and Node.js.</p>
 
-      <!-- Why Me card -->
-      <div class="why-card" style="margin-bottom:22px">
-        <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
-        <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. I don't just write code; <strong>I build solutions.</strong> Honest about my skill level, committed to continuous growth, and AI-powered to deliver results that matter.</p>
-      </div>
+   <div class="why-card" style="margin:18px 0">
+    <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
+    <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong> Honest about my skill level, committed to growth, AI-powered to deliver.</p>
+   </div>
 
-      <div class="div-sec"></div>
+   <div class="divl"></div>
 
-      <!-- Skills table -->
-      <div>
-        <div class="stag" style="margin-bottom:14px">Skills &amp; Stack</div>
-        <div class="skt">
-          <div class="skr">
-            <div class="skrh">
-              <div class="skri"><i class="fa-solid fa-code"></i></div>
-              <div class="skrn">Core Technologies</div>
-              <span class="skrst st-r">Production Ready</span>
-            </div>
-            <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span><span class="skrcap">DOM Manipulation</span></div>
-          </div>
-          <div class="skr">
-            <div class="skrh">
-              <div class="skri"><i class="fa-solid fa-server"></i></div>
-              <div class="skrn">Systems &amp; Dashboards</div>
-              <span class="skrst st-r">Production Ready</span>
-            </div>
-            <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Complex Data Flows</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
-          </div>
-          <div class="skr">
-            <div class="skrh">
-              <div class="skri"><i class="fa-brands fa-google"></i></div>
-              <div class="skrn">Backend &amp; Cloud</div>
-              <span class="skrst st-r">Production Ready</span>
-            </div>
-            <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Firebase Hosting</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
-          </div>
-          <div class="skr">
-            <div class="skrh">
-              <div class="skri"><i class="fa-brands fa-react"></i></div>
-              <div class="skrn">Frameworks — In Progress</div>
-              <span class="skrst st-p">Leveling Up</span>
-            </div>
-            <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">State Management</span><span class="skrcap">Hands-on Soon</span></div>
-          </div>
-          <div class="skr">
-            <div class="skrh">
-              <div class="skri"><i class="fa-solid fa-robot"></i></div>
-              <div class="skrn">AI Productivity</div>
-              <span class="skrst st-r">Expert Level</span>
-            </div>
-            <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
-          </div>
-        </div>
-      </div>
-
+   <div class="stag" style="margin-bottom:13px">Skills &amp; Stack</div>
+   <div class="skt">
+    <div class="skr">
+     <div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div>
+     <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span><span class="skrcap">DOM Manipulation</span></div>
     </div>
-    <!-- /MID COL -->
-
-
-    <!-- ░░░ RIGHT COLUMN — WORKS + CONTACT + FOOTER ░░░ -->
-    <div class="d-col" id="dcol-right">
-
-      <!-- Social circles -->
-      <div class="sc-row">
-        <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
-        <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
-        <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
-        <div class="sc-item"><a href="mailto:hello@example.com" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
-        <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
-      </div>
-
-      <!-- Featured works -->
-      <div style="margin-bottom:32px">
-        <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
-        <div class="hswrap" id="ds-feat">
-          <div class="hrow">
-            <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
-            <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
-            <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation Platform</div></div></div>
-            <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Analytics Dashboard</div><div class="ftag">Data Visualization</div></div></div>
-            <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Platform</div></div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Admin Systems -->
-      <div style="margin-bottom:32px">
-        <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
-        <div class="sygrid">
-          <div class="sycard" onclick="openModal('spms')">
-            <div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div class="sybadge">Management</div>
-            <div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades, attendance & performance tracking.</div></div>
-          </div>
-          <div class="sycard" onclick="openModal('clinic')">
-            <div class="sybg"><i class="fa-solid fa-hospital"></i></div>
-            <div class="sybadge">Medical</div>
-            <div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records & appointments.</div></div>
-          </div>
-          <div class="sycard" onclick="openModal('booking')">
-            <div class="sybg"><i class="fa-solid fa-calendar-check"></i></div>
-            <div class="sybadge">Booking</div>
-            <div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservation management.</div></div>
-          </div>
-          <div class="sycard" onclick="openModal('business')">
-            <div class="sybg"><i class="fa-solid fa-briefcase"></i></div>
-            <div class="sybadge">ERP</div>
-            <div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing, inventory & HR.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Web Projects -->
-      <div style="margin-bottom:32px">
-        <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
-        <div class="hswrap" id="ds-web">
-          <div class="hrow">
-            <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
-            <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
-            <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
-            <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
-            <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Analytics Dashboard</div><div class="wctag">Data-Driven</div></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="div-sec"></div>
-
-      <!-- Contact -->
-      <div style="margin-bottom:28px">
-        <div class="sec-hdr"><i class="fa-solid fa-paper-plane"></i><div class="sec-title">Let's Build Together</div><div class="sec-line"></div></div>
-        <div class="cform">
-          <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
-          <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
-          <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project idea..."></textarea></div>
-          <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
-        </div>
-        <div class="cirow">
-          <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">hello@abdullah.dev</div></div></div>
-          <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
-          <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="footer">
-        <div class="ftop">
-          <div>
-            <div class="flogo">Abdullah</div>
-            <div class="ftagline">Product Systems Builder<br>Rapid AI-Driven Developer</div>
-            <div class="fsocials">
-              <a href="#" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
-              <a href="#" class="fsbtn"><i class="fa-brands fa-github"></i></a>
-              <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
-              <a href="#" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-          </div>
-          <div>
-            <div class="fc-title">Quick Access</div>
-            <ul class="flinks">
-              <li><a onclick="document.getElementById('dcol-left').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-house"></i> Home</a></li>
-              <li><a onclick="document.getElementById('dcol-mid').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-user"></i> About Me</a></li>
-              <li><a onclick="document.getElementById('dcol-right').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
-              <li><a onclick="document.getElementById('dcol-right').scrollTo({top:99999,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="fbot">
-          <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
-          <div class="fmade">Built with <span>&#9670;</span> Pure HTML · CSS · JS</div>
-        </div>
-      </div>
-
+    <div class="skr">
+     <div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div>
+     <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
     </div>
-    <!-- /RIGHT COL -->
-
-  </div>
-</div>
-<!-- /DESKTOP LAYOUT -->
-
-
-<!-- ============================================================
-     MOBILE LAYOUT  —  3 pages + bottom nav
-============================================================ -->
-<div class="mobile-layout">
-
-  <!-- PAGE: HOME -->
-  <div class="m-page active" id="mp-home" style="padding:28px 18px 20px">
-
-    <div class="profile-block" style="margin-bottom:22px">
-      <div class="av-wrap"><div class="av-ring"></div><div class="av-inner">A</div></div>
-      <div class="p-name">Abdullah</div>
-      <div class="p-title">Product Systems Builder</div>
-      <div class="badge"><span class="bdot"></span> Available for Work</div>
-      <p class="p-tagline">"Specializing in building high-quality, functional web systems at record speed."</p>
+    <div class="skr">
+     <div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div>
+     <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Firebase Hosting</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
     </div>
+    <div class="skr">
+     <div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div>
+     <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">State Management</span><span class="skrcap">Hands-on Soon</span></div>
+    </div>
+    <div class="skr">
+     <div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div>
+     <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
+    </div>
+   </div>
 
-    <div style="margin-bottom:18px">
-      <div class="stag" style="margin-bottom:10px">Impact</div>
-      <div class="srow">
-        <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
-        <div class="sbox"><div class="snum">4+</div><div class="slbl">Admin Systems</div></div>
-        <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
-        <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
+  </div><!-- /mid -->
+
+
+  <!-- ▌RIGHT: Works + Contact + Footer -->
+  <div class="dc" id="dcR">
+
+   <div class="sc-row">
+    <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
+    <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
+    <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
+    <div class="sc-item"><a href="mailto:hello@abdullah.dev" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
+    <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
+   </div>
+
+   <div style="margin-bottom:30px">
+    <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
+    <div class="hswrap" id="dsFeat">
+     <div class="hrow">
+      <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
+      <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
+      <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation Platform</div></div></div>
+      <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Analytics Dashboard</div><div class="ftag">Data Visualization</div></div></div>
+      <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Platform</div></div></div>
+     </div>
+    </div>
+   </div>
+
+   <div style="margin-bottom:30px">
+    <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
+    <div class="sygrid">
+     <div class="sycard" onclick="openModal('spms')"><div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div><div class="sybadge">Management</div><div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades, attendance &amp; performance.</div></div></div>
+     <div class="sycard" onclick="openModal('clinic')"><div class="sybg"><i class="fa-solid fa-hospital"></i></div><div class="sybadge">Medical</div><div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records &amp; billing.</div></div></div>
+     <div class="sycard" onclick="openModal('booking')"><div class="sybg"><i class="fa-solid fa-calendar-check"></i></div><div class="sybadge">Booking</div><div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservations.</div></div></div>
+     <div class="sycard" onclick="openModal('business')"><div class="sybg"><i class="fa-solid fa-briefcase"></i></div><div class="sybadge">ERP</div><div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing &amp; HR.</div></div></div>
+    </div>
+   </div>
+
+   <div style="margin-bottom:30px">
+    <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
+    <div class="hswrap" id="dsWeb">
+     <div class="hrow">
+      <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
+      <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
+      <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
+      <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
+      <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Dashboard</div><div class="wctag">Data-Driven</div></div></div>
+     </div>
+    </div>
+   </div>
+
+   <div class="divl"></div>
+
+   <div style="margin-bottom:26px">
+    <div class="sec-hdr"><i class="fa-solid fa-paper-plane"></i><div class="sec-title">Let's Build Together</div><div class="sec-line"></div></div>
+    <div class="cform">
+     <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
+     <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
+     <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project..."></textarea></div>
+     <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> <span>Send Message</span></button>
+    </div>
+    <div class="cirow">
+     <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">hello@abdullah.dev</div></div></div>
+     <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
+     <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
+    </div>
+   </div>
+
+   <div class="footer">
+    <div class="ftop">
+     <div>
+      <div class="flogo">Abdullah</div>
+      <div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div>
+      <div class="fsoc">
+       <a href="#" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
+       <a href="#" class="fsbtn"><i class="fa-brands fa-github"></i></a>
+       <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
+       <a href="#" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
+     </div>
+     <div>
+      <div class="fc-ttl">Quick Access</div>
+      <ul class="flinks">
+       <li><a onclick="document.getElementById('dcL').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-house"></i> Home</a></li>
+       <li><a onclick="document.getElementById('dcM').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-user"></i> About Me</a></li>
+       <li><a onclick="document.getElementById('dcR').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
+       <li><a onclick="document.getElementById('dcR').scrollTo({top:99999,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+     </div>
     </div>
-
-    <div class="div-sec"></div>
-
-    <div class="sk-section" style="padding-top:0">
-      <div class="sk-lbl">Core Technologies</div>
-      <div class="sk-grp"><div class="sk-gname">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
-      <div class="sk-grp"><div class="sk-gname">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
-      <div class="sk-grp"><div class="sk-gname">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">Auth</span></div></div>
-      <div class="sk-grp"><div class="sk-gname">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
+    <div class="fbot">
+     <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
+     <div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div>
     </div>
+   </div>
 
-    <div class="div-sec"></div>
+  </div><!-- /right -->
 
-    <div style="margin-bottom:18px">
-      <div class="stag" style="margin-bottom:10px">My Workflow</div>
-      <div class="wfg">
-        <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
-        <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
-        <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
-        <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
-        <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
-        <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
-        <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
-        <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
-      </div>
+ </div>
+</div><!-- /desk -->
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MOBILE — 4 Pages
+═══════════════════════════════════════════════════════ -->
+<div class="mob">
+
+ <!-- PAGE: HOME -->
+ <div class="mp act" id="mp-home">
+
+  <div class="profile-block">
+   <div class="av-wrap">
+    <div class="av-ring"></div>
+    <div class="av-in" id="avM">
+     <img id="avM-img" src="" alt="Abdullah">
+     <span id="avM-txt">A</span>
     </div>
-
-    <div class="btng" style="margin-bottom:8px">
-      <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> View SPMS System</button>
-      <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> Download CV</a>
-      <button class="btn btn-g" onclick="goMPage('contact')"><i class="fa-solid fa-envelope"></i> Contact Me</button>
-    </div>
+   </div>
+   <div class="pname">Abdullah</div>
+   <div class="ptitle">Product Systems Builder</div>
+   <div class="badge"><span class="bdot"></span> Available for Work</div>
+   <p class="ptagline">"Specializing in building high-quality, functional web systems at record speed."</p>
   </div>
 
-  <!-- PAGE: ABOUT -->
-  <div class="m-page" id="mp-about" style="padding:28px 18px 20px">
-
-    <div style="margin-bottom:20px">
-      <div class="stag" style="margin-bottom:12px">About Me</div>
-      <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
-      <p class="txt" style="margin-bottom:10px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
-      <p class="txt" style="margin-bottom:10px">Every project is treated as a <strong>real product</strong> — not just a deliverable. Currently leveling up with <strong>React.js</strong> while actively delivering with Firebase and Node.js.</p>
-    </div>
-
-    <div class="why-card" style="margin-bottom:20px">
-      <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
-      <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong></p>
-    </div>
-
-    <div class="div-sec"></div>
-
-    <div class="stag" style="margin-bottom:12px">Skills &amp; Stack</div>
-    <div class="skt">
-      <div class="skr">
-        <div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div>
-        <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span></div>
-      </div>
-      <div class="skr">
-        <div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div>
-        <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
-      </div>
-      <div class="skr">
-        <div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div>
-        <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
-      </div>
-      <div class="skr">
-        <div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div>
-        <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">Hands-on Soon</span></div>
-      </div>
-      <div class="skr">
-        <div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div>
-        <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
-      </div>
-    </div>
+  <div class="stag" style="margin-bottom:10px">Impact</div>
+  <div class="srow" style="margin-bottom:18px">
+   <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
+   <div class="sbox"><div class="snum">4+</div><div class="slbl">Admin Systems</div></div>
+   <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
+   <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
   </div>
 
-  <!-- PAGE: WORKS -->
-  <div class="m-page" id="mp-works" style="padding:28px 18px 20px">
+  <div class="divl"></div>
 
-    <div class="sc-row">
-      <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
-      <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
-      <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
-      <div class="sc-item"><a href="mailto:hello@example.com" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
-      <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
-    </div>
-
-    <div style="margin-bottom:28px">
-      <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
-      <div class="hswrap" id="mf">
-        <div class="hrow">
-          <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
-          <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
-          <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation</div></div></div>
-          <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Dashboard</div><div class="ftag">Analytics</div></div></div>
-          <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Store</div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-bottom:28px">
-      <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
-      <div class="sygrid">
-        <div class="sycard" onclick="openModal('spms')"><div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div><div class="sybadge">Management</div><div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades & attendance tracking.</div></div></div>
-        <div class="sycard" onclick="openModal('clinic')"><div class="sybg"><i class="fa-solid fa-hospital"></i></div><div class="sybadge">Medical</div><div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records & billing.</div></div></div>
-        <div class="sycard" onclick="openModal('booking')"><div class="sybg"><i class="fa-solid fa-calendar-check"></i></div><div class="sybadge">Booking</div><div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservations.</div></div></div>
-        <div class="sycard" onclick="openModal('business')"><div class="sybg"><i class="fa-solid fa-briefcase"></i></div><div class="sybadge">ERP</div><div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing & HR.</div></div></div>
-      </div>
-    </div>
-
-    <div style="margin-bottom:28px">
-      <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
-      <div class="hswrap" id="mw">
-        <div class="hrow">
-          <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
-          <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
-          <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
-          <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
-          <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Dashboard</div><div class="wctag">Data-Driven</div></div></div>
-        </div>
-      </div>
-    </div>
+  <div class="sk-sec" style="padding-top:0">
+   <div class="sk-lbl">Core Technologies</div>
+   <div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
+   <div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
+   <div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">Auth</span></div></div>
+   <div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
   </div>
 
-  <!-- PAGE: CONTACT -->
-  <div class="m-page" id="mp-contact" style="padding:28px 18px 20px">
+  <div class="divl"></div>
 
-    <div style="margin-bottom:22px">
-      <div class="stag" style="margin-bottom:10px">Get In Touch</div>
-      <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--cream);margin-top:8px;line-height:1.3">Let's Build Something<br><span style="background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Together.</span></div>
-    </div>
-
-    <div class="cform" style="margin-bottom:16px">
-      <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
-      <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
-      <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project idea..."></textarea></div>
-      <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
-    </div>
-
-    <div class="cirow" style="margin-bottom:28px">
-      <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">hello@abdullah.dev</div></div></div>
-      <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
-      <div class="cicard"><div class="ciico"><i class="fa-brands fa-linkedin-in"></i></div><div><div class="cilbl">LinkedIn</div><div class="cival">linkedin.com/in/abdullah</div></div></div>
-      <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
-    </div>
-
-    <!-- Footer (mobile) -->
-    <div class="footer">
-      <div class="ftop">
-        <div>
-          <div class="flogo">Abdullah</div>
-          <div class="ftagline">Product Systems Builder<br>Rapid AI-Driven Developer</div>
-          <div class="fsocials">
-            <a href="#" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="fsbtn"><i class="fa-brands fa-github"></i></a>
-            <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
-          </div>
-        </div>
-        <div>
-          <div class="fc-title">Quick Access</div>
-          <ul class="flinks">
-            <li><a onclick="goMPage('home')"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a onclick="goMPage('about')"><i class="fa-solid fa-user"></i> About Me</a></li>
-            <li><a onclick="goMPage('works')"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
-            <li><a onclick="goMPage('contact')"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="fbot">
-        <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
-        <div class="fmade">Built with <span>&#9670;</span> Pure HTML · CSS · JS</div>
-      </div>
-    </div>
+  <div class="stag" style="margin-bottom:10px">My Workflow</div>
+  <div class="wfg" style="margin-bottom:18px">
+   <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
+   <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
+   <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
+   <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
+   <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
+   <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
+   <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
+   <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
   </div>
 
-</div>
-<!-- /MOBILE LAYOUT -->
+  <div class="btng">
+   <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> <span>View SPMS System</span></button>
+   <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> <span>Download CV</span></a>
+   <button class="btn btn-g" onclick="goPage('contact')"><i class="fa-solid fa-envelope"></i> <span>Contact Me</span></button>
+  </div>
+
+ </div><!-- /home -->
+
+
+ <!-- PAGE: ABOUT -->
+ <div class="mp" id="mp-about">
+
+  <div class="stag" style="margin-bottom:13px">About Me</div>
+  <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
+  <p class="txt" style="margin-bottom:10px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
+  <p class="txt" style="margin-bottom:10px">Every project is treated as a <strong>real product</strong> — not just a deliverable. Currently leveling up with <strong>React.js</strong> while actively delivering with Firebase and Node.js.</p>
+
+  <div class="why-card" style="margin-bottom:18px">
+   <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
+   <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong></p>
+  </div>
+
+  <div class="divl"></div>
+
+  <div class="stag" style="margin-bottom:12px">Skills &amp; Stack</div>
+  <div class="skt" style="margin-bottom:18px">
+   <div class="skr">
+    <div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div>
+    <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span></div>
+   </div>
+   <div class="skr">
+    <div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div>
+    <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
+   </div>
+   <div class="skr">
+    <div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div>
+    <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
+   </div>
+   <div class="skr">
+    <div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div>
+    <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">Hands-on Soon</span></div>
+   </div>
+   <div class="skr">
+    <div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div>
+    <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
+   </div>
+  </div>
+
+  <div class="divl"></div>
+
+  <!-- WHY WORK WITH ME -->
+  <div class="stag" style="margin-bottom:12px">Why Work With Me</div>
+  <p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design</strong> — delivering in 50% less time without compromising quality.</p>
+  <div class="why-card">
+   <div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
+   <p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong> with hands-on projects coming soon. AI-augmented workflow for rapid delivery. I don't just write code; <strong>I build solutions.</strong></p>
+  </div>
+
+ </div><!-- /about -->
+
+
+ <!-- PAGE: WORKS -->
+ <div class="mp" id="mp-works">
+
+  <div class="sc-row">
+   <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
+   <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
+   <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
+   <div class="sc-item"><a href="mailto:hello@abdullah.dev" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
+   <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
+  </div>
+
+  <div style="margin-bottom:26px">
+   <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
+   <div class="hswrap" id="mFeat">
+    <div class="hrow">
+     <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
+     <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
+     <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation</div></div></div>
+     <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Dashboard</div><div class="ftag">Analytics</div></div></div>
+     <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Store</div></div></div>
+    </div>
+   </div>
+  </div>
+
+  <div style="margin-bottom:26px">
+   <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
+   <div class="sygrid">
+    <div class="sycard" onclick="openModal('spms')"><div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div><div class="sybadge">Management</div><div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades &amp; attendance tracking.</div></div></div>
+    <div class="sycard" onclick="openModal('clinic')"><div class="sybg"><i class="fa-solid fa-hospital"></i></div><div class="sybadge">Medical</div><div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records &amp; billing.</div></div></div>
+    <div class="sycard" onclick="openModal('booking')"><div class="sybg"><i class="fa-solid fa-calendar-check"></i></div><div class="sybadge">Booking</div><div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservations.</div></div></div>
+    <div class="sycard" onclick="openModal('business')"><div class="sybg"><i class="fa-solid fa-briefcase"></i></div><div class="sybadge">ERP</div><div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing &amp; HR.</div></div></div>
+   </div>
+  </div>
+
+  <div style="margin-bottom:26px">
+   <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
+   <div class="hswrap" id="mWeb">
+    <div class="hrow">
+     <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
+     <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
+     <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
+     <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
+     <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Dashboard</div><div class="wctag">Data-Driven</div></div></div>
+    </div>
+   </div>
+  </div>
+
+ </div><!-- /works -->
+
+
+ <!-- PAGE: CONTACT -->
+ <div class="mp" id="mp-contact">
+
+  <div style="margin-bottom:20px">
+   <div class="stag" style="margin-bottom:10px">Get In Touch</div>
+   <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--cream);margin-top:8px;line-height:1.3">Let's Build Something<br><span style="background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Together.</span></div>
+  </div>
+
+  <div class="cform" style="margin-bottom:14px">
+   <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
+   <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
+   <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project idea..."></textarea></div>
+   <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> <span>Send Message</span></button>
+  </div>
+
+  <div class="cirow" style="margin-bottom:26px">
+   <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">hello@abdullah.dev</div></div></div>
+   <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
+   <div class="cicard"><div class="ciico"><i class="fa-brands fa-linkedin-in"></i></div><div><div class="cilbl">LinkedIn</div><div class="cival">linkedin.com/in/abdullah</div></div></div>
+   <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
+  </div>
+
+  <div class="footer">
+   <div class="ftop">
+    <div>
+     <div class="flogo">Abdullah</div>
+     <div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div>
+     <div class="fsoc">
+      <a href="#" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="fsbtn"><i class="fa-brands fa-github"></i></a>
+      <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
+     </div>
+    </div>
+    <div>
+     <div class="fc-ttl">Quick Access</div>
+     <ul class="flinks">
+      <li><a onclick="goPage('home')"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a onclick="goPage('about')"><i class="fa-solid fa-user"></i> About Me</a></li>
+      <li><a onclick="goPage('works')"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
+      <li><a onclick="goPage('contact')"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+     </ul>
+    </div>
+   </div>
+   <div class="fbot">
+    <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
+    <div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div>
+   </div>
+  </div>
+
+ </div><!-- /contact -->
+
+</div><!-- /mob -->
 
 
 <!-- BOTTOM NAV -->
 <nav class="bnav">
-  <div class="bnav-inner">
-    <button class="bnt active" onclick="goMPage('home',this)"><i class="fa-solid fa-house"></i><span>Home</span></button>
-    <button class="bnt" onclick="goMPage('about',this)"><i class="fa-solid fa-user"></i><span>About</span></button>
-    <button class="bnt" onclick="goMPage('works',this)"><i class="fa-solid fa-layer-group"></i><span>Works</span></button>
-    <button class="bnt" onclick="goMPage('contact',this)"><i class="fa-solid fa-envelope"></i><span>Contact</span></button>
-  </div>
+ <div class="bnav-i">
+  <button class="bnt on" onclick="goPage('home',this)"><i class="fa-solid fa-house"></i><span>Home</span></button>
+  <button class="bnt" onclick="goPage('about',this)"><i class="fa-solid fa-user"></i><span>About</span></button>
+  <button class="bnt" onclick="goPage('works',this)"><i class="fa-solid fa-layer-group"></i><span>Works</span></button>
+  <button class="bnt" onclick="goPage('contact',this)"><i class="fa-solid fa-envelope"></i><span>Contact</span></button>
+ </div>
 </nav>
 
 
 <!-- MODAL -->
-<div class="movl" id="mo" onclick="cmo(event)">
-  <div class="mbox">
-    <div class="mhdr">
-      <div><div class="mtitle" id="mt"></div><div class="msub" id="ms"></div></div>
-      <button class="mcls" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="mbdy">
-      <div class="mgal" id="mg"></div>
-      <p class="mdesc" id="md"></p>
-      <div class="mtechs" id="mtx"></div>
-      <div class="mbtns">
-        <a href="#" class="btn btn-p"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
-        <button class="btn btn-g" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
-      </div>
-    </div>
+<div class="movl" id="modalOverlay">
+ <div class="mbox">
+  <div class="mhdr">
+   <div>
+    <div class="mtitle" id="mTitle">Project Title</div>
+    <div class="msub" id="mSub">Subtitle</div>
+   </div>
+   <button class="mcls" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
   </div>
+  <div class="mbdy">
+   <div class="mgal" id="mGal"></div>
+   <p class="mdesc" id="mDesc"></p>
+   <div class="mtechs" id="mTechs"></div>
+   <div class="mbtns">
+    <a href="#" class="btn btn-p"><i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Live Demo</span></a>
+    <button class="btn btn-g" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> <span>Close</span></button>
+   </div>
+  </div>
+ </div>
 </div>
 
 
 <script>
-/* ===== PROJECT DATA ===== */
-const PROJ = {
-  spms:{title:'SPMS — Student Management System',sub:'Administrative & Academic Platform',icons:['fa-graduation-cap','fa-chart-bar','fa-users'],desc:'A full-featured platform for managing student data, academic performance, grades, and attendance. Comprehensive admin dashboard with role-based access for administrators, teachers, and students. Detailed analytics and exportable reports.',techs:['HTML5','CSS3','JavaScript','Firebase','Firestore','Auth System','PDF Reports','Dashboard UI']},
-  clinic:{title:'ClinicFlow Pro',sub:'Clinic Management System',icons:['fa-hospital','fa-stethoscope','fa-file-medical'],desc:'A complete medical management platform covering patient records, appointment scheduling, prescriptions, billing, and health analytics. Built for clinics of any scale with clean UI for medical staff.',techs:['HTML5','CSS3','JavaScript','Firebase','Firestore','Calendar UI','Patient DB','Billing System']},
-  booking:{title:'Smart Booking System',sub:'Reservation & Availability Platform',icons:['fa-calendar-check','fa-clock','fa-bell'],desc:'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',techs:['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel']},
-  business:{title:'Business Manager ERP',sub:'Enterprise Resource Planning System',icons:['fa-briefcase','fa-chart-line','fa-warehouse'],desc:'A unified ERP covering invoicing, inventory management, supplier relations, HR modules, and financial reporting. Designed for SMEs needing a powerful yet intuitive management interface.',techs:['HTML5','CSS3','JavaScript','Node.js','MongoDB','REST API','Excel Export','Multi-user']},
-  dashboard:{title:'Analytics Dashboard',sub:'Data Visualization Platform',icons:['fa-chart-line','fa-chart-pie','fa-table'],desc:'An interactive analytics dashboard featuring dynamic charts, KPI indicators, customizable reports, and real-time data visualization to help businesses make informed decisions.',techs:['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive']},
-  corp:{title:'Corporate Website',sub:'Company Identity & Services',icons:['fa-building','fa-globe','fa-handshake'],desc:'A professional corporate website reflecting brand identity, showcasing services and team, with optimized performance and SEO-ready structure. Modern, fast-loading, fully responsive.',techs:['HTML5','CSS3','JavaScript','SEO','Responsive','Fast Loading','Animations']},
-  landing:{title:'High-Conversion Landing Page',sub:'Product & Service Launch Page',icons:['fa-rocket','fa-bullseye','fa-bolt'],desc:'A conversion-optimized landing page with compelling CTAs, smooth animations, and mobile-first design for product launches and service promotion.',techs:['HTML5','CSS3','JavaScript','Mobile-First','CRO','Animations','Fast Loading']},
-  personal:{title:'Personal Portfolio',sub:'Personal Brand & Showcase',icons:['fa-user-tie','fa-star','fa-palette'],desc:'A unique personal portfolio website presenting professional identity, projects, and skills with distinctive design that leaves a lasting impression.',techs:['HTML5','CSS3','JavaScript','Custom Design','Animations','Dark Theme','Responsive']},
-  ecomm:{title:'E-Commerce Platform',sub:'Online Store & Cart System',icons:['fa-store','fa-credit-card','fa-box'],desc:'A complete e-commerce platform with product management, shopping cart, payment gateway integration, and order management with full admin control panel.',techs:['HTML5','CSS3','JavaScript','Node.js','MongoDB','Payment Gateway','Cart System','Admin Panel']}
+'use strict';
+
+/* ─── PROFILE PHOTO ─────────────────────────────────
+   📸  ضع رابط صورتك هنا:
+   مثال: const PHOTO_URL = 'https://i.imgur.com/abc123.jpg';
+   أو مسار محلي: const PHOTO_URL = './my-photo.jpg';
+─────────────────────────────────────────────────── */
+var PHOTO_URL = 'public/photo_2026-02-20_17-37-50.jpg'; // ← ضع رابط صورتك هنا
+
+function loadPhoto() {
+  if (!PHOTO_URL) return;
+  var ids = [['avD-img','avD-txt'], ['avM-img','avM-txt']];
+  ids.forEach(function(pair) {
+    var img = document.getElementById(pair[0]);
+    var txt = document.getElementById(pair[1]);
+    if (!img) return;
+    img.src = PHOTO_URL;
+    img.onload = function() { img.style.display = 'block'; if (txt) txt.style.display = 'none'; };
+    img.onerror = function() { img.style.display = 'none'; if (txt) txt.style.display = ''; };
+  });
+}
+loadPhoto();
+
+/* ─── PROJECT DATA ──────────────────────────────── */
+var PROJ = {
+  spms: {
+    title: 'SPMS — Student Management System',
+    sub: 'Administrative & Academic Platform',
+    icons: ['fa-graduation-cap','fa-chart-bar','fa-users'],
+    desc: 'A full-featured platform for managing student data, academic performance, grades, and attendance. Comprehensive admin dashboard with role-based access for administrators, teachers, and students. Includes detailed analytics and exportable reports.',
+    techs: ['HTML5','CSS3','JavaScript','Firebase','Firestore','Auth System','PDF Reports','Dashboard UI']
+  },
+  clinic: {
+    title: 'ClinicFlow Pro',
+    sub: 'Clinic Management System',
+    icons: ['fa-hospital','fa-stethoscope','fa-file-medical'],
+    desc: 'A complete medical management platform covering patient records, appointment scheduling, prescriptions, billing, and health analytics. Built for clinics of any scale with a clean UI for medical staff.',
+    techs: ['HTML5','CSS3','JavaScript','Firebase','Firestore','Calendar UI','Patient DB','Billing System']
+  },
+  booking: {
+    title: 'Smart Booking System',
+    sub: 'Reservation & Availability Platform',
+    icons: ['fa-calendar-check','fa-clock','fa-bell'],
+    desc: 'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',
+    techs: ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel']
+  },
+  business: {
+    title: 'Business Manager ERP',
+    sub: 'Enterprise Resource Planning System',
+    icons: ['fa-briefcase','fa-chart-line','fa-warehouse'],
+    desc: 'A unified ERP covering invoicing, inventory management, supplier relations, HR modules, and financial reporting. Designed for SMEs needing a powerful yet intuitive management interface.',
+    techs: ['HTML5','CSS3','JavaScript','Node.js','MongoDB','REST API','Excel Export','Multi-user']
+  },
+  dashboard: {
+    title: 'Analytics Dashboard',
+    sub: 'Data Visualization Platform',
+    icons: ['fa-chart-line','fa-chart-pie','fa-table'],
+    desc: 'An interactive analytics dashboard featuring dynamic charts, KPI indicators, customizable reports, and real-time data visualization to help businesses make informed decisions.',
+    techs: ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive']
+  },
+  corp: {
+    title: 'Corporate Website',
+    sub: 'Company Identity & Services',
+    icons: ['fa-building','fa-globe','fa-handshake'],
+    desc: 'A professional corporate website reflecting brand identity, showcasing services and team, with optimized performance and SEO-ready structure. Modern, fast-loading, fully responsive.',
+    techs: ['HTML5','CSS3','JavaScript','SEO','Responsive','Fast Loading','Animations']
+  },
+  landing: {
+    title: 'High-Conversion Landing Page',
+    sub: 'Product & Service Launch Page',
+    icons: ['fa-rocket','fa-bullseye','fa-bolt'],
+    desc: 'A conversion-optimized landing page with compelling CTAs, smooth animations, and mobile-first design for product launches and service promotion.',
+    techs: ['HTML5','CSS3','JavaScript','Mobile-First','CRO','Animations','Fast Loading']
+  },
+  personal: {
+    title: 'Personal Portfolio',
+    sub: 'Personal Brand & Showcase',
+    icons: ['fa-user-tie','fa-star','fa-palette'],
+    desc: 'A unique personal portfolio website presenting professional identity, projects, and skills with distinctive design that leaves a lasting impression.',
+    techs: ['HTML5','CSS3','JavaScript','Custom Design','Animations','Dark Theme','Responsive']
+  },
+  ecomm: {
+    title: 'E-Commerce Platform',
+    sub: 'Online Store & Cart System',
+    icons: ['fa-store','fa-credit-card','fa-box'],
+    desc: 'A complete e-commerce platform with product management, shopping cart, payment gateway integration, and order management with full admin control panel.',
+    techs: ['HTML5','CSS3','JavaScript','Node.js','MongoDB','Payment Gateway','Cart System','Admin Panel']
+  }
 };
 
-/* ===== MODAL ===== */
-function openModal(id){
-  const p=PROJ[id]; if(!p) return;
-  document.getElementById('mt').textContent=p.title;
-  document.getElementById('ms').textContent=p.sub;
-  document.getElementById('md').textContent=p.desc;
-  document.getElementById('mg').innerHTML=p.icons.map(ic=>`<div class="mth"><i class="fa-solid ${ic}"></i></div>`).join('');
-  document.getElementById('mtx').innerHTML=p.techs.map(t=>`<span class="mtech">${t}</span>`).join('');
-  document.getElementById('mo').classList.add('open');
-  document.body.style.overflow='hidden';
+/* ─── MODAL ─────────────────────────────────────── */
+function openModal(id) {
+  var p = PROJ[id];
+  if (!p) return;
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mSub').textContent = p.sub;
+  document.getElementById('mDesc').textContent = p.desc;
+  document.getElementById('mGal').innerHTML = p.icons.map(function(ic) {
+    return '<div class="mth"><i class="fa-solid ' + ic + '"></i></div>';
+  }).join('');
+  document.getElementById('mTechs').innerHTML = p.techs.map(function(t) {
+    return '<span class="mtech">' + t + '</span>';
+  }).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-function closeModal(){document.getElementById('mo').classList.remove('open');document.body.style.overflow='';}
-function cmo(e){if(e.target===document.getElementById('mo'))closeModal();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-/* ===== MOBILE PAGE NAV ===== */
-function goMPage(name, btn){
-  document.querySelectorAll('.m-page').forEach(p=>p.classList.remove('active'));
-  const pg = document.getElementById('mp-'+name);
-  if(pg){ pg.classList.add('active'); window.scrollTo(0,0); }
-  document.querySelectorAll('.bnt').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  else {
-    const map={home:0,about:1,works:2,contact:3};
-    const btns=document.querySelectorAll('.bnt');
-    if(btns[map[name]]) btns[map[name]].classList.add('active');
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ─── MOBILE PAGE NAVIGATION ────────────────────── */
+function goPage(name, btn) {
+  // hide all pages
+  var pages = document.querySelectorAll('.mp');
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.remove('act');
+  }
+  // show target
+  var target = document.getElementById('mp-' + name);
+  if (target) {
+    target.classList.add('act');
+    window.scrollTo(0, 0);
+  }
+  // update nav buttons
+  var bnts = document.querySelectorAll('.bnt');
+  for (var j = 0; j < bnts.length; j++) {
+    bnts[j].classList.remove('on');
+  }
+  if (btn) {
+    btn.classList.add('on');
+  } else {
+    var map = { home: 0, about: 1, works: 2, contact: 3 };
+    var idx = map[name];
+    if (idx !== undefined && bnts[idx]) {
+      bnts[idx].classList.add('on');
+    }
   }
 }
 
-/* ===== CONTACT FORM ===== */
-function handleSend(btn){
-  const o=btn.innerHTML;
-  btn.innerHTML='<i class="fa-solid fa-check"></i> Sent!';
-  btn.style.background='linear-gradient(135deg,#5D8A50,#3A6B30)';
-  setTimeout(()=>{btn.innerHTML=o;btn.style.background='';},3000);
+/* ─── CONTACT FORM ──────────────────────────────── */
+function handleSend(btn) {
+  var orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Message Sent!</span>';
+  btn.style.background = 'linear-gradient(135deg,#5D8A50,#3A6B30)';
+  setTimeout(function() {
+    btn.innerHTML = orig;
+    btn.style.background = '';
+  }, 3000);
 }
 
-/* ===== DRAG SCROLL ===== */
-function dragScroll(el){
-  if(!el) return;
-  let d=false,sx,sl;
-  el.addEventListener('mousedown',e=>{d=true;sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;el.style.userSelect='none';});
-  el.addEventListener('mouseleave',()=>{d=false;el.style.userSelect='';});
-  el.addEventListener('mouseup',()=>{d=false;el.style.userSelect='';});
-  el.addEventListener('mousemove',e=>{if(!d)return;e.preventDefault();el.scrollLeft=sl-(e.pageX-el.offsetLeft-sx);});
+/* ─── DRAG SCROLL ───────────────────────────────── */
+function dragScroll(el) {
+  if (!el) return;
+  var down = false, startX = 0, scrollLeft = 0;
+  el.addEventListener('mousedown', function(e) {
+    down = true;
+    startX = e.pageX - el.offsetLeft;
+    scrollLeft = el.scrollLeft;
+    el.style.userSelect = 'none';
+  });
+  el.addEventListener('mouseleave', function() { down = false; el.style.userSelect = ''; });
+  el.addEventListener('mouseup', function() { down = false; el.style.userSelect = ''; });
+  el.addEventListener('mousemove', function(e) {
+    if (!down) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX);
+  });
 }
-['ds-feat','ds-web','mf','mw'].forEach(id=>dragScroll(document.getElementById(id)));
+
+dragScroll(document.getElementById('dsFeat'));
+dragScroll(document.getElementById('dsWeb'));
+dragScroll(document.getElementById('mFeat'));
+dragScroll(document.getElementById('mWeb'));
+
+/* ─── DESKTOP shortcut ref ──────────────────────── */
+var dcR = document.getElementById('dcR');
 </script>
 </body>
 </html>
