@@ -9,73 +9,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cairo:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-/* ─── VARIABLES ─────────────────────────────────── */
-:root {
-  --bg:    #1A120B;
-  --bgm:   #3C2A21;
-  --bgc:   #2A1F17;
-  --cream: #FFFDD0;
-  --gold:  #EAD39B;
-  --warm:  #D4A96A;
-  --glow:  #C8943A;
-  --t1:    #FFFDD0;
-  --t2:    #B8A898;
-  --t3:    #7A6A5A;
-  --bd:    rgba(234,211,155,0.12);
-  --bdh:   rgba(234,211,155,0.35);
-  --gg:    linear-gradient(135deg,#EAD39B 0%,#C8943A 50%,#A0722A 100%);
-  --gc:    linear-gradient(145deg,#2A1F17 0%,#1E1510 100%);
-  --gs:    linear-gradient(105deg,transparent 40%,rgba(234,211,155,0.07) 50%,transparent 60%);
-}
-
-/* ─── RESET ─────────────────────────────────────── */
+:root{--bg:#1A120B;--bgm:#3C2A21;--bgc:#2A1F17;--cream:#FFFDD0;--gold:#EAD39B;--warm:#D4A96A;--glow:#C8943A;--t1:#FFFDD0;--t2:#B8A898;--t3:#7A6A5A;--bd:rgba(234,211,155,0.12);--bdh:rgba(234,211,155,0.35);--gg:linear-gradient(135deg,#EAD39B 0%,#C8943A 50%,#A0722A 100%);--gc:linear-gradient(145deg,#2A1F17 0%,#1E1510 100%);--gs:linear-gradient(105deg,transparent 40%,rgba(234,211,155,0.07) 50%,transparent 60%)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
-
-/* noise */
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
-
-/* ambient blobs */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
 .amb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
 .a1{width:500px;height:500px;background:radial-gradient(circle,#C8943A,transparent 70%);top:-100px;right:-80px;opacity:.09;animation:fl 8s ease-in-out infinite}
 .a2{width:400px;height:400px;background:radial-gradient(circle,#8B5E2E,transparent 70%);bottom:15%;left:-100px;opacity:.09;animation:fl 12s ease-in-out infinite reverse}
 .a3{width:300px;height:300px;background:radial-gradient(circle,#EAD39B,transparent 70%);top:45%;right:12%;opacity:.05;animation:fl 10s ease-in-out infinite 3s}
-@keyframes fl{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(16px,-24px)scale(1.04)}}
-
-/* scrollbars */
+@keyframes fl{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(16px,-24px) scale(1.04)}}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-thumb{background:var(--bgm);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--warm)}
-
-/* ─── DESKTOP: 3-COL LAYOUT ──────────────────────── */
 .desk{display:none;position:relative;z-index:1;height:100vh;overflow:hidden}
 .desk-cols{display:grid;grid-template-columns:1fr 1fr 1fr;height:100vh}
 .dc{height:100vh;overflow-y:auto;overflow-x:hidden;padding:46px 32px 60px;border-right:1px solid var(--bd);scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
 .dc:last-child{border-right:none}
-
-/* ─── MOBILE: PAGE LAYOUT ────────────────────────── */
 .mob{display:none;position:relative;z-index:1;min-height:100vh}
 .mp{display:none;flex-direction:column;padding:28px 18px 20px;min-height:100vh}
 .mp.act{display:flex}
-
-/* ─── BOTTOM NAV ─────────────────────────────────── */
 .bnav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(26,18,11,.97);backdrop-filter:blur(20px);border-top:1px solid var(--bd);padding:8px 0}
 .bnav-i{display:flex;justify-content:space-around}
 .bnt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 12px;color:var(--t3);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;background:none;font-family:'Cairo',sans-serif;transition:color .25s}
 .bnt i{font-size:17px}
 .bnt.on,.bnt:hover{color:var(--gold)}
-
-/* ─── AVATAR ─────────────────────────────────────── */
 .profile-block{display:flex;flex-direction:column;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--bd);margin-bottom:20px}
 .av-wrap{position:relative;width:90px;height:90px}
 .av-ring{position:absolute;inset:-3px;border-radius:50%;background:var(--gg);animation:spin 8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .av-in{position:absolute;inset:2px;border-radius:50%;background:var(--gc);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold);border:2px solid var(--bg);overflow:hidden}
 .av-in img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:none}
-
-/* ─── PROFILE TEXT ───────────────────────────────── */
 .pname{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;background:linear-gradient(90deg,var(--gold) 0%,var(--cream) 40%,var(--glow) 60%,var(--gold) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shi 4s linear infinite}
 @keyframes shi{0%{background-position:-200% center}100%{background-position:200% center}}
 .ptitle{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--gold);text-align:center;letter-spacing:2px;text-transform:uppercase}
@@ -83,10 +47,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;padding:3px 10px;border-radius:20px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.25);color:var(--warm);letter-spacing:1px;text-transform:uppercase}
 .bdot{width:5px;height:5px;border-radius:50%;background:var(--warm);animation:pu 2s ease infinite}
 @keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-
-/* ─── TAGS & HEADINGS ────────────────────────────── */
 .stag{display:inline-block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--warm);padding:3px 10px;border:1px solid rgba(200,148,58,.3);border-radius:3px;background:rgba(200,148,58,.05)}
-.mhead{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--cream);margin-bottom:8px;line-height:1.4}
 .abigh{font-family:'Playfair Display',serif;font-size:27px;font-weight:900;color:var(--cream);line-height:1.25;margin-bottom:14px}
 .abigh span{background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
@@ -94,22 +55,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .sec-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream)}
 .sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--bdh),transparent)}
 .divl{height:1px;background:linear-gradient(90deg,transparent,var(--bdh),transparent);margin:20px 0}
-
-/* ─── TEXT ───────────────────────────────────────── */
 .txt{font-size:12px;color:var(--t2);line-height:2;font-weight:300}
 .txt strong{color:var(--gold);font-weight:700}
-.txt em{color:var(--cream);font-style:normal;font-weight:500}
-
-/* ─── SKILL CAPSULES ─────────────────────────────── */
 .sk-sec{padding:16px 0}
 .sk-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:10px;font-weight:600}
 .sk-g{margin-bottom:10px}
 .sk-gn{font-size:9px;color:var(--warm);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
 .caps{display:flex;flex-wrap:wrap;gap:4px}
 .cap{font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid var(--bd);color:var(--t2);background:rgba(255,255,255,.02);transition:all .25s;cursor:default;white-space:nowrap}
-.cap:hover{border-color:var(--gold);color:var(--gold);background:rgba(234,211,155,.07);box-shadow:0 0 10px rgba(200,148,58,.2);transform:translateY(-1px)}
-
-/* ─── BUTTONS ────────────────────────────────────── */
+.cap:hover{border-color:var(--gold);color:var(--gold);background:rgba(234,211,155,.07);transform:translateY(-1px)}
 .btng{display:flex;flex-direction:column;gap:7px;padding-top:14px;border-top:1px solid var(--bd)}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;letter-spacing:.5px;border:none;position:relative;overflow:hidden}
 .btn::after{content:'';position:absolute;inset:0;background:var(--gs);transform:translateX(-100%);transition:transform .5s}
@@ -117,41 +71,32 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .btn-p{background:var(--gg);color:#1A120B;box-shadow:0 4px 18px rgba(200,148,58,.3)}
 .btn-p:hover{box-shadow:0 6px 28px rgba(200,148,58,.55);transform:translateY(-2px)}
 .btn-o{background:transparent;color:var(--gold);border:1px solid var(--bdh)}
-.btn-o:hover{background:rgba(234,211,155,.07);border-color:var(--gold);box-shadow:0 4px 18px rgba(200,148,58,.15);transform:translateY(-2px)}
+.btn-o:hover{background:rgba(234,211,155,.07);border-color:var(--gold);transform:translateY(-2px)}
 .btn-g{background:rgba(255,255,255,.03);color:var(--t2);border:1px solid var(--bd)}
 .btn-g:hover{background:rgba(255,255,255,.06);color:var(--t1);border-color:var(--bdh);transform:translateY(-2px)}
-.btn i{font-size:12px;position:relative;z-index:1}
-.btn span{position:relative;z-index:1}
-
-/* ─── WORKFLOW ───────────────────────────────────── */
+.btn i,.btn span{position:relative;z-index:1}
 .wfg{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
 .wfi{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:6px;background:rgba(255,255,255,.02);border:1px solid var(--bd);transition:all .25s;cursor:default}
 .wfi:hover{background:rgba(234,211,155,.05);border-color:var(--bdh);transform:translateX(-2px)}
 .wfn{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--warm);font-style:italic;min-width:18px;line-height:1}
 .wft{font-size:10px;color:var(--t2)}
-
-/* ─── STATS ──────────────────────────────────────── */
 .srow{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
 .sbox{padding:12px;border-radius:8px;background:var(--gc);border:1px solid var(--bd);text-align:center;transition:all .3s;position:relative;overflow:hidden}
 .sbox::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--gg);transform:scaleX(0);transition:transform .3s}
 .sbox:hover::before{transform:scaleX(1)}
-.sbox:hover{border-color:var(--bdh);box-shadow:0 4px 18px rgba(200,148,58,.1);transform:translateY(-2px)}
+.sbox:hover{border-color:var(--bdh);transform:translateY(-2px)}
 .snum{font-family:'Playfair Display',serif;font-size:25px;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .slbl{font-size:9px;color:var(--t3);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
-
-/* ─── WHY CARD ───────────────────────────────────── */
 .why-card{background:var(--gc);border:1px solid var(--bd);border-radius:12px;padding:18px;position:relative;overflow:hidden}
 .why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg)}
 .why-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--cream);margin-bottom:9px;display:flex;align-items:center;gap:8px}
 .why-txt{font-size:12px;color:var(--t2);line-height:2}
 .why-txt strong{color:var(--warm);font-weight:600}
-
-/* ─── SKILL ROWS ─────────────────────────────────── */
 .skt{display:flex;flex-direction:column;gap:10px;margin-top:6px}
 .skr{border:1px solid var(--bd);border-radius:10px;padding:12px 14px;background:var(--gc);transition:all .3s;position:relative;overflow:hidden}
 .skr::after{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:var(--gg);transform:scaleY(0);transition:transform .3s;transform-origin:bottom}
 .skr:hover::after{transform:scaleY(1)}
-.skr:hover{border-color:var(--bdh);box-shadow:0 4px 18px rgba(200,148,58,.08);transform:translateX(-2px)}
+.skr:hover{border-color:var(--bdh);transform:translateX(-2px)}
 .skrh{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .skri{width:29px;height:29px;border-radius:6px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.2);display:flex;align-items:center;justify-content:center;color:var(--warm);font-size:11px;flex-shrink:0}
 .skrn{font-size:11px;font-weight:700;color:var(--cream)}
@@ -160,8 +105,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .st-p{background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.25);color:var(--warm)}
 .skrc{display:flex;flex-wrap:wrap;gap:4px}
 .skrcap{font-size:9px;padding:2px 8px;border-radius:10px;border:1px solid var(--bd);color:var(--t3);background:rgba(255,255,255,.02)}
-
-/* ─── SOCIAL CIRCLES ─────────────────────────────── */
 .sc-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
 .sc-item{display:flex;flex-direction:column;align-items:center;gap:5px}
 .sc-btn{width:45px;height:45px;border-radius:50%;border:1px solid var(--bd);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:17px;text-decoration:none;transition:all .35s;position:relative;overflow:hidden}
@@ -170,49 +113,47 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .sc-btn:hover::before{opacity:.15}
 .sc-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 28px rgba(200,148,58,.2)}
 .sc-lbl{font-size:8px;letter-spacing:1px;color:var(--t3);text-transform:uppercase}
-
-/* ─── HORIZONTAL SCROLL ──────────────────────────── */
 .hswrap{overflow-x:auto;padding-bottom:10px;cursor:grab;scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
 .hswrap:active{cursor:grabbing}
 .hrow{display:flex;gap:11px;width:max-content}
-
-/* featured cards */
-.fcard{width:158px;height:218px;border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;background:var(--gc);transition:all .35s}
+/* FEATURED CARDS */
+.fcard{width:158px;height:158px;border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;background:var(--gc);transition:all .35s}
 .fcard:hover{transform:translateY(-6px) scale(1.02);border-color:var(--bdh);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 28px rgba(200,148,58,.12)}
 .fcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:2}
 .fcard:hover::before{transform:scaleX(1)}
-.fph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--warm);opacity:.2;transition:all .4s}
-.fcard:hover .fph{opacity:.1;transform:scale(1.1)}
-.fov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.88) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:13px;opacity:0;transition:opacity .35s}
+.fcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.8);transition:all .4s}
+.fcard:hover .fcard-img{filter:brightness(.38) saturate(.6) scale(1.05)}
+.fcard-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--warm);opacity:.22;transition:all .4s}
+.fcard:hover .fcard-icon{opacity:.1;transform:scale(1.1)}
+.fov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.88) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:13px;opacity:0;transition:opacity .35s;z-index:2}
 .fcard:hover .fov{opacity:1}
 .fname{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--cream);text-align:center}
 .ftag{font-size:9px;color:var(--gold);text-align:center;letter-spacing:1px;text-transform:uppercase;margin-top:3px}
-
-/* system cards */
+/* SYSTEM CARDS */
 .sygrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 .sycard{border-radius:12px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;position:relative;height:162px;background:var(--gc);transition:all .35s}
 .sycard:hover{border-color:var(--bdh);box-shadow:0 12px 38px rgba(0,0,0,.5),0 0 22px rgba(200,148,58,.1);transform:translateY(-4px)}
 .sycard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:3}
 .sycard:hover::before{transform:scaleX(1)}
+.sycard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.35) saturate(.6)}
 .sybg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px;color:var(--warm);opacity:.12;transition:all .35s}
 .sycard:hover .sybg{opacity:.07;transform:scale(1.1)}
-.syfoot{position:absolute;bottom:0;left:0;right:0;padding:11px 13px;background:linear-gradient(180deg,transparent 0%,rgba(26,18,11,.96) 100%);z-index:2}
+.syfoot{position:absolute;bottom:0;left:0;right:0;padding:11px 13px;background:linear-gradient(180deg,transparent,rgba(26,18,11,.96) 100%);z-index:2}
 .syname{font-family:'Playfair Display',serif;font-size:12px;font-weight:700;color:var(--cream);margin-bottom:3px}
 .sydesc{font-size:9px;color:var(--t2);line-height:1.5}
-.sybadge{position:absolute;top:9px;right:9px;z-index:2;font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(200,148,58,.12);border:1px solid rgba(200,148,58,.3);color:var(--warm);letter-spacing:1px;text-transform:uppercase}
-
-/* web cards */
-.wcard{width:195px;height:148px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;position:relative;background:var(--gc);transition:all .35s}
+.sybadge{position:absolute;top:9px;right:9px;z-index:4;font-size:8px;padding:2px 7px;border-radius:10px;background:rgba(200,148,58,.12);border:1px solid rgba(200,148,58,.3);color:var(--warm);letter-spacing:1px;text-transform:uppercase}
+/* WEB CARDS */
+.wcard{width:148px;height:148px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);cursor:pointer;flex-shrink:0;position:relative;background:var(--gc);transition:all .35s}
 .wcard:hover{transform:translateY(-5px) scale(1.02);border-color:var(--bdh);box-shadow:0 16px 38px rgba(0,0,0,.5),0 0 22px rgba(200,148,58,.1)}
 .wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gg);transform:scaleX(0);transition:transform .3s;z-index:2}
 .wcard:hover::before{transform:scaleX(1)}
+.wcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.7)}
 .wcbg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--warm);opacity:.18;transition:all .4s}
 .wcard:hover .wcbg{opacity:.08;transform:scale(1.1)}
-.wcov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 28%,rgba(26,18,11,.92) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px;z-index:1}
+.wcov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(26,18,11,.92) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px;z-index:1}
 .wcname{font-family:'Playfair Display',serif;font-size:12px;font-weight:600;color:var(--cream)}
 .wctag{font-size:9px;color:var(--warm);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
-
-/* ─── CONTACT FORM ───────────────────────────────── */
+/* CONTACT */
 .cform{display:flex;flex-direction:column;gap:10px}
 .flbl{display:block;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
 .finp,.ftea{width:100%;padding:10px 13px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--bd);color:var(--t1);font-family:'Cairo',sans-serif;font-size:12px;outline:none;transition:all .3s;resize:none}
@@ -220,13 +161,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .ftea{height:100px}
 .finp::placeholder,.ftea::placeholder{color:var(--t3)}
 .cirow{display:flex;flex-direction:column;gap:9px;margin-top:14px}
-.cicard{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;background:var(--gc);border:1px solid var(--bd);transition:all .3s}
-.cicard:hover{border-color:var(--bdh);transform:translateX(-3px);box-shadow:0 5px 18px rgba(200,148,58,.08)}
+.cicard{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;background:var(--gc);border:1px solid var(--bd);transition:all .3s;text-decoration:none}
+.cicard:hover{border-color:var(--bdh);transform:translateX(-3px)}
 .ciico{width:33px;height:33px;border-radius:7px;background:rgba(200,148,58,.1);border:1px solid rgba(200,148,58,.2);display:flex;align-items:center;justify-content:center;color:var(--warm);font-size:13px;flex-shrink:0}
 .cival{font-size:11px;color:var(--t1)}
 .cilbl{font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-
-/* ─── FOOTER ─────────────────────────────────────── */
+/* FOOTER */
 .footer{background:#0D0905;border-top:1px solid var(--bd);padding:26px 32px 16px;margin:0 -32px}
 .ftop{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:18px}
 .flogo{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
@@ -238,719 +178,823 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .flinks i{font-size:9px}
 .fsoc{display:flex;gap:7px;margin-top:10px}
 .fsbtn{width:30px;height:30px;border-radius:50%;border:1px solid var(--bd);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:11px;text-decoration:none;transition:all .3s}
-.fsbtn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);box-shadow:0 5px 13px rgba(200,148,58,.15)}
+.fsbtn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
 .fbot{border-top:1px solid var(--bd);padding-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px}
 .fcopy,.fmade{font-size:9px;color:var(--t3)}
 .fmade span{color:var(--warm)}
-
-/* mobile footer fix */
-@media(max-width:899px){
-  .footer{margin:0 -18px;padding:26px 18px 16px}
-}
-
-/* ─── MODAL ──────────────────────────────────────── */
+/* MODAL */
 .movl{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);z-index:1000;display:none;align-items:center;justify-content:center;padding:18px}
 .movl.open{display:flex}
-.mbox{background:linear-gradient(145deg,#261E1A 0%,#1E1510 100%);border:1px solid var(--bdh);border-radius:16px;width:100%;max-width:580px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.65),0 0 55px rgba(200,148,58,.1);animation:min .35s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
-@keyframes min{from{opacity:0;transform:scale(.88) translateY(22px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mbox{background:linear-gradient(145deg,#261E1A,#1E1510);border:1px solid var(--bdh);border-radius:16px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.65),0 0 55px rgba(200,148,58,.1);animation:mIn .35s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:var(--bgm) transparent}
+@keyframes mIn{from{opacity:0;transform:scale(.88) translateY(22px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .mhdr{padding:20px 24px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;background:#261E1A;border-radius:16px 16px 0 0;z-index:2}
 .mtitle{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream)}
 .msub{font-size:9px;color:var(--warm);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
 .mcls{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s;flex-shrink:0}
 .mcls:hover{background:rgba(255,255,255,.1);color:var(--t1);border-color:var(--bdh);transform:rotate(90deg)}
 .mbdy{padding:20px 24px}
-.mgal{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
-.mth{height:88px;border-radius:8px;background:linear-gradient(135deg,#3C2A21,#2A1F17);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--warm);opacity:.5;border:1px solid var(--bd);transition:all .25s}
-.mth:hover{border-color:var(--bdh);opacity:.8;transform:scale(1.03)}
+.mgal-wrap{position:relative;margin-bottom:16px;border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.mgal-track{display:flex;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+.mgal-slide{min-width:100%;height:210px;flex-shrink:0;background:var(--gc);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mgal-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.mgal-icon{font-size:64px;color:var(--warm);opacity:.25}
+.mgal-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(26,18,11,.75);border:1px solid var(--bdh);color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s;z-index:3;backdrop-filter:blur(4px)}
+.mgal-nav:hover{background:rgba(200,148,58,.2);border-color:var(--gold)}
+.mgal-prev{left:10px}
+.mgal-next{right:10px}
+.mgal-dots{display:flex;justify-content:center;gap:6px;padding:10px 0 4px}
+.mgal-dot{width:6px;height:6px;border-radius:50%;background:rgba(234,211,155,.15);border:1px solid var(--bdh);cursor:pointer;transition:all .25s}
+.mgal-dot.on{background:var(--warm);border-color:var(--warm);transform:scale(1.2)}
 .mdesc{font-size:12px;color:var(--t2);line-height:2;margin-bottom:12px}
 .mtechs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
 .mtech{font-size:10px;padding:3px 10px;border-radius:20px;background:rgba(200,148,58,.08);border:1px solid rgba(200,148,58,.2);color:var(--gold)}
 .mbtns{display:flex;gap:8px}
 .mbtns .btn{flex:1;font-size:11px}
-
-/* ─── RESPONSIVE ─────────────────────────────────── */
-@media(min-width:900px){
-  .desk{display:block}
-  .mob{display:none}
-  .bnav{display:none !important}
-}
-@media(max-width:899px){
-  .desk{display:none}
-  .mob{display:block}
-  .bnav{display:block}
-  body{padding-bottom:68px}
-  .sygrid{grid-template-columns:1fr 1fr}
-  .mgal{grid-template-columns:1fr 1fr}
-}
-@media(max-width:480px){
-  .fcard{width:145px;height:198px}
-  .wcard{width:170px;height:132px}
-  .sygrid{grid-template-columns:1fr}
-}
+@media(min-width:900px){.desk{display:block}.mob{display:none}.bnav{display:none!important}}
+@media(max-width:899px){.desk{display:none}.mob{display:block}.bnav{display:block}body{padding-bottom:68px}.sygrid{grid-template-columns:1fr 1fr}.footer{margin:0 -18px;padding:26px 18px 16px}}
+@media(max-width:480px){.fcard{width:145px;height:145px}.wcard{width:132px;height:132px}.sygrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="amb a1"></div><div class="amb a2"></div><div class="amb a3"></div>
 
-<div class="amb a1"></div>
-<div class="amb a2"></div>
-<div class="amb a3"></div>
+<!-- DESKTOP -->
+<div class="desk"><div class="desk-cols">
 
-<!-- ═══════════════════════════════════════════════════════
-     DESKTOP — 3 Independent Scrollable Columns
-═══════════════════════════════════════════════════════ -->
-<div class="desk">
- <div class="desk-cols">
+<!-- LEFT: Home -->
+<div class="dc" id="dcL">
+<div class="profile-block">
+<div class="av-wrap"><div class="av-ring"></div><div class="av-in" id="avD"><img id="avD-img" src="" alt="Abdullah"><span id="avD-txt">A</span></div></div>
+<div class="pname">Abdullah Adnan</div><div class="ptitle">Product Systems Builder</div>
+<div class="badge"><span class="bdot"></span> Available for Work</div>
+<p class="ptagline">"Specializing in building high-quality,<br>functional web systems at record speed."</p>
+</div>
+<div class="stag" style="margin-bottom:10px">Impact</div>
+<div class="srow">
+<div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
+<div class="sbox"><div class="snum">3+</div><div class="slbl">Admin Systems</div></div>
+<div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
+<div class="sbox"><div class="snum">&#8734;</div><div class="slbl">Scalable</div></div>
+</div>
+<div class="divl"></div>
+<div class="sk-sec" style="padding-top:0">
+<div class="sk-lbl">Core Technologies</div>
+<div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
+<div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
+<div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">DB Design</span><span class="cap">Auth</span></div></div>
+<div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:10px">My Workflow</div>
+<div class="wfg">
+<div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div><div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
+<div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div><div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
+<div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div><div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
+<div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div><div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:10px">Why Work With Me</div>
+<p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design.</strong></p>
+<div class="why-card" style="margin-bottom:18px">
+<div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
+<p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong>. AI-augmented workflow for rapid, high-quality delivery.</p>
+</div>
+<div class="btng" id="d-cta-btns"></div>
+</div>
 
-  <!-- ▌LEFT: Home content -->
-  <div class="dc" id="dcL">
+<!-- MID: About -->
+<div class="dc" id="dcM">
+<div class="stag" style="margin-bottom:14px">About Me</div>
+<div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
+<p class="txt" style="margin-bottom:11px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
+<p class="txt" style="margin-bottom:11px">I don't just write code — I design the entire thinking behind a system: how data flows, how users interact, how businesses scale. Every project is treated as a <strong>real product.</strong></p>
+<p class="txt">Currently leveling up with <strong>React.js</strong> while actively delivering with pure JavaScript, Firebase, and Node.js.</p>
+<div class="why-card" style="margin:18px 0">
+<div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
+<p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong> Honest about skill level, committed to growth.</p>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:13px">Skills &amp; Stack</div>
+<div class="skt">
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Firestore</span><span class="skrcap">Firebase Hosting</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div><div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">State Management</span><span class="skrcap">Hands-on Soon</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div><div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div></div>
+</div>
+</div>
 
-   <div class="profile-block">
-    <div class="av-wrap">
-     <div class="av-ring"></div>
-     <div class="av-in" id="avD">
-      <!-- 📸 صورة البروفايل: غيّر src في JS أسفل الصفحة (PHOTO_URL) -->
-      <img id="avD-img" src="" alt="Abdullah">
-      <span id="avD-txt">A</span>
-     </div>
-    </div>
-    <div class="pname">Abdullah Adnan</div>
-    <div class="ptitle">Product Systems Builder</div>
-    <div class="badge"><span class="bdot"></span> Available for Work</div>
-    <p class="ptagline">"Specializing in building high-quality,<br>functional web systems at record speed."</p>
-   </div>
+<!-- RIGHT: Works + Contact -->
+<div class="dc" id="dcR">
+<div id="d-socials" class="sc-row"></div>
+<div style="margin-bottom:30px"><div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div><div class="hswrap" id="dsFeat"><div class="hrow" id="dsFeatRow"></div></div></div>
+<div style="margin-bottom:30px"><div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div><div class="sygrid" id="dsSysGrid"></div></div>
+<div style="margin-bottom:30px"><div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div><div class="hswrap" id="dsWeb"><div class="hrow" id="dsWebRow"></div></div></div>
+<div class="divl"></div>
+<div style="margin-bottom:26px">
+<div class="sec-hdr"><i class="fa-solid fa-paper-plane"></i><div class="sec-title">Let's Build Together</div><div class="sec-line"></div></div>
+<div class="cform">
+<div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
+<div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
+<div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project..."></textarea></div>
+<button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i><span>Send Message</span></button>
+</div>
+<div id="d-cinfo" class="cirow"></div>
+</div>
+<div class="footer">
+<div class="ftop">
+<div><div class="flogo">Abdullah</div><div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div><div class="fsoc" id="d-fsoc"></div></div>
+<div><div class="fc-ttl">Quick Access</div>
+<ul class="flinks">
+<li><a onclick="document.getElementById('dcL').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-house"></i> Home</a></li>
+<li><a onclick="document.getElementById('dcM').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-user"></i> About Me</a></li>
+<li><a onclick="document.getElementById('dcR').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
+<li><a onclick="document.getElementById('dcR').scrollTo({top:99999,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="fbot"><div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div><div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div></div>
+</div>
+</div>
 
-   <div class="stag" style="margin-bottom:10px">Impact</div>
-   <div class="srow">
-    <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
-    <div class="sbox"><div class="snum">3+</div><div class="slbl">Admin Systems</div></div>
-    <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
-    <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
-   </div>
+</div></div><!-- /desk -->
 
-   <div class="divl"></div>
-
-   <div class="sk-sec" style="padding-top:0">
-    <div class="sk-lbl">Core Technologies</div>
-    <div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
-    <div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
-    <div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">DB Design</span><span class="cap">Auth</span></div></div>
-    <div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
-   </div>
-
-   <div class="divl"></div>
-
-   <div class="stag" style="margin-bottom:10px">My Workflow</div>
-   <div class="wfg">
-    <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
-    <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
-    <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
-    <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
-    <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
-    <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
-    <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
-    <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
-   </div>
-
-   <div class="divl"></div>
-
-   <div class="stag" style="margin-bottom:10px">Why Work With Me</div>
-   <p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design.</strong></p>
-   <div class="why-card" style="margin-bottom:18px">
-    <div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
-    <p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong> with hands-on projects coming soon. AI-augmented workflow for rapid, high-quality delivery.</p>
-   </div>
-
-   <div class="btng">
-    <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> <span>View SPMS System</span></button>
-    <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> <span>Download CV</span></a>
-    <button class="btn btn-g" onclick="dcR.scrollTo({top:dcR.scrollHeight,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> <span>Contact Me</span></button>
-   </div>
-
-  </div><!-- /left -->
-
-
-  <!-- ▌MID: About content -->
-  <div class="dc" id="dcM">
-
-   <div class="stag" style="margin-bottom:14px">About Me</div>
-   <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
-   <p class="txt" style="margin-bottom:11px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
-   <p class="txt" style="margin-bottom:11px">I don't just write code — I design the entire thinking behind a system: how data flows, how users interact, how businesses scale. Every project is treated as a <strong>real product.</strong></p>
-   <p class="txt">Currently leveling up with <strong>React.js</strong> and deeper backend architecture, while actively delivering with pure JavaScript, Firebase, and Node.js.</p>
-
-   <div class="why-card" style="margin:18px 0">
-    <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
-    <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong> Honest about my skill level, committed to growth, AI-powered to deliver.</p>
-   </div>
-
-   <div class="divl"></div>
-
-   <div class="stag" style="margin-bottom:13px">Skills &amp; Stack</div>
-   <div class="skt">
-    <div class="skr">
-     <div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div>
-     <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span><span class="skrcap">DOM Manipulation</span></div>
-    </div>
-    <div class="skr">
-     <div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div>
-     <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
-    </div>
-    <div class="skr">
-     <div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div>
-     <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Firebase Hosting</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
-    </div>
-    <div class="skr">
-     <div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div>
-     <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">State Management</span><span class="skrcap">Hands-on Soon</span></div>
-    </div>
-    <div class="skr">
-     <div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div>
-     <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
-    </div>
-   </div>
-
-  </div><!-- /mid -->
-
-
-  <!-- ▌RIGHT: Works + Contact + Footer -->
-  <div class="dc" id="dcR">
-
-   <div class="sc-row">
-    <div class="sc-item"><a href="https://www.instagram.com/abdo_k2r2?igsh=MWV6b3dhMjlhaWR4Yg==" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
-    <div class="sc-item"><a href="https://github.com/abdo-a2026" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
-    <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
-    <div class="sc-item"><a href="mailto:bwdy72937@gmail.com" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
-    <div class="sc-item"><a href="https://wa.me/9647750479081" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
-   </div>
-
-   <div style="margin-bottom:30px">
-    <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
-    <div class="hswrap" id="dsFeat">
-     <div class="hrow">
-      <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
-      <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
-      <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation Platform</div></div></div>
-      <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Analytics Dashboard</div><div class="ftag">Data Visualization</div></div></div>
-      <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Platform</div></div></div>
-     </div>
-    </div>
-   </div>
-
-   <div style="margin-bottom:30px">
-    <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
-    <div class="sygrid">
-     <div class="sycard" onclick="openModal('spms')"><div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div><div class="sybadge">Management</div><div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades, attendance &amp; performance.</div></div></div>
-     <div class="sycard" onclick="openModal('clinic')"><div class="sybg"><i class="fa-solid fa-hospital"></i></div><div class="sybadge">Medical</div><div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records &amp; billing.</div></div></div>
-     <div class="sycard" onclick="openModal('booking')"><div class="sybg"><i class="fa-solid fa-calendar-check"></i></div><div class="sybadge">Booking</div><div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservations.</div></div></div>
-     <div class="sycard" onclick="openModal('business')"><div class="sybg"><i class="fa-solid fa-briefcase"></i></div><div class="sybadge">ERP</div><div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing &amp; HR.</div></div></div>
-    </div>
-   </div>
-
-   <div style="margin-bottom:30px">
-    <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
-    <div class="hswrap" id="dsWeb">
-     <div class="hrow">
-      <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
-      <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
-      <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
-      <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
-      <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Dashboard</div><div class="wctag">Data-Driven</div></div></div>
-     </div>
-    </div>
-   </div>
-
-   <div class="divl"></div>
-
-   <div style="margin-bottom:26px">
-    <div class="sec-hdr"><i class="fa-solid fa-paper-plane"></i><div class="sec-title">Let's Build Together</div><div class="sec-line"></div></div>
-    <div class="cform">
-     <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
-     <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
-     <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project..."></textarea></div>
-     <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> <span>Send Message</span></button>
-    </div>
-    <div class="cirow">
-     <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">bwdy72937@gmail.com</div></div></div>
-     <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
-     <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
-    </div>
-   </div>
-
-   <div class="footer">
-    <div class="ftop">
-     <div>
-      <div class="flogo">Abdullah</div>
-      <div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div>
-      <div class="fsoc">
-       <a href="https://www.instagram.com/abdo_k2r2?igsh=MWV6b3dhMjlhaWR4Yg==" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
-       <a href="https://github.com/abdo-a2026" class="fsbtn"><i class="fa-brands fa-github"></i></a>
-       <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
-       <a href="https://wa.me/9647750479081" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
-      </div>
-     </div>
-     <div>
-      <div class="fc-ttl">Quick Access</div>
-      <ul class="flinks">
-       <li><a onclick="document.getElementById('dcL').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-house"></i> Home</a></li>
-       <li><a onclick="document.getElementById('dcM').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-user"></i> About Me</a></li>
-       <li><a onclick="document.getElementById('dcR').scrollTo({top:0,behavior:'smooth'})"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
-       <li><a onclick="document.getElementById('dcR').scrollTo({top:99999,behavior:'smooth'})"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-      </ul>
-     </div>
-    </div>
-    <div class="fbot">
-     <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
-     <div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div>
-    </div>
-   </div>
-
-  </div><!-- /right -->
-
- </div>
-</div><!-- /desk -->
-
-
-<!-- ═══════════════════════════════════════════════════════
-     MOBILE — 4 Pages
-═══════════════════════════════════════════════════════ -->
+<!-- MOBILE -->
 <div class="mob">
 
- <!-- PAGE: HOME -->
- <div class="mp act" id="mp-home">
+<!-- HOME -->
+<div class="mp act" id="mp-home">
+<div class="profile-block">
+<div class="av-wrap"><div class="av-ring"></div><div class="av-in" id="avM"><img id="avM-img" src="" alt="Abdullah"><span id="avM-txt">A</span></div></div>
+<div class="pname">Abdullah Adnan</div><div class="ptitle">Product Systems Builder</div>
+<div class="badge"><span class="bdot"></span> Available for Work</div>
+<p class="ptagline">"Specializing in building high-quality, functional web systems at record speed."</p>
+</div>
+<div class="stag" style="margin-bottom:10px">Impact</div>
+<div class="srow" style="margin-bottom:18px">
+<div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
+<div class="sbox"><div class="snum">3+</div><div class="slbl">Admin Systems</div></div>
+<div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
+<div class="sbox"><div class="snum">&#8734;</div><div class="slbl">Scalable</div></div>
+</div>
+<div class="divl"></div>
+<div class="sk-sec" style="padding-top:0">
+<div class="sk-lbl">Core Technologies</div>
+<div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
+<div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
+<div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">Auth</span></div></div>
+<div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:10px">My Workflow</div>
+<div class="wfg" style="margin-bottom:18px">
+<div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div><div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
+<div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div><div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
+<div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div><div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
+<div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div><div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
+</div>
+<div class="btng" id="m-cta-btns"></div>
+</div>
 
-  <div class="profile-block">
-   <div class="av-wrap">
-    <div class="av-ring"></div>
-    <div class="av-in" id="avM">
-     <img id="avM-img" src="" alt="Abdullah">
-     <span id="avM-txt">A</span>
-    </div>
-   </div>
-   <div class="pname">Abdullah Adnan</div>
-   <div class="ptitle">Product Systems Builder</div>
-   <div class="badge"><span class="bdot"></span> Available for Work</div>
-   <p class="ptagline">"Specializing in building high-quality, functional web systems at record speed."</p>
-  </div>
+<!-- ABOUT -->
+<div class="mp" id="mp-about">
+<div class="stag" style="margin-bottom:13px">About Me</div>
+<div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
+<p class="txt" style="margin-bottom:10px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
+<p class="txt" style="margin-bottom:10px">Every project is treated as a <strong>real product</strong> — not just a deliverable.</p>
+<div class="why-card" style="margin-bottom:18px">
+<div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
+<p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong></p>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:12px">Skills &amp; Stack</div>
+<div class="skt" style="margin-bottom:18px">
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div><div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Firestore</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div><div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span></div></div>
+<div class="skr"><div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div><div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">50% Faster</span></div></div>
+</div>
+<div class="divl"></div>
+<div class="stag" style="margin-bottom:12px">Why Work With Me</div>
+<p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. I <strong>bridge complex logic with functional design</strong> — delivering in 50% less time without compromising quality.</p>
+<div class="why-card">
+<div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
+<p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. AI-augmented workflow. I don't just write code; <strong>I build solutions.</strong></p>
+</div>
+</div>
 
-  <div class="stag" style="margin-bottom:10px">Impact</div>
-  <div class="srow" style="margin-bottom:18px">
-   <div class="sbox"><div class="snum">20+</div><div class="slbl">Web Projects</div></div>
-   <div class="sbox"><div class="snum">3+</div><div class="slbl">Admin Systems</div></div>
-   <div class="sbox"><div class="snum">50%</div><div class="slbl">Faster Delivery</div></div>
-   <div class="sbox"><div class="snum">∞</div><div class="slbl">Scalable</div></div>
-  </div>
+<!-- WORKS -->
+<div class="mp" id="mp-works">
+<div id="m-socials" class="sc-row"></div>
+<div style="margin-bottom:26px"><div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div><div class="hswrap" id="mFeat"><div class="hrow" id="mFeatRow"></div></div></div>
+<div style="margin-bottom:26px"><div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div><div class="sygrid" id="mSysGrid"></div></div>
+<div style="margin-bottom:26px"><div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div><div class="hswrap" id="mWeb"><div class="hrow" id="mWebRow"></div></div></div>
+</div>
 
-  <div class="divl"></div>
-
-  <div class="sk-sec" style="padding-top:0">
-   <div class="sk-lbl">Core Technologies</div>
-   <div class="sk-g"><div class="sk-gn">Frontend</div><div class="caps"><span class="cap">HTML5</span><span class="cap">CSS3</span><span class="cap">JavaScript ES6+</span></div></div>
-   <div class="sk-g"><div class="sk-gn">Backend &amp; Cloud</div><div class="caps"><span class="cap">Firebase</span><span class="cap">Firestore</span><span class="cap">Node.js</span><span class="cap">MongoDB</span></div></div>
-   <div class="sk-g"><div class="sk-gn">Systems</div><div class="caps"><span class="cap">Admin Systems</span><span class="cap">API Design</span><span class="cap">Auth</span></div></div>
-   <div class="sk-g"><div class="sk-gn">AI Productivity</div><div class="caps"><span class="cap">Prompt Engineering</span><span class="cap">AI-Assisted Dev</span><span class="cap">Rapid Prototyping</span></div></div>
-  </div>
-
-  <div class="divl"></div>
-
-  <div class="stag" style="margin-bottom:10px">My Workflow</div>
-  <div class="wfg" style="margin-bottom:18px">
-   <div class="wfi"><span class="wfn">1</span><span class="wft">Analyze Idea</span></div>
-   <div class="wfi"><span class="wfn">2</span><span class="wft">Design Structure</span></div>
-   <div class="wfi"><span class="wfn">3</span><span class="wft">Define Schema</span></div>
-   <div class="wfi"><span class="wfn">4</span><span class="wft">Build UI</span></div>
-   <div class="wfi"><span class="wfn">5</span><span class="wft">Connect Logic</span></div>
-   <div class="wfi"><span class="wfn">6</span><span class="wft">Test Scenarios</span></div>
-   <div class="wfi"><span class="wfn">7</span><span class="wft">Optimize</span></div>
-   <div class="wfi"><span class="wfn">8</span><span class="wft">Deliver</span></div>
-  </div>
-
-  <div class="btng">
-   <button class="btn btn-p" onclick="openModal('spms')"><i class="fa-solid fa-database"></i> <span>View SPMS System</span></button>
-   <a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i> <span>Download CV</span></a>
-   <button class="btn btn-g" onclick="goPage('contact')"><i class="fa-solid fa-envelope"></i> <span>Contact Me</span></button>
-  </div>
-
- </div><!-- /home -->
-
-
- <!-- PAGE: ABOUT -->
- <div class="mp" id="mp-about">
-
-  <div class="stag" style="margin-bottom:13px">About Me</div>
-  <div class="abigh">I bridge <span>logic</span><br>and functional design.</div>
-  <p class="txt" style="margin-bottom:10px">With a background in <strong>Medical Analysis</strong> and a passion for software engineering, I build production-ready systems (like <strong>ClinicFlow Pro</strong>) using a modern, AI-augmented workflow. Delivering in <strong>50% less time</strong> without compromising quality.</p>
-  <p class="txt" style="margin-bottom:10px">Every project is treated as a <strong>real product</strong> — not just a deliverable. Currently leveling up with <strong>React.js</strong> while actively delivering with Firebase and Node.js.</p>
-
-  <div class="why-card" style="margin-bottom:18px">
-   <div class="why-title"><i class="fa-solid fa-circle-question" style="color:var(--warm)"></i> Why Me?</div>
-   <p class="why-txt">Because I value your time. I specialize in building <strong>MVPs and internal tools</strong> at speed. I don't just write code; <strong>I build solutions.</strong></p>
-  </div>
-
-  <div class="divl"></div>
-
-  <div class="stag" style="margin-bottom:12px">Skills &amp; Stack</div>
-  <div class="skt" style="margin-bottom:18px">
-   <div class="skr">
-    <div class="skrh"><div class="skri"><i class="fa-solid fa-code"></i></div><div class="skrn">Core Technologies</div><span class="skrst st-r">Production Ready</span></div>
-    <div class="skrc"><span class="skrcap">HTML5</span><span class="skrcap">CSS3</span><span class="skrcap">Pure JavaScript ES6+</span><span class="skrcap">Responsive</span></div>
-   </div>
-   <div class="skr">
-    <div class="skrh"><div class="skri"><i class="fa-solid fa-server"></i></div><div class="skrn">Systems &amp; Dashboards</div><span class="skrst st-r">Production Ready</span></div>
-    <div class="skrc"><span class="skrcap">Admin Interfaces</span><span class="skrcap">Business Logic</span><span class="skrcap">Auth Systems</span><span class="skrcap">Dashboard UI</span></div>
-   </div>
-   <div class="skr">
-    <div class="skrh"><div class="skri"><i class="fa-brands fa-google"></i></div><div class="skrn">Backend &amp; Cloud</div><span class="skrst st-r">Production Ready</span></div>
-    <div class="skrc"><span class="skrcap">Firebase Auth</span><span class="skrcap">Cloud Firestore</span><span class="skrcap">Node.js</span><span class="skrcap">MongoDB</span><span class="skrcap">REST API</span></div>
-   </div>
-   <div class="skr">
-    <div class="skrh"><div class="skri"><i class="fa-brands fa-react"></i></div><div class="skrn">Frameworks — In Progress</div><span class="skrst st-p">Leveling Up</span></div>
-    <div class="skrc"><span class="skrcap">React.js (Conceptual)</span><span class="skrcap">Component Architecture</span><span class="skrcap">Hands-on Soon</span></div>
-   </div>
-   <div class="skr">
-    <div class="skrh"><div class="skri"><i class="fa-solid fa-robot"></i></div><div class="skrn">AI Productivity</div><span class="skrst st-r">Expert Level</span></div>
-    <div class="skrc"><span class="skrcap">Prompt Engineering</span><span class="skrcap">AI-Assisted Dev</span><span class="skrcap">Rapid Prototyping</span><span class="skrcap">50% Faster</span></div>
-   </div>
-  </div>
-
-  <div class="divl"></div>
-
-  <!-- WHY WORK WITH ME -->
-  <div class="stag" style="margin-bottom:12px">Why Work With Me</div>
-  <p class="txt" style="margin-bottom:12px">I specialize in building <strong>MVPs and internal tools</strong> at a speed that helps your business launch faster. With a background in Medical Analysis and Software Engineering, I <strong>bridge complex logic with functional design</strong> — delivering in 50% less time without compromising quality.</p>
-  <div class="why-card">
-   <div class="why-title"><i class="fa-solid fa-bolt" style="color:var(--warm)"></i> Transparent. Skilled. Fast.</div>
-   <p class="why-txt">Core: HTML5, CSS3, Pure JS ES6+. Cloud via <strong>Firebase</strong>. Conceptual mastery of <strong>React.js</strong> with hands-on projects coming soon. AI-augmented workflow for rapid delivery. I don't just write code; <strong>I build solutions.</strong></p>
-  </div>
-
- </div><!-- /about -->
-
-
- <!-- PAGE: WORKS -->
- <div class="mp" id="mp-works">
-
-  <div class="sc-row">
-   <div class="sc-item"><a href="https://www.instagram.com/abdo_k2r2?igsh=MWV6b3dhMjlhaWR4Yg==" class="sc-btn"><i class="fa-brands fa-instagram"></i></a><div class="sc-lbl">Instagram</div></div>
-   <div class="sc-item"><a href="https://github.com/abdo-a2026" class="sc-btn"><i class="fa-brands fa-github"></i></a><div class="sc-lbl">GitHub</div></div>
-   <div class="sc-item"><a href="#" class="sc-btn"><i class="fa-brands fa-linkedin-in"></i></a><div class="sc-lbl">LinkedIn</div></div>
-   <div class="sc-item"><a href="mailto:bwdy72937@gmail.com" class="sc-btn"><i class="fa-solid fa-envelope"></i></a><div class="sc-lbl">Email</div></div>
-   <div class="sc-item"><a href="https://wa.me/9647750479081" class="sc-btn"><i class="fa-brands fa-whatsapp"></i></a><div class="sc-lbl">WhatsApp</div></div>
-  </div>
-
-  <div style="margin-bottom:26px">
-   <div class="sec-hdr"><i class="fa-solid fa-star"></i><div class="sec-title">Featured Works</div><div class="sec-line"></div></div>
-   <div class="hswrap" id="mFeat">
-    <div class="hrow">
-     <div class="fcard" onclick="openModal('spms')"><div class="fph"><i class="fa-solid fa-graduation-cap"></i></div><div class="fov"><div class="fname">SPMS System</div><div class="ftag">Student Management</div></div></div>
-     <div class="fcard" onclick="openModal('clinic')"><div class="fph"><i class="fa-solid fa-hospital"></i></div><div class="fov"><div class="fname">ClinicFlow Pro</div><div class="ftag">Medical System</div></div></div>
-     <div class="fcard" onclick="openModal('booking')"><div class="fph"><i class="fa-solid fa-calendar-check"></i></div><div class="fov"><div class="fname">Booking System</div><div class="ftag">Reservation</div></div></div>
-     <div class="fcard" onclick="openModal('dashboard')"><div class="fph"><i class="fa-solid fa-chart-line"></i></div><div class="fov"><div class="fname">Dashboard</div><div class="ftag">Analytics</div></div></div>
-     <div class="fcard" onclick="openModal('ecomm')"><div class="fph"><i class="fa-solid fa-cart-shopping"></i></div><div class="fov"><div class="fname">E-Commerce</div><div class="ftag">Online Store</div></div></div>
-    </div>
-   </div>
-  </div>
-
-  <div style="margin-bottom:26px">
-   <div class="sec-hdr"><i class="fa-solid fa-building"></i><div class="sec-title">Administrative Systems</div><div class="sec-line"></div></div>
-   <div class="sygrid">
-    <div class="sycard" onclick="openModal('spms')"><div class="sybg"><i class="fa-solid fa-graduation-cap"></i></div><div class="sybadge">Management</div><div class="syfoot"><div class="syname">SPMS</div><div class="sydesc">Grades &amp; attendance tracking.</div></div></div>
-    <div class="sycard" onclick="openModal('clinic')"><div class="sybg"><i class="fa-solid fa-hospital"></i></div><div class="sybadge">Medical</div><div class="syfoot"><div class="syname">ClinicFlow Pro</div><div class="sydesc">Patient records &amp; billing.</div></div></div>
-    <div class="sycard" onclick="openModal('booking')"><div class="sybg"><i class="fa-solid fa-calendar-check"></i></div><div class="sybadge">Booking</div><div class="syfoot"><div class="syname">Smart Booking</div><div class="sydesc">Real-time reservations.</div></div></div>
-    <div class="sycard" onclick="openModal('business')"><div class="sybg"><i class="fa-solid fa-briefcase"></i></div><div class="sybadge">ERP</div><div class="syfoot"><div class="syname">Business ERP</div><div class="sydesc">Invoicing &amp; HR.</div></div></div>
-   </div>
-  </div>
-
-  <div style="margin-bottom:26px">
-   <div class="sec-hdr"><i class="fa-solid fa-globe"></i><div class="sec-title">Web Projects</div><div class="sec-line"></div></div>
-   <div class="hswrap" id="mWeb">
-    <div class="hrow">
-     <div class="wcard" onclick="openModal('corp')"><div class="wcbg"><i class="fa-solid fa-building"></i></div><div class="wcov"><div class="wcname">Corporate Website</div><div class="wctag">Company Identity</div></div></div>
-     <div class="wcard" onclick="openModal('landing')"><div class="wcbg"><i class="fa-solid fa-rocket"></i></div><div class="wcov"><div class="wcname">Landing Page</div><div class="wctag">High-Conversion</div></div></div>
-     <div class="wcard" onclick="openModal('personal')"><div class="wcbg"><i class="fa-solid fa-user-tie"></i></div><div class="wcov"><div class="wcname">Personal Portfolio</div><div class="wctag">Personal Brand</div></div></div>
-     <div class="wcard" onclick="openModal('ecomm')"><div class="wcbg"><i class="fa-solid fa-store"></i></div><div class="wcov"><div class="wcname">E-Commerce</div><div class="wctag">Online Retail</div></div></div>
-     <div class="wcard" onclick="openModal('dashboard')"><div class="wcbg"><i class="fa-solid fa-chart-pie"></i></div><div class="wcov"><div class="wcname">Dashboard</div><div class="wctag">Data-Driven</div></div></div>
-    </div>
-   </div>
-  </div>
-
- </div><!-- /works -->
-
-
- <!-- PAGE: CONTACT -->
- <div class="mp" id="mp-contact">
-
-  <div style="margin-bottom:20px">
-   <div class="stag" style="margin-bottom:10px">Get In Touch</div>
-   <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--cream);margin-top:8px;line-height:1.3">Let's Build Something<br><span style="background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Together.</span></div>
-  </div>
-
-  <div class="cform" style="margin-bottom:14px">
-   <div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
-   <div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
-   <div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project idea..."></textarea></div>
-   <button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i> <span>Send Message</span></button>
-  </div>
-
-  <div class="cirow" style="margin-bottom:26px">
-   <div class="cicard"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">bwdy72937@gmail.com</div></div></div>
-   <div class="cicard"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></div>
-   <div class="cicard"><div class="ciico"><i class="fa-brands fa-linkedin-in"></i></div><div><div class="cilbl">LinkedIn</div><div class="cival">linkedin.com/in/abdullah</div></div></div>
-   <div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>
-  </div>
-
-  <div class="footer">
-   <div class="ftop">
-    <div>
-     <div class="flogo">Abdullah</div>
-     <div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div>
-     <div class="fsoc">
-      <a href="https://www.instagram.com/abdo_k2r2?igsh=MWV6b3dhMjlhaWR4Yg==" class="fsbtn"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://github.com/abdo-a2026" class="fsbtn"><i class="fa-brands fa-github"></i></a>
-      <a href="#" class="fsbtn"><i class="fa-brands fa-linkedin-in"></i></a>
-      <a href="https://wa.me/9647750479081" class="fsbtn"><i class="fa-brands fa-whatsapp"></i></a>
-     </div>
-    </div>
-    <div>
-     <div class="fc-ttl">Quick Access</div>
-     <ul class="flinks">
-      <li><a onclick="goPage('home')"><i class="fa-solid fa-house"></i> Home</a></li>
-      <li><a onclick="goPage('about')"><i class="fa-solid fa-user"></i> About Me</a></li>
-      <li><a onclick="goPage('works')"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
-      <li><a onclick="goPage('contact')"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-     </ul>
-    </div>
-   </div>
-   <div class="fbot">
-    <div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div>
-    <div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div>
-   </div>
-  </div>
-
- </div><!-- /contact -->
+<!-- CONTACT -->
+<div class="mp" id="mp-contact">
+<div style="margin-bottom:20px">
+<div class="stag" style="margin-bottom:10px">Get In Touch</div>
+<div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--cream);margin-top:8px;line-height:1.3">Let's Build Something<br><span style="background:var(--gg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Together.</span></div>
+</div>
+<div class="cform" style="margin-bottom:14px">
+<div><div class="flbl">Your Name</div><input type="text" class="finp" placeholder="Full name"></div>
+<div><div class="flbl">Email</div><input type="email" class="finp" placeholder="example@email.com"></div>
+<div><div class="flbl">Message</div><textarea class="ftea" placeholder="Describe your project idea..."></textarea></div>
+<button class="btn btn-p" onclick="handleSend(this)"><i class="fa-solid fa-paper-plane"></i><span>Send Message</span></button>
+</div>
+<div id="m-cinfo" class="cirow" style="margin-bottom:26px"></div>
+<div class="footer">
+<div class="ftop">
+<div><div class="flogo">Abdullah</div><div class="ftagl">Product Systems Builder<br>Rapid AI-Driven Developer</div><div class="fsoc" id="m-fsoc"></div></div>
+<div><div class="fc-ttl">Quick Access</div>
+<ul class="flinks">
+<li><a onclick="goPage('home')"><i class="fa-solid fa-house"></i> Home</a></li>
+<li><a onclick="goPage('about')"><i class="fa-solid fa-user"></i> About Me</a></li>
+<li><a onclick="goPage('works')"><i class="fa-solid fa-layer-group"></i> Projects</a></li>
+<li><a onclick="goPage('contact')"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="fbot"><div class="fcopy">&copy; 2025 Abdullah. All rights reserved.</div><div class="fmade">Built with <span>&#9670;</span> Pure HTML &middot; CSS &middot; JS</div></div>
+</div>
+</div>
 
 </div><!-- /mob -->
 
-
 <!-- BOTTOM NAV -->
-<nav class="bnav">
- <div class="bnav-i">
-  <button class="bnt on" onclick="goPage('home',this)"><i class="fa-solid fa-house"></i><span>Home</span></button>
-  <button class="bnt" onclick="goPage('about',this)"><i class="fa-solid fa-user"></i><span>About</span></button>
-  <button class="bnt" onclick="goPage('works',this)"><i class="fa-solid fa-layer-group"></i><span>Works</span></button>
-  <button class="bnt" onclick="goPage('contact',this)"><i class="fa-solid fa-envelope"></i><span>Contact</span></button>
- </div>
-</nav>
-
+<nav class="bnav"><div class="bnav-i">
+<button class="bnt on" onclick="goPage('home',this)"><i class="fa-solid fa-house"></i><span>Home</span></button>
+<button class="bnt" onclick="goPage('about',this)"><i class="fa-solid fa-user"></i><span>About</span></button>
+<button class="bnt" onclick="goPage('works',this)"><i class="fa-solid fa-layer-group"></i><span>Works</span></button>
+<button class="bnt" onclick="goPage('contact',this)"><i class="fa-solid fa-envelope"></i><span>Contact</span></button>
+</div></nav>
 
 <!-- MODAL -->
-<div class="movl" id="modalOverlay">
- <div class="mbox">
-  <div class="mhdr">
-   <div>
-    <div class="mtitle" id="mTitle">Project Title</div>
-    <div class="msub" id="mSub">Subtitle</div>
-   </div>
-   <button class="mcls" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div class="mbdy">
-   <div class="mgal" id="mGal"></div>
-   <p class="mdesc" id="mDesc"></p>
-   <div class="mtechs" id="mTechs"></div>
-   <div class="mbtns">
-    <a href="#" class="btn btn-p"><i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Live Demo</span></a>
-    <button class="btn btn-g" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> <span>Close</span></button>
-   </div>
-  </div>
- </div>
+<div class="movl" id="modalOvl">
+<div class="mbox">
+<div class="mhdr">
+<div><div class="mtitle" id="mTitle"></div><div class="msub" id="mSub"></div></div>
+<button class="mcls" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 </div>
-
+<div class="mbdy">
+<div class="mgal-wrap">
+<div class="mgal-track" id="mGalTrack"></div>
+<button class="mgal-nav mgal-prev" onclick="galMove(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+<button class="mgal-nav mgal-next" onclick="galMove(1)"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+<div class="mgal-dots" id="mGalDots"></div>
+<p class="mdesc" id="mDesc"></p>
+<div class="mtechs" id="mTechs"></div>
+<div class="mbtns">
+<a href="#" id="mLiveBtn" target="_blank" rel="noopener" class="btn btn-p"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Live Demo</span></a>
+<button class="btn btn-g" onclick="closeModal()"><i class="fa-solid fa-xmark"></i><span>Close</span></button>
+</div>
+</div>
+</div>
+</div>
 
 <script>
 'use strict';
 
-/* ─── PROFILE PHOTO ─────────────────────────────────
-   📸  ضع رابط صورتك هنا:
-   مثال: const PHOTO_URL = 'https://i.imgur.com/abc123.jpg';
-   أو مسار محلي: const PHOTO_URL = './my-photo.jpg';
-─────────────────────────────────────────────────── */
-var PHOTO_URL = 'public/photo_2026-02-20_17-37-50.jpg'; // ← ضع رابط صورتك هنا
+/* ══════════════════════════════════════════════════════════════
+   ██████╗  █████╗ ████████╗ █████╗     ██████╗  █████╗ ███████╗███████╗
+   ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗    ██╔══██╗██╔══██╗██╔════╝██╔════╝
+   ██║  ██║███████║   ██║   ███████║    ██████╔╝███████║███████╗█████╗  
+   ██║  ██║██╔══██║   ██║   ██╔══██║    ██╔══██╗██╔══██║╚════██║██╔══╝  
+   ██████╔╝██║  ██║   ██║   ██║  ██║    ██████╔╝██║  ██║███████║███████╗
+   ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+══════════════════════════════════════════════════════════════ */
 
+/* ────────────────────────────────────────────────────────────
+   1.  PROFILE PHOTO
+   ────────────────────────────────────────────────────────────
+   ضع رابط صورتك هنا:
+   مثال: 'https://i.imgur.com/XYZ.jpg'
+   أو مسار محلي: './my-photo.jpg'
+──────────────────────────────────────────────────────────── */
+var PHOTO_URL = 'public/photo_2026-02-20_17-37-50.jpg';   /* ← ضع رابط صورتك هنا */
+
+/* ────────────────────────────────────────────────────────────
+   2.  SOCIAL LINKS  (ضع روابطك الحقيقية هنا)
+──────────────────────────────────────────────────────────── */
+var SOCIAL = {
+  instagram : 'https://www.instagram.com/abdo_k2r2?igsh=MWV6b3dhMjlhaWR4Yg==',   /* رابط انستقرام    مثال: 'https://instagram.com/username' */
+  github    : 'https://github.com/abdo-a2026',   /* رابط جيت هاب     مثال: 'https://github.com/username'    */
+  linkedin  : 'https://www.linkedin.com/in/abdullah-adnan-0093393b4?utm_source=share_via&utm_content=profile&utm_medium=member_android',   /* رابط لينكدإن     مثال: 'https://linkedin.com/in/username' */
+  email     : 'mailto:bwdy72937@gmail.com',   /* بريدك الإلكتروني مثال: 'mailto:you@gmail.com'            */
+  whatsapp  : 'https://wa.me/9647750479081'    /* رابط واتساب      مثال: 'https://wa.me/9647XXXXXXXXX'     */
+};
+
+/* ────────────────────────────────────────────────────────────
+   3.  PROJECTS DATA
+   ────────────────────────────────────────────────────────────
+   كل مشروع يحتوي على:
+     id       : معرّف فريد (بالإنجليزية بدون مسافات)
+     name     : اسم المشروع
+     tag      : وسم قصير (يظهر على البطاقة)
+     badge    : شارة صغيرة (للأنظمة الإدارية)
+     icon     : أيقونة Font Awesome  مثال: 'fa-graduation-cap'
+     sub      : وصف فرعي (يظهر في نافذة التفاصيل)
+     desc     : وصف تفصيلي
+     techs    : مصفوفة التقنيات المستخدمة
+     cover    : رابط صورة الغلاف (تظهر على البطاقة) — اتركه '' إذا لم يكن لديك صورة
+     images   : مصفوفة روابط صور للمعرض داخل نافذة التفاصيل (صورة واحدة على الأقل)
+     liveUrl  : رابط العرض المباشر للمشروع
+──────────────────────────────────────────────────────────── */
+var DATA = {
+
+  /* ── المشاريع المميزة ─────────────────────────────────── */
+  featured: [
+    {
+      id      : 'spms',
+      name    : 'SPMS — Student Management System',
+      tag     : 'Student Management',
+      icon    : 'fa-graduation-cap',
+      sub     : 'Administrative & Academic Platform',
+      desc    : 'A full-featured platform for managing student data, academic performance, grades, and attendance. Comprehensive admin dashboard with role-based access for administrators, teachers, and students. Includes detailed analytics and exportable reports.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Firestore','Auth System','PDF Reports','Dashboard UI'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-19-58.jpg',   /* ← رابط صورة الغلاف */
+      images  : ['public/prj-img/Capturehvj.k..PNG','public/prj-img/Capture.PNG',],   /* ← مصفوفة روابط الصور  مثال: ['https://i.imgur.com/A.jpg','https://i.imgur.com/B.jpg'] */
+      liveUrl : 'https://abdo-a2026.github.io/SPMS-app-web-/'    /* ← رابط العرض المباشر */
+    },
+    {
+      id      : 'booking',
+      name    : 'Smart Booking System',
+      tag     : 'Reservation Platform',
+      icon    : 'fa-calendar-check',
+      sub     : 'Reservation & Availability Platform',
+      desc    : 'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-19-47.jpg',
+      images  : ['public/prj-img/mgvjbnnkmjl..PNG','public/prj-img/mjdfc,,axx.PNG','public/prj-img/mgvjbnnkmjl..PNG',],
+      liveUrl : 'https://abdo-a2026.github.io/SCMS-web/'
+    },
+    {
+      id      : 'clinic',
+      name    : 'ClinicFlow Pro',
+      tag     : 'Medical System',
+      icon    : 'fa-hospital',
+      sub     : 'Clinic Management System',
+      desc    : 'A complete medical management platform covering patient records, appointment scheduling, prescriptions, billing, and health analytics. Built for clinics of any scale with a clean UI for medical staff.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Firestore','Calendar UI','Patient DB','Billing System'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-19-33.jpg',
+      images  : ['public/prj-img/Capturemjg m.PNG',],
+      liveUrl : 'https://abdo-a2026.github.io/ACFP-web/'
+    },
+    {
+      id      : 'phy',
+      name    : 'Smart Booking System',
+      tag     : 'Reservation Platform',
+      icon    : 'fa-calendar-check',
+      sub     : 'Reservation & Availability Platform',
+      desc    : 'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-20-16.jpg',
+      images  : ['public/prj-img/hjvfjhfvjbnh.PNG',],
+      liveUrl : 'https://haidarphysics.pages.dev/'
+    },
+    {
+      id      : 'store',
+      name    : 'Smart Booking System',
+      tag     : 'Reservation Platform',
+      icon    : 'fa-calendar-check',
+      sub     : 'Reservation & Availability Platform',
+      desc    : 'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-20-11.jpg',
+      images  : ['public/prj-img/mgfuybgkjk.PNG',],
+      liveUrl : 'https://abdo-a2026.github.io/online-store-web-1/'
+    },
+    /* أضف مشاريع مميزة هنا بنفس التنسيق */
+  ],
+
+  /* ── الأنظمة الإدارية ────────────────────────────────── */
+  systems: [
+    {
+      id      : 'spms2',
+      name    : 'SPMS',
+      tag     : 'Management',
+      badge   : 'Management',
+      // icon    : 'fa-graduation-cap',
+      sub     : 'Student Performance Management',
+      desc    : 'A full-featured platform for managing student data, academic performance, grades, and attendance with role-based access.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Firestore','Auth System','Dashboard UI'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-21-29.jpg',
+      images  : ['public/prj-img/Capturehvj.k..PNG','public/prj-img/Capture.PNG',],
+      liveUrl : 'https://abdo-a2026.github.io/SPMS-app-web-/'
+    },
+    {
+      id      : 'booking2',
+      name    : 'Smart Booking',
+      tag     : 'Booking',
+      badge   : 'Booking',
+      // icon    : 'fa-calendar-check',
+      sub     : 'Smart Reservation System',
+      desc    : 'Real-time booking platform with smart calendar, availability tracking, and automated notifications.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Admin Panel'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-21-25.jpg',
+      images  : ['public/prj-img/mgvjbnnkmjl..PNG','public/prj-img/mjdfc,,axx.PNG','public/prj-img/mgvjbnnkmjl..PNG',],
+      liveUrl : 'https://abdo-a2026.github.io/SCMS-web/'
+    },
+    {
+      id      : 'clinic2',
+      name    : 'ClinicFlow Pro',
+      tag     : 'Medical',
+      badge   : 'Medical',
+      // icon    : 'fa-hospital',
+      sub     : 'Clinic Management System',
+      desc    : 'Complete medical management covering patient records, appointments, prescriptions, and billing.',
+      techs   : ['HTML5','CSS3','JavaScript','Firebase','Firestore','Calendar UI','Billing System'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-21-21.jpg',
+      images  : ['public/prj-img/Capturemjg m.PNG'],
+      liveUrl : 'https://abdo-a2026.github.io/ACFP-web/'
+    },
+    /* أضف أنظمة إدارية هنا */
+  ],
+
+  /* ── مواقع الويب ─────────────────────────────────────── */
+  websites: [
+    {
+      id      : 'red',
+      name    : 'Corporate Website',
+      tag     : 'Company Identity',
+      // icon    : 'fa-building',
+      sub     : 'Company Identity & Services',
+      desc    : 'A professional corporate website reflecting brand identity, showcasing services and team, with optimized performance and SEO-ready structure.',
+      techs   : ['HTML5','CSS3','JavaScript','SEO','Responsive','Fast Loading','Animations'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-20-06.jpg',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/red-academy-web/'
+    },
+    {
+      id      : 'store',
+      name    : 'Personal Portfolio',
+      tag     : 'Personal Brand',
+      // icon    : 'fa-user-tie',
+      sub     : 'Personal Brand & Showcase',
+      desc    : 'A unique personal portfolio presenting professional identity, projects, and skills with distinctive design.',
+      techs   : ['HTML5','CSS3','JavaScript','Custom Design','Animations','Dark Theme','Responsive'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-20-11.jpg',
+      images  : ['public/prj-img/mgfuybgkjk.PNG'],
+      liveUrl : 'https://abdo-a2026.github.io/online-store-web-1/'
+    },
+    {
+      id      : 'hpy',
+      name    : 'E-Commerce',
+      tag     : 'Online Store',
+      // icon    : 'fa-store',
+      sub     : 'Online Store & Cart System',
+      desc    : 'A complete e-commerce platform with product management, shopping cart, payment gateway, and admin panel.',
+      techs   : ['HTML5','CSS3','JavaScript','Node.js','MongoDB','Payment Gateway','Cart System','Admin Panel'],
+      cover   : 'public/prj-img/photo_2026-03-02_11-20-16.jpg',
+      images  : ['public/prj-img/hjvfjhfvjbnh.PNG'],
+      liveUrl : 'https://haidarphysics.pages.dev/'
+    },
+    {
+      id      : 'next',
+      name    : 'Landing Page',
+      tag     : 'High-Conversion',
+      // icon    : 'fa-rocket',
+      sub     : 'Product & Service Launch Page',
+      desc    : 'A conversion-optimized landing page with compelling CTAs, smooth animations, and mobile-first design.',
+      techs   : ['HTML5','CSS3','JavaScript','Mobile-First','CRO','Animations','Fast Loading'],
+      cover   : 'public/prj-img/ChatGPT Image 2 مارس 2026, 04_35_05 م.png',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/Next-Vision-web/'
+    },
+    {
+      id      : 'teeth',
+      name    : 'Analytics Dashboard',
+      tag     : 'Data-Driven',
+      // icon    : 'fa-chart-pie',
+      sub     : 'Data Visualization Platform',
+      desc    : 'Interactive analytics dashboard with dynamic charts, KPI indicators, and real-time data visualization.',
+      techs   : ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive'],
+      cover   : 'public/prj-img/ChatGPT Image 2 مارس 2026, 04_47_55 م.png',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/floss-web/'
+    },
+    {
+      id      : 'orange',
+      name    : 'Analytics Dashboard',
+      tag     : 'Data-Driven',
+      // icon    : 'fa-chart-pie',
+      sub     : 'Data Visualization Platform',
+      desc    : 'Interactive analytics dashboard with dynamic charts, KPI indicators, and real-time data visualization.',
+      techs   : ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive'],
+      cover   : 'public/prj-img/ChatGPT Image 2 مارس 2026, 04_40_33 م.png',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/Academy--Sciences-web/'
+    },
+    {
+      id      : 'photo',
+      name    : 'Analytics Dashboard',
+      tag     : 'Data-Driven',
+      // icon    : 'fa-chart-pie',
+      sub     : 'Data Visualization Platform',
+      desc    : 'Interactive analytics dashboard with dynamic charts, KPI indicators, and real-time data visualization.',
+      techs   : ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive'],
+      cover   : 'public/prj-img/ChatGPT Image 2 مارس 2026, 04_55_34 م.png',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/photography-web-2/'
+    },
+    {
+      id      : 'green',
+      name    : 'Analytics Dashboard',
+      tag     : 'Data-Driven',
+      // icon    : 'fa-chart-pie',
+      sub     : 'Data Visualization Platform',
+      desc    : 'Interactive analytics dashboard with dynamic charts, KPI indicators, and real-time data visualization.',
+      techs   : ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive'],
+      cover   : 'public/prj-img/ChatGPT Image 2 مارس 2026, 04_51_24 م.png',
+      images  : [],
+      liveUrl : 'https://abdo-a2026.github.io/estate-web/'
+    },
+    /* أضف مواقع ويب هنا */
+  ]
+};
+
+/* ══════════════════════════════════════════════════════════
+   ENGINE — لا تعدّل ما دون هذا السطر إلا إذا كنت متأكداً
+══════════════════════════════════════════════════════════ */
+
+/* === GALLERY STATE === */
+var GAL = { slides: [], idx: 0 };
+
+function galMove(dir) {
+  GAL.idx = (GAL.idx + dir + GAL.slides.length) % GAL.slides.length;
+  document.getElementById('mGalTrack').style.transform = 'translateX(-' + (GAL.idx * 100) + '%)';
+  var dots = document.querySelectorAll('.mgal-dot');
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.toggle('on', i === GAL.idx);
+  }
+}
+
+function galGoto(n) {
+  GAL.idx = n;
+  document.getElementById('mGalTrack').style.transform = 'translateX(-' + (GAL.idx * 100) + '%)';
+  var dots = document.querySelectorAll('.mgal-dot');
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.toggle('on', i === GAL.idx);
+  }
+}
+
+/* === BUILD GALLERY === */
+function buildGallery(p) {
+  var track = document.getElementById('mGalTrack');
+  var dotsEl = document.getElementById('mGalDots');
+  var imgs = (p.images && p.images.length) ? p.images : [];
+  GAL.slides = imgs.length ? imgs : ['__icon__'];
+  GAL.idx = 0;
+
+  var slidesHtml = GAL.slides.map(function(src) {
+    if (src === '__icon__') {
+      return '<div class="mgal-slide"><i class="mgal-icon fa-solid ' + p.icon + '"></i></div>';
+    }
+    return '<div class="mgal-slide"><img src="' + src + '" alt="' + p.name + '" loading="lazy"></div>';
+  }).join('');
+  track.innerHTML = slidesHtml;
+  track.style.transform = 'translateX(0)';
+
+  var dotsHtml = GAL.slides.length > 1 ? GAL.slides.map(function(_, i) {
+    return '<div class="mgal-dot' + (i === 0 ? ' on' : '') + '" onclick="galGoto(' + i + ')"></div>';
+  }).join('') : '';
+  dotsEl.innerHTML = dotsHtml;
+
+  /* show/hide nav arrows */
+  var navBtns = document.querySelectorAll('.mgal-nav');
+  for (var i = 0; i < navBtns.length; i++) {
+    navBtns[i].style.display = GAL.slides.length > 1 ? 'flex' : 'none';
+  }
+}
+
+/* === FIND PROJECT BY ID === */
+function findProject(id) {
+  var all = DATA.featured.concat(DATA.systems).concat(DATA.websites);
+  for (var i = 0; i < all.length; i++) {
+    if (all[i].id === id) return all[i];
+  }
+  return null;
+}
+
+/* === OPEN MODAL === */
+function openModal(id) {
+  var p = findProject(id);
+  if (!p) return;
+  document.getElementById('mTitle').textContent = p.name;
+  document.getElementById('mSub').textContent = p.sub;
+  document.getElementById('mDesc').textContent = p.desc;
+  document.getElementById('mTechs').innerHTML = p.techs.map(function(t) {
+    return '<span class="mtech">' + t + '</span>';
+  }).join('');
+  var liveBtn = document.getElementById('mLiveBtn');
+  if (p.liveUrl) {
+    liveBtn.href = p.liveUrl;
+    liveBtn.style.opacity = '1';
+    liveBtn.style.pointerEvents = 'auto';
+  } else {
+    liveBtn.href = '#';
+    liveBtn.style.opacity = '.45';
+    liveBtn.style.pointerEvents = 'none';
+  }
+  buildGallery(p);
+  document.getElementById('modalOvl').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+/* === CLOSE MODAL === */
+function closeModal() {
+  document.getElementById('modalOvl').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalOvl').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* === MOBILE PAGE NAV === */
+function goPage(name, btn) {
+  var pages = document.querySelectorAll('.mp');
+  for (var i = 0; i < pages.length; i++) { pages[i].classList.remove('act'); }
+  var t = document.getElementById('mp-' + name);
+  if (t) { t.classList.add('act'); window.scrollTo(0, 0); }
+  var bnts = document.querySelectorAll('.bnt');
+  for (var j = 0; j < bnts.length; j++) { bnts[j].classList.remove('on'); }
+  if (btn) { btn.classList.add('on'); }
+  else {
+    var map = { home: 0, about: 1, works: 2, contact: 3 };
+    if (map[name] !== undefined && bnts[map[name]]) bnts[map[name]].classList.add('on');
+  }
+}
+
+/* === CONTACT FORM === */
+function handleSend(btn) {
+  var orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-check"></i><span>Message Sent!</span>';
+  btn.style.background = 'linear-gradient(135deg,#5D8A50,#3A6B30)';
+  setTimeout(function() { btn.innerHTML = orig; btn.style.background = ''; }, 3000);
+}
+
+/* === DRAG SCROLL === */
+function dragScroll(el) {
+  if (!el) return;
+  var dn = false, sx = 0, sl = 0;
+  el.addEventListener('mousedown', function(e) { dn = true; sx = e.pageX - el.offsetLeft; sl = el.scrollLeft; el.style.userSelect = 'none'; });
+  el.addEventListener('mouseleave', function() { dn = false; el.style.userSelect = ''; });
+  el.addEventListener('mouseup', function() { dn = false; el.style.userSelect = ''; });
+  el.addEventListener('mousemove', function(e) { if (!dn) return; e.preventDefault(); el.scrollLeft = sl - (e.pageX - el.offsetLeft - sx); });
+}
+
+/* === PROFILE PHOTO === */
 function loadPhoto() {
   if (!PHOTO_URL) return;
-  var ids = [['avD-img','avD-txt'], ['avM-img','avM-txt']];
-  ids.forEach(function(pair) {
-    var img = document.getElementById(pair[0]);
-    var txt = document.getElementById(pair[1]);
+  ['avD-img', 'avM-img'].forEach(function(imgId) {
+    var img = document.getElementById(imgId);
+    var txt = document.getElementById(imgId.replace('-img', '-txt'));
     if (!img) return;
     img.src = PHOTO_URL;
     img.onload = function() { img.style.display = 'block'; if (txt) txt.style.display = 'none'; };
     img.onerror = function() { img.style.display = 'none'; if (txt) txt.style.display = ''; };
   });
 }
-loadPhoto();
 
-/* ─── PROJECT DATA ──────────────────────────────── */
-var PROJ = {
-  spms: {
-    title: 'SPMS — Student Management System',
-    sub: 'Administrative & Academic Platform',
-    icons: ['fa-graduation-cap','fa-chart-bar','fa-users'],
-    desc: 'A full-featured platform for managing student data, academic performance, grades, and attendance. Comprehensive admin dashboard with role-based access for administrators, teachers, and students. Includes detailed analytics and exportable reports.',
-    techs: ['HTML5','CSS3','JavaScript','Firebase','Firestore','Auth System','PDF Reports','Dashboard UI']
-  },
-  clinic: {
-    title: 'ClinicFlow Pro',
-    sub: 'Clinic Management System',
-    icons: ['fa-hospital','fa-stethoscope','fa-file-medical'],
-    desc: 'A complete medical management platform covering patient records, appointment scheduling, prescriptions, billing, and health analytics. Built for clinics of any scale with a clean UI for medical staff.',
-    techs: ['HTML5','CSS3','JavaScript','Firebase','Firestore','Calendar UI','Patient DB','Billing System']
-  },
-  booking: {
-    title: 'Smart Booking System',
-    sub: 'Reservation & Availability Platform',
-    icons: ['fa-calendar-check','fa-clock','fa-bell'],
-    desc: 'An advanced booking platform with smart calendar management, real-time availability tracking, automated notifications, and occupancy reporting. Customizable for hotels, event halls, or any service.',
-    techs: ['HTML5','CSS3','JavaScript','Firebase','Real-Time DB','Notifications','Calendar API','Admin Panel']
-  },
-  business: {
-    title: 'Business Manager ERP',
-    sub: 'Enterprise Resource Planning System',
-    icons: ['fa-briefcase','fa-chart-line','fa-warehouse'],
-    desc: 'A unified ERP covering invoicing, inventory management, supplier relations, HR modules, and financial reporting. Designed for SMEs needing a powerful yet intuitive management interface.',
-    techs: ['HTML5','CSS3','JavaScript','Node.js','MongoDB','REST API','Excel Export','Multi-user']
-  },
-  dashboard: {
-    title: 'Analytics Dashboard',
-    sub: 'Data Visualization Platform',
-    icons: ['fa-chart-line','fa-chart-pie','fa-table'],
-    desc: 'An interactive analytics dashboard featuring dynamic charts, KPI indicators, customizable reports, and real-time data visualization to help businesses make informed decisions.',
-    techs: ['HTML5','CSS3','JavaScript','Chart.js','Data Viz','Custom Reports','PDF Export','Responsive']
-  },
-  corp: {
-    title: 'Corporate Website',
-    sub: 'Company Identity & Services',
-    icons: ['fa-building','fa-globe','fa-handshake'],
-    desc: 'A professional corporate website reflecting brand identity, showcasing services and team, with optimized performance and SEO-ready structure. Modern, fast-loading, fully responsive.',
-    techs: ['HTML5','CSS3','JavaScript','SEO','Responsive','Fast Loading','Animations']
-  },
-  landing: {
-    title: 'High-Conversion Landing Page',
-    sub: 'Product & Service Launch Page',
-    icons: ['fa-rocket','fa-bullseye','fa-bolt'],
-    desc: 'A conversion-optimized landing page with compelling CTAs, smooth animations, and mobile-first design for product launches and service promotion.',
-    techs: ['HTML5','CSS3','JavaScript','Mobile-First','CRO','Animations','Fast Loading']
-  },
-  personal: {
-    title: 'Personal Portfolio',
-    sub: 'Personal Brand & Showcase',
-    icons: ['fa-user-tie','fa-star','fa-palette'],
-    desc: 'A unique personal portfolio website presenting professional identity, projects, and skills with distinctive design that leaves a lasting impression.',
-    techs: ['HTML5','CSS3','JavaScript','Custom Design','Animations','Dark Theme','Responsive']
-  },
-  ecomm: {
-    title: 'E-Commerce Platform',
-    sub: 'Online Store & Cart System',
-    icons: ['fa-store','fa-credit-card','fa-box'],
-    desc: 'A complete e-commerce platform with product management, shopping cart, payment gateway integration, and order management with full admin control panel.',
-    techs: ['HTML5','CSS3','JavaScript','Node.js','MongoDB','Payment Gateway','Cart System','Admin Panel']
-  }
-};
-
-/* ─── MODAL ─────────────────────────────────────── */
-function openModal(id) {
-  var p = PROJ[id];
-  if (!p) return;
-  document.getElementById('mTitle').textContent = p.title;
-  document.getElementById('mSub').textContent = p.sub;
-  document.getElementById('mDesc').textContent = p.desc;
-  document.getElementById('mGal').innerHTML = p.icons.map(function(ic) {
-    return '<div class="mth"><i class="fa-solid ' + ic + '"></i></div>';
-  }).join('');
-  document.getElementById('mTechs').innerHTML = p.techs.map(function(t) {
-    return '<span class="mtech">' + t + '</span>';
-  }).join('');
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
-});
-
-/* ─── MOBILE PAGE NAVIGATION ────────────────────── */
-function goPage(name, btn) {
-  // hide all pages
-  var pages = document.querySelectorAll('.mp');
-  for (var i = 0; i < pages.length; i++) {
-    pages[i].classList.remove('act');
-  }
-  // show target
-  var target = document.getElementById('mp-' + name);
-  if (target) {
-    target.classList.add('act');
-    window.scrollTo(0, 0);
-  }
-  // update nav buttons
-  var bnts = document.querySelectorAll('.bnt');
-  for (var j = 0; j < bnts.length; j++) {
-    bnts[j].classList.remove('on');
-  }
-  if (btn) {
-    btn.classList.add('on');
-  } else {
-    var map = { home: 0, about: 1, works: 2, contact: 3 };
-    var idx = map[name];
-    if (idx !== undefined && bnts[idx]) {
-      bnts[idx].classList.add('on');
-    }
-  }
-}
-
-/* ─── CONTACT FORM ──────────────────────────────── */
-function handleSend(btn) {
-  var orig = btn.innerHTML;
-  btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Message Sent!</span>';
-  btn.style.background = 'linear-gradient(135deg,#5D8A50,#3A6B30)';
-  setTimeout(function() {
-    btn.innerHTML = orig;
-    btn.style.background = '';
-  }, 3000);
-}
-
-/* ─── DRAG SCROLL ───────────────────────────────── */
-function dragScroll(el) {
+/* === BUILD SOCIAL CIRCLES === */
+function buildSocials(containerId, compact) {
+  var el = document.getElementById(containerId);
   if (!el) return;
-  var down = false, startX = 0, scrollLeft = 0;
-  el.addEventListener('mousedown', function(e) {
-    down = true;
-    startX = e.pageX - el.offsetLeft;
-    scrollLeft = el.scrollLeft;
-    el.style.userSelect = 'none';
-  });
-  el.addEventListener('mouseleave', function() { down = false; el.style.userSelect = ''; });
-  el.addEventListener('mouseup', function() { down = false; el.style.userSelect = ''; });
-  el.addEventListener('mousemove', function(e) {
-    if (!down) return;
-    e.preventDefault();
-    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX);
-  });
+  var list = [
+    { key: 'instagram', icon: 'fa-brands fa-instagram',   label: 'Instagram' },
+    { key: 'github',    icon: 'fa-brands fa-github',      label: 'GitHub'    },
+    { key: 'linkedin',  icon: 'fa-brands fa-linkedin-in', label: 'LinkedIn'  },
+    { key: 'email',     icon: 'fa-solid fa-envelope',     label: 'Email'     },
+    { key: 'whatsapp',  icon: 'fa-brands fa-whatsapp',    label: 'WhatsApp'  }
+  ];
+  el.innerHTML = list.map(function(s) {
+    var href = SOCIAL[s.key] || '#';
+    return '<div class="sc-item"><a href="' + href + '" class="sc-btn" target="_blank" rel="noopener"><i class="' + s.icon + '"></i></a><div class="sc-lbl">' + s.label + '</div></div>';
+  }).join('');
 }
 
-dragScroll(document.getElementById('dsFeat'));
-dragScroll(document.getElementById('dsWeb'));
-dragScroll(document.getElementById('mFeat'));
-dragScroll(document.getElementById('mWeb'));
+/* === BUILD FOOTER SOCIALS === */
+function buildFooterSocials(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var list = [
+    { key: 'instagram', icon: 'fa-brands fa-instagram'   },
+    { key: 'github',    icon: 'fa-brands fa-github'      },
+    { key: 'linkedin',  icon: 'fa-brands fa-linkedin-in' },
+    { key: 'whatsapp',  icon: 'fa-brands fa-whatsapp'    }
+  ];
+  el.innerHTML = list.map(function(s) {
+    return '<a href="' + (SOCIAL[s.key] || '#') + '" class="fsbtn" target="_blank" rel="noopener"><i class="' + s.icon + '"></i></a>';
+  }).join('');
+}
 
-/* ─── DESKTOP shortcut ref ──────────────────────── */
-var dcR = document.getElementById('dcR');
+/* === BUILD CONTACT INFO CARDS === */
+function buildCinfo(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var emailHref = SOCIAL.email || '#';
+  var emailDisplay = SOCIAL.email ? SOCIAL.email.replace('mailto:', '') : 'hello@abdullah.dev';
+  var waHref = SOCIAL.whatsapp || '#';
+  var liHref = SOCIAL.linkedin || '#';
+  el.innerHTML =
+    '<a class="cicard" href="' + emailHref + '"><div class="ciico"><i class="fa-solid fa-envelope"></i></div><div><div class="cilbl">Email</div><div class="cival">' + emailDisplay + '</div></div></a>' +
+    '<a class="cicard" href="' + waHref + '" target="_blank" rel="noopener"><div class="ciico"><i class="fa-brands fa-whatsapp"></i></div><div><div class="cilbl">WhatsApp</div><div class="cival">Available — Fast Response</div></div></a>' +
+    '<a class="cicard" href="' + liHref + '" target="_blank" rel="noopener"><div class="ciico"><i class="fa-brands fa-linkedin-in"></i></div><div><div class="cilbl">LinkedIn</div><div class="cival">Connect with me</div></div></a>' +
+    '<div class="cicard"><div class="ciico"><i class="fa-solid fa-clock"></i></div><div><div class="cilbl">Response Time</div><div class="cival">Within 24 hours</div></div></div>';
+}
+
+/* === BUILD CTA BUTTONS === */
+function buildCTA(id, isMobile) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var firstId = DATA.featured.length ? DATA.featured[0].id : '';
+  var contactAction = isMobile ? "goPage('contact')" : "document.getElementById('dcR').scrollTo({top:99999,behavior:'smooth'})";
+  el.innerHTML =
+    '<button class="btn btn-p" onclick="openModal(\'' + firstId + '\')"><i class="fa-solid fa-database"></i><span>View SPMS System</span></button>' +
+    '<a href="#" class="btn btn-o"><i class="fa-solid fa-file-arrow-down"></i><span>Download CV</span></a>' +
+    '<button class="btn btn-g" onclick="' + contactAction + '"><i class="fa-solid fa-envelope"></i><span>Contact Me</span></button>';
+}
+
+/* === BUILD FEATURED CARDS === */
+function buildFeatured(rowId) {
+  var row = document.getElementById(rowId);
+  if (!row) return;
+  row.innerHTML = DATA.featured.map(function(p) {
+    var coverHtml = p.cover
+      ? '<img class="fcard-img" src="' + p.cover + '" alt="' + p.name + '" loading="lazy">'
+      : '<div class="fcard-icon"><i class="fa-solid ' + p.icon + '"></i></div>';
+    return '<div class="fcard" onclick="openModal(\'' + p.id + '\')">' + coverHtml +
+      '<div class="fov"><div class="fname">' + p.name + '</div><div class="ftag">' + p.tag + '</div></div></div>';
+  }).join('');
+}
+
+/* === BUILD SYSTEM CARDS === */
+function buildSystems(gridId) {
+  var grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = DATA.systems.map(function(p) {
+    var coverHtml = p.cover
+      ? '<img class="sycard-img" src="' + p.cover + '" alt="' + p.name + '" loading="lazy">'
+      : '';
+    return '<div class="sycard" onclick="openModal(\'' + p.id + '\')">' + coverHtml +
+      '<div class="sybg"><i class="fa-solid ' + p.icon + '"></i></div>' +
+      '<div class="sybadge">' + p.badge + '</div>' +
+      '<div class="syfoot"><div class="syname">' + p.name + '</div><div class="sydesc">' + p.sub + '</div></div></div>';
+  }).join('');
+}
+
+/* === BUILD WEB CARDS === */
+function buildWebsites(rowId) {
+  var row = document.getElementById(rowId);
+  if (!row) return;
+  row.innerHTML = DATA.websites.map(function(p) {
+    var coverHtml = p.cover
+      ? '<img class="wcard-img" src="' + p.cover + '" alt="' + p.name + '" loading="lazy">'
+      : '';
+    return '<div class="wcard" onclick="openModal(\'' + p.id + '\')">' + coverHtml +
+      '<div class="wcbg"><i class="fa-solid ' + p.icon + '"></i></div>' +
+      '<div class="wcov"><div class="wcname">' + p.name + '</div><div class="wctag">' + p.tag + '</div></div></div>';
+  }).join('');
+}
+
+/* === INIT ALL === */
+function init() {
+  loadPhoto();
+
+  /* socials */
+  buildSocials('d-socials');
+  buildSocials('m-socials');
+  buildFooterSocials('d-fsoc');
+  buildFooterSocials('m-fsoc');
+  buildCinfo('d-cinfo');
+  buildCinfo('m-cinfo');
+
+  /* CTA buttons */
+  buildCTA('d-cta-btns', false);
+  buildCTA('m-cta-btns', true);
+
+  /* projects */
+  buildFeatured('dsFeatRow');
+  buildFeatured('mFeatRow');
+  buildSystems('dsSysGrid');
+  buildSystems('mSysGrid');
+  buildWebsites('dsWebRow');
+  buildWebsites('mWebRow');
+
+  /* drag scroll */
+  dragScroll(document.getElementById('dsFeat'));
+  dragScroll(document.getElementById('dsWeb'));
+  dragScroll(document.getElementById('mFeat'));
+  dragScroll(document.getElementById('mWeb'));
+}
+
+init();
 </script>
 </body>
 </html>
